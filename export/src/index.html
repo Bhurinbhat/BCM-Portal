@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BCM Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+</head>
+<body style="background-color: #fff; font-family: &quot;IBM Plex Sans&quot;">
+  <template id="__bundler_thumbnail" data-bg-color="#e60028">
+    <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="bcm-bg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#e60028"></stop>
+          <stop offset="55%" stop-color="#c30021"></stop>
+          <stop offset="100%" stop-color="#97001b"></stop>
+        </linearGradient>
+        <radialGradient id="bcm-glow" cx="0.7" cy="0.3" r="0.7">
+          <stop offset="0%" stop-color="rgba(255,255,255,0.22)"></stop>
+          <stop offset="100%" stop-color="transparent"></stop>
+        </radialGradient>
+      </defs>
+      <rect width="1200" height="800" fill="url(#bcm-bg)"></rect>
+      <rect width="1200" height="800" fill="url(#bcm-glow)"></rect>
+      <g transform="translate(600 360)" fill="none" stroke="rgba(255,255,255,0.18)" stroke-width="1">
+        <circle r="80"></circle>
+        <circle r="140" stroke-dasharray="4 6"></circle>
+        <circle r="200"></circle>
+        <circle r="260" stroke-dasharray="4 6"></circle>
+      </g>
+      <g transform="translate(556 316)" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M44 4 L80 16 V52 C80 76 64 92 44 100 C24 92 8 76 8 52 V16 Z" fill="rgba(255,255,255,0.10)"></path>
+        <path d="M24 50 L40 64 L64 36"></path>
+      </g>
+      <text x="600" y="600" text-anchor="middle" font-family="IBM Plex Sans, system-ui, sans-serif" font-size="68" font-weight="700" fill="#fff" letter-spacing="-1">BCM Portal</text>
+      <text x="600" y="650" text-anchor="middle" font-family="IBM Plex Sans, system-ui, sans-serif" font-size="22" font-weight="400" fill="rgba(255,255,255,0.7)" letter-spacing="2">BUSINESS CONTINUITY MANAGEMENT</text>
+    </svg>
+  </template>
+  <div id="root"></div>
+
+  <script>
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "density": "comfy",
+      "dark": false,
+      "accent": "#b3261e",
+      "showMap": true
+    }/*EDITMODE-END*/;
+    window.TWEAK_DEFAULTS = TWEAK_DEFAULTS;
+  </script>
+
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="data.jsx"></script>
+  <script type="text/babel" src="primitives.jsx"></script>
+  <script type="text/babel" src="users.jsx"></script>
+  <script type="text/babel" src="roster.jsx"></script>
+  <script type="text/babel" src="documents.jsx"></script>
+  <script type="text/babel" src="applications.jsx"></script>
+  <script type="text/babel" src="opsmap.jsx"></script>
+  <script type="text/babel" src="ics.jsx"></script>
+  <script type="text/babel" src="dashboard.jsx"></script>
+  <script type="text/babel" src="assistant.jsx"></script>
+  <script type="text/babel" src="login.jsx"></script>
+  <script type="text/babel" src="app.jsx"></script>
+</body>
+</html>
