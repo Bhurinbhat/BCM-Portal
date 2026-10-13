@@ -961,7 +961,11 @@ function renderNav(){
   $("#bnav").innerHTML = [["home","หน้าหลัก","home"],["readiness","Dashboard","gauge"],["ews","EWS","radar"],["crisis","Crisis Hub","siren"]].map(([r,l,i])=>`<button class="${S.route===r?'on':''}" data-go="${r}">${svg(i,21)}${l}</button>`).join("")+`<button id="bMenu">${svg("menu",21)}เมนู</button>`;
   $("#bellCount").textContent = EVENTS.length;
 }
-function go(r,opts={}){ Object.assign(S,opts); S.route=r; hidePop(true); renderNav(); render(); $("#rail").classList.remove("open"); window.scrollTo(0,0); }
+const ROUTES = ["home","readiness","ews","crisis","apps","news","about","ops","erp","bcp","contact"];
+function go(r,opts={}){ Object.assign(S,opts); S.route=r; hidePop(true); renderNav(); render(); $("#rail").classList.remove("open"); window.scrollTo(0,0);
+  if(location.hash.slice(1)!==r){ try{ history.replaceState(null,"","#"+r); }catch(e){} } }
+window.addEventListener("hashchange",()=>{ const h=location.hash.slice(1); if(!$("#app").hidden && ROUTES.includes(h) && h!==S.route) go(h); });
+let lastW=innerWidth; window.addEventListener("resize",()=>{ if(innerWidth!==lastW){ lastW=innerWidth; if(!$("#pop").hidden) hidePop(true); } });
 
 /* ================= HOME ================= */
 const thaiDate = d => { try{ return new Date(d).toLocaleDateString("th-TH-u-ca-gregory",{day:"numeric",month:"short",year:"numeric"}) }catch(e){ return d } };
