@@ -24,7 +24,13 @@ Portal for SCG's Corporate BCM Office. It shows current disaster news across Sou
 
 Links live in the `LINKS` object in `index.html` and open in a new tab.
 
-## Sign in with Microsoft
+## Sign in, sign up and password reset
+
+The login page follows the shadcn `Login04` and `SignupForm` components (Sign in with Microsoft, email and password, sign-up with a BCM role, forgot password), rebuilt in plain HTML/CSS because this portal has no React build step. To move to Next.js + shadcn later: `npx create-next-app@latest --ts --tailwind`, `npx shadcn@latest init`, `npx shadcn@latest add button card checkbox input label select separator`, then place the component in `components/ui/` (the `@/components/ui/...` imports in shadcn components expect that folder).
+
+Email and password use Supabase Auth when `emailLogin: true` in `config.js` (sign-up stores first name, last name, username and BCM role in `user_metadata`). Supabase's built-in mailer only delivers to project team members, so set up custom SMTP in Supabase before opening sign-up to staff. While `emailLogin` is false the forms run in demo mode and passwords are never sent or stored.
+
+### Sign in with Microsoft
 
 The login page uses Supabase Auth with the Azure (Microsoft Entra ID) provider. To turn it on:
 

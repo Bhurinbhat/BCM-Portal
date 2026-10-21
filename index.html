@@ -568,49 +568,164 @@ a.app b svg,a.ph-item b svg{opacity:.55;vertical-align:-1px}
   .wf-grid{grid-template-columns:minmax(0,1fr)}
   .dash-tabs{margin-inline:-16px;padding-inline:16px}
 }
+
+/* ===== v5: login & sign-up (shadcn Login04 + SignupForm, rebuilt without React) ===== */
+#login{display:block;min-height:100%;padding:0;background:var(--surface);color:var(--ink);overflow:visible;grid-template-columns:none}
+#login .auth-view{min-height:100vh;min-height:100dvh;display:flex;align-items:center;justify-content:center;padding-block:40px;padding-inline:16px}
+.auth-wrap{width:100%;max-width:448px}
+.auth-brand{display:flex;align-items:center;gap:8px}
+.auth-brand p{margin:0;font-family:var(--f-display);font-weight:600;font-size:18px;color:var(--ink)}
+.auth-h3{margin-top:24px;font-size:18px;font-weight:600;font-family:var(--f-body);color:var(--ink)}
+.auth-h2{font-size:24px;font-weight:600;font-family:var(--f-body);color:var(--ink)}
+.auth-sub{margin:8px 0 0;font-size:14px;color:var(--muted)}
+.auth-link{font-weight:500;color:var(--brand);text-decoration:none}
+.auth-link:hover{text-decoration:underline;opacity:.9}
+.auth-social{margin-top:32px;display:flex;flex-direction:column;gap:8px}
+.auth-form{margin-top:24px;display:grid;gap:16px}
+.auth-mode{margin-top:28px;font-size:12px;color:var(--muted);display:flex;gap:6px;align-items:center;padding:8px 12px;border-radius:8px;background:var(--surface-2)}
+.auth-mode::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--sev-wt);flex:none}
+.auth-mode.live::before{background:var(--ok)}
+
+/* shadcn-like primitives */
+.ui-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;white-space:nowrap;border-radius:8px;font-size:14px;font-weight:500;height:40px;padding:0 16px;border:1px solid transparent;transition:background .15s,color .15s,box-shadow .15s;cursor:pointer}
+.ui-btn:focus-visible{outline:none;box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--sev-ad)}
+.ui-btn[disabled]{opacity:.55;pointer-events:none}
+.ui-btn.w-full{width:100%}
+.ui-btn.primary{background:var(--brand);color:#fff}
+.ui-btn.primary:hover{background:color-mix(in srgb,var(--brand) 90%,#000)}
+.ui-btn.outline{background:var(--surface);border-color:var(--line);color:var(--ink)}
+.ui-btn.outline:hover{background:var(--surface-2)}
+.ui-btn.ghost{background:transparent;color:var(--muted)}
+.ui-btn.icon{width:40px;padding:0}
+.ui-btn .ms-logo{width:18px;height:18px;flex:none}
+.ui-btn .spin{width:16px;height:16px;border:2px solid color-mix(in srgb,currentColor 25%,transparent);border-top-color:currentColor}
+.ui-sep{position:relative;margin:24px 0;text-align:center}
+.ui-sep::before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:var(--line)}
+.ui-sep span{position:relative;padding:0 8px;background:var(--surface);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.ui-field{display:grid;gap:8px}
+.ui-label{font-size:14px;font-weight:500;line-height:1;color:var(--ink)}
+.ui-input{display:flex;height:40px;width:100%;border-radius:8px;border:1px solid var(--line);background:var(--surface);padding:8px 12px;font:inherit;font-size:14px;color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.04);transition:border-color .15s,box-shadow .15s}
+.ui-input::placeholder{color:color-mix(in srgb,var(--muted) 70%,transparent)}
+.ui-input:focus-visible{outline:none;border-color:var(--sev-ad);box-shadow:0 0 0 3px color-mix(in srgb,var(--sev-ad) 20%,transparent)}
+.ui-input[aria-invalid="true"]{border-color:var(--miss)}
+.ui-error{margin:0;font-size:13px;color:var(--miss)}
+.ui-pass{position:relative}
+.ui-pass .ui-btn{position:absolute;right:0;top:0;height:100%}
+.ui-pass .ui-btn:hover{background:transparent;color:var(--ink)}
+.ui-grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px}
+.ui-check{display:flex;align-items:flex-start;gap:8px;font-size:14px;cursor:pointer;line-height:1.4}
+.ui-check input{position:absolute;opacity:0;width:1px;height:1px}
+.ui-check .box{flex:none;width:16px;height:16px;margin-top:2px;border-radius:4px;border:1px solid var(--brand);display:grid;place-items:center;transition:background .12s}
+.ui-check input:checked + .box{background:var(--brand)}
+.ui-check input:checked + .box::after{content:"";width:8px;height:4px;border:2px solid #fff;border-top:0;border-right:0;transform:rotate(-45deg) translate(1px,-1px)}
+.ui-check input:focus-visible + .box{box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--sev-ad)}
+.auth-card-wrap{width:100%;max-width:448px}
+.ui-card{border-radius:12px;background:var(--surface);color:var(--ink);box-shadow:0 10px 30px -12px rgba(16,21,33,.25),0 2px 6px rgba(16,21,33,.06);overflow:hidden}
+.ui-card-header{display:flex;flex-direction:column;align-items:center;gap:6px;padding:24px 24px 16px;text-align:center}
+.ui-card-content{display:grid;gap:22px;padding:0 32px 24px}
+.ui-card-footer{display:flex;justify-content:center;border-top:1px solid var(--line);padding:16px}
+.ui-card-footer p{margin:0;font-size:14px;color:var(--muted)}
+.ui-select{position:relative}
+.ui-select-trigger{display:flex;height:40px;width:100%;align-items:center;justify-content:space-between;gap:8px;border-radius:8px;border:1px solid var(--line);background:var(--surface);padding:0 12px;font-size:14px;color:var(--ink);text-align:left}
+.ui-select-trigger:focus-visible{outline:none;box-shadow:0 0 0 2px var(--surface),0 0 0 4px var(--sev-ad)}
+.ui-select-value{display:flex;align-items:center;gap:8px;min-width:0}
+.ui-select-value svg,.ui-opt svg{flex:none;color:var(--muted)}
+.ui-select-content{position:absolute;z-index:50;left:0;right:0;top:calc(100% + 4px);border:1px solid var(--line);border-radius:8px;background:var(--surface);box-shadow:0 12px 28px -10px rgba(0,0,0,.3);padding:4px;max-height:280px;overflow:auto;animation:pp .12s ease-out}
+.ui-opt{position:relative;display:flex;align-items:center;gap:8px;width:100%;border:0;background:none;border-radius:6px;padding:8px 32px 8px 8px;font-size:14px;color:var(--ink);text-align:left;cursor:pointer}
+.ui-opt:hover,.ui-opt.active{background:var(--surface-2)}
+.ui-opt .ui-chk{position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--ink)}
+.ui-opt small{display:block;color:var(--muted);font-size:11.5px}
+@media (max-width:480px){ .ui-card-content{padding:0 20px 20px} .ui-grid2{grid-template-columns:minmax(0,1fr)} }
 </style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
 <body>
-<!-- ================= LOGIN ================= -->
+<!-- ================= LOGIN / SIGN UP (shadcn Login04 + SignupForm, adapted) ================= -->
 <section id="login">
-  <canvas id="radar" aria-hidden="true"></canvas>
-  <div class="lg-copy">
-    <div class="brand"><img class="logo" src="assets/scg-logo.svg" alt="SCG" style="height:38px"><span class="div"></span><span>BCM Portal<small>Business Continuity Management</small></span></div>
-    <div>
-      <div class="eyebrow" style="color:#7C8BA1">Corporate BCM Office · SCG</div>
-      <h1 style="margin-top:12px">เห็นภัยก่อน <em>พร้อมก่อน</em> ฟื้นตัวได้เร็วกว่า</h1>
-      <p>ศูนย์รวมข้อมูลความพร้อมรับมือเหตุฉุกเฉินและวิกฤติของทุก BU ติดตามภัยที่เกิดขึ้น ตรวจสอบความพร้อมของแต่ละ Site และส่งต่อเหตุการณ์ไปยัง EWS และ Crisis Hub ได้ในที่เดียว</p>
-    </div>
-    <div class="lg-stats">
-      <div><b id="lgSites">147</b><span>บริษัท / Site</span></div>
-      <div><b>7</b><span>กลุ่มธุรกิจ</span></div>
-      <div><b id="lgCountries">8</b><span>ประเทศ</span></div>
-      <div><b id="lgEvents">6</b><span>เหตุการณ์ที่ติดตาม</span></div>
+  <!-- Sign in (Login04) -->
+  <div class="auth-view" id="authSignin">
+    <div class="auth-wrap">
+      <div class="auth-brand"><img class="logo" src="assets/scg-logo.svg" alt="SCG" style="height:28px"><p>BCM Portal</p></div>
+      <h3 class="auth-h3">เข้าสู่ระบบบัญชีของคุณ</h3>
+      <p class="auth-sub">ยังไม่มีบัญชี? <a href="#" class="auth-link" data-auth-view="signup">ลงทะเบียน</a></p>
+      <div class="auth-social">
+        <button class="ui-btn outline" type="button" id="ssoBtn">
+          <svg class="ms-logo" viewBox="0 0 21 21" aria-hidden="true"><rect x="1" y="1" width="9" height="9" fill="#F25022"/><rect x="11" y="1" width="9" height="9" fill="#7FBA00"/><rect x="1" y="11" width="9" height="9" fill="#00A4EF"/><rect x="11" y="11" width="9" height="9" fill="#FFB900"/></svg>
+          <span id="ssoLabel">Sign in with Microsoft</span>
+        </button>
+      </div>
+      <div class="ui-sep"><span>หรือ</span></div>
+      <form class="auth-form" id="signinForm" novalidate>
+        <div class="ui-field">
+          <label class="ui-label" for="email-login">อีเมล</label>
+          <input class="ui-input" type="email" id="email-login" name="email" autocomplete="email" placeholder="name@scg.com">
+        </div>
+        <div class="ui-field">
+          <label class="ui-label" for="password-login">รหัสผ่าน</label>
+          <input class="ui-input" type="password" id="password-login" name="password" autocomplete="current-password" placeholder="********">
+        </div>
+        <p class="ui-error" id="signinErr" hidden></p>
+        <button type="submit" class="ui-btn primary w-full" id="signinBtn">เข้าสู่ระบบ</button>
+      </form>
+      <p class="auth-sub" style="margin-top:22px">ลืมรหัสผ่าน? <a href="#" class="auth-link" data-auth-view="forgot">รีเซ็ตรหัสผ่าน</a></p>
+      <p class="auth-mode" id="authMode"></p>
     </div>
   </div>
-  <div class="lg-card">
-    <div>
-      <div class="eyebrow" style="color:#7C8BA1">เข้าสู่ระบบ</div>
-      <h2 style="margin-top:6px">ยินดีต้อนรับสู่ BCM Portal</h2>
-      <p>เข้าสู่ระบบด้วยบัญชีพนักงาน SCG ผ่าน Microsoft (Single Sign-On) ระบบจะกำหนดสิทธิ์ตามบทบาท BCM ของคุณ</p>
+
+  <!-- Sign up (SignupForm) -->
+  <div class="auth-view" id="authSignup" hidden>
+    <div class="auth-card-wrap">
+      <div class="ui-card">
+        <div class="ui-card-header">
+          <img class="logo" src="assets/scg-logo.svg" alt="SCG" style="height:40px">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:2px">
+            <h2 class="auth-h2">สร้างบัญชี</h2>
+            <p class="auth-sub" style="margin:0">ยินดีต้อนรับ ลงทะเบียนเพื่อเริ่มใช้งาน BCM Portal</p>
+          </div>
+        </div>
+        <form class="ui-card-content" id="signupForm" novalidate>
+          <div class="ui-field">
+            <label class="ui-label" id="roleLbl">บทบาท</label>
+            <div class="ui-select" id="roleSelect">
+              <button type="button" class="ui-select-trigger" id="role" aria-haspopup="listbox" aria-expanded="false" aria-labelledby="roleLbl role"><span class="ui-select-value"></span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="opacity:.5"><path d="M6 9l6 6 6-6"/></svg></button>
+              <div class="ui-select-content" role="listbox" aria-labelledby="roleLbl" hidden></div>
+            </div>
+          </div>
+          <div class="ui-grid2">
+            <div class="ui-field"><label class="ui-label" for="firstName">ชื่อ</label><input class="ui-input" id="firstName" autocomplete="given-name"></div>
+            <div class="ui-field"><label class="ui-label" for="lastName">นามสกุล</label><input class="ui-input" id="lastName" autocomplete="family-name"></div>
+          </div>
+          <div class="ui-field"><label class="ui-label" for="username">ชื่อผู้ใช้</label><input class="ui-input" id="username" autocomplete="username"></div>
+          <div class="ui-field"><label class="ui-label" for="email">อีเมล</label><input class="ui-input" id="email" type="email" autocomplete="email" placeholder="name@scg.com"></div>
+          <div class="ui-field"><label class="ui-label" for="password">รหัสผ่าน</label>
+            <div class="ui-pass"><input class="ui-input" id="password" type="password" autocomplete="new-password" style="padding-right:42px">
+              <button type="button" class="ui-btn ghost icon" id="pwToggle" aria-label="แสดงรหัสผ่าน"></button></div>
+          </div>
+          <label class="ui-check"><input type="checkbox" id="terms"><span class="box" aria-hidden="true"></span><span class="muted">ฉันยอมรับ <a href="#" class="auth-link">ข้อกำหนด</a> และ <a href="#" class="auth-link">เงื่อนไข</a> การใช้งาน</span></label>
+          <p class="ui-error" id="signupErr" hidden></p>
+          <button type="submit" class="ui-btn primary w-full" id="signupBtn">สร้างบัญชี</button>
+        </form>
+        <div class="ui-card-footer"><p>มีบัญชีอยู่แล้ว? <a href="#" class="auth-link" data-auth-view="signin">เข้าสู่ระบบ</a></p></div>
+      </div>
     </div>
-    <button class="btn-ms" id="ssoBtn" type="button">
-      <svg class="ms-logo" viewBox="0 0 21 21" aria-hidden="true"><rect x="1" y="1" width="9" height="9" fill="#F25022"/><rect x="11" y="1" width="9" height="9" fill="#7FBA00"/><rect x="1" y="11" width="9" height="9" fill="#00A4EF"/><rect x="11" y="11" width="9" height="9" fill="#FFB900"/></svg>
-      <span id="ssoLabel">Sign in with Microsoft</span>
-    </button>
-    <div class="lg-steps">
-      <div><i>1</i><span>กดปุ่มด้านบน ระบบจะพาไปหน้าเข้าสู่ระบบของ Microsoft</span></div>
-      <div><i>2</i><span>ใช้อีเมลบริษัท (@scg.com) และยืนยันตัวตนตามนโยบายของ SCG</span></div>
-      <div><i>3</i><span>กลับมาที่ BCM Portal พร้อมสิทธิ์ตามบทบาทของคุณ</span></div>
+  </div>
+
+  <!-- Forgot password -->
+  <div class="auth-view" id="authForgot" hidden>
+    <div class="auth-wrap">
+      <div class="auth-brand"><img class="logo" src="assets/scg-logo.svg" alt="SCG" style="height:28px"><p>BCM Portal</p></div>
+      <h3 class="auth-h3">รีเซ็ตรหัสผ่าน</h3>
+      <p class="auth-sub">กรอกอีเมลของคุณ ระบบจะส่งลิงก์สำหรับตั้งรหัสผ่านใหม่</p>
+      <form class="auth-form" id="forgotForm" novalidate>
+        <div class="ui-field"><label class="ui-label" for="email-forgot">อีเมล</label><input class="ui-input" type="email" id="email-forgot" autocomplete="email" placeholder="name@scg.com"></div>
+        <p class="ui-error" id="forgotErr" hidden></p>
+        <button type="submit" class="ui-btn primary w-full">ส่งลิงก์รีเซ็ตรหัสผ่าน</button>
+      </form>
+      <p class="auth-sub" style="margin-top:22px"><a href="#" class="auth-link" data-auth-view="signin">← กลับไปเข้าสู่ระบบ</a></p>
     </div>
-    <div>
-      <div class="eyebrow" style="color:#5D6B80;margin-bottom:8px">บทบาทที่รองรับ</div>
-      <div class="roles"><span>Corporate BCM</span><span>BU BCM</span><span>Site BCM Co</span><span>LMT / ERT</span><span>CMC</span></div>
-    </div>
-    <div class="lg-foot"><span id="authMode">โหมดสาธิต · ยังไม่ได้เชื่อมต่อ Microsoft Entra ID</span><span>ติดต่อ Corporate BCM Office</span></div>
   </div>
 </section>
+
 
 <!-- ================= APP ================= -->
 <div id="app" hidden>
@@ -1608,38 +1723,124 @@ async function checkSession(){
 }
 async function signOut(){ try{ if(AUTH.client) await AUTH.client.auth.signOut(); }catch(e){} }
 
-/* ================= LOGIN ================= */
-$("#logout").addEventListener("click",async()=>{ await signOut(); $("#app").hidden=true;$("#login").hidden=false;resetSSO();startRadar() });
-const MSLOGO=$("#ssoBtn .ms-logo").outerHTML;
-function resetSSO(){const b=$("#ssoBtn");b.disabled=false;const sp=b.querySelector(".spin");if(sp)sp.outerHTML=MSLOGO;$("#ssoLabel").textContent="Sign in with Microsoft"}
-function enterApp(){ $("#login").hidden=true; $("#app").hidden=false; stopRadar(); resetSSO(); const r=routeFromHash(); if(r) go(r[0], r[0]==="article"?{article:r[1]}:{}); else go("home"); }
-$("#ssoBtn").addEventListener("click",()=>{ const b=$("#ssoBtn"); if(b.disabled) return; b.querySelector(".ms-logo").outerHTML='<span class="spin"></span>'; signIn(); });
-$("#authMode").textContent = CFG.msLogin ? "เชื่อมต่อ Microsoft Entra ID แล้ว" : "โหมดสาธิต · ยังไม่ได้เชื่อมต่อ Microsoft Entra ID";
-$("#lgSites").textContent=CO.length; $("#lgCountries").textContent=COUNTRIES.length; $("#lgEvents").textContent=EVENTS.length;
-/* login backdrop: radar sweep over the real site positions */
-let raf=null;
-function startRadar(){
-  const cv=$("#radar"),ctx=cv.getContext("2d"),reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const paths=MAP.c.filter(c=>c.s).map(c=>new Path2D(c.d));
-  function frame(t){
-    const w=cv.clientWidth,h=cv.clientHeight,dpr=devicePixelRatio||1; if(cv.width!==Math.round(w*dpr)){cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr)}
-    ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
-    const sc=Math.max(w/700,h/640)*0.95, ox=w*(w>860?0.06:-.1)-120*sc, oy=-30*sc;
-    ctx.save();ctx.translate(ox,oy);ctx.scale(sc,sc);
-    ctx.fillStyle="rgba(36,50,70,.55)";ctx.strokeStyle="rgba(80,100,130,.35)";ctx.lineWidth=.8/sc;paths.forEach(p=>{ctx.fill(p);ctx.stroke(p)});
-    const [cx,cy]=P(13.75,100.5), R=640, sw=reduce?1.2:(t/2800)%(Math.PI*2);
-    ctx.strokeStyle="rgba(120,140,170,.10)";ctx.lineWidth=1/sc;for(let i=1;i<=6;i++){ctx.beginPath();ctx.arc(cx,cy,R*i/6,0,Math.PI*2);ctx.stroke()}
-    if(ctx.createConicGradient){const g=ctx.createConicGradient(sw-0.7,cx,cy);g.addColorStop(0,"rgba(227,36,43,0)");g.addColorStop(.11,"rgba(227,36,43,.22)");g.addColorStop(.112,"rgba(227,36,43,0)");ctx.fillStyle=g;ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fill()}
-    CO.forEach(c=>{const [x,y]=P(c.lat,c.lon);const a=Math.atan2(y-cy,x-cx);const d=((sw-a)%(Math.PI*2)+Math.PI*2)%(Math.PI*2);const glow=Math.max(0,1-d/1.4);
-      ctx.fillStyle=`rgba(255,${120+glow*100|0},${120+glow*100|0},${.25+glow*.75})`;ctx.beginPath();ctx.arc(x,y,(2.2+glow*2)/sc*1.4,0,Math.PI*2);ctx.fill()});
-    ctx.restore();
-    const vg=ctx.createLinearGradient(0,0,w,0);vg.addColorStop(0,"rgba(10,15,23,.92)");vg.addColorStop(.55,"rgba(10,15,23,.35)");vg.addColorStop(1,"rgba(10,15,23,.75)");ctx.fillStyle=vg;ctx.fillRect(0,0,w,h);
-    if(!reduce) raf=requestAnimationFrame(frame);
-  }
-  stopRadar(); raf=requestAnimationFrame(frame);
+/* ================= v5: sign in / sign up views ================= */
+Object.assign(ICON,{
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',
+  eye:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>',
+  eyeOff:'<path d="M3 3l18 18"/><path d="M10.6 5.1A10.4 10.4 0 0 1 12 5c6.5 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.2M6.6 6.6C3.8 8.4 2 12 2 12s3.5 7 10 7a9.9 9.9 0 0 0 5.4-1.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/>',
+});
+const ROLES = [
+  {v:"corporate",l:"Corporate BCM",d:"ดูแลภาพรวมทุก BU",icon:"building"},
+  {v:"bu",l:"BU BCM",d:"ผู้ประสานงาน BCM ระดับกลุ่มธุรกิจ",icon:"org"},
+  {v:"site",l:"Site BCM Co",d:"ผู้ประสานงาน BCM ระดับบริษัท / Site",icon:"user"},
+  {v:"lmt",l:"LMT / ERT",d:"ทีมจัดการเหตุการณ์ในพื้นที่",icon:"shield"},
+  {v:"cmc",l:"CMC",d:"คณะกรรมการบริหารวิกฤต",icon:"siren"},
+];
+let ROLE = "site";
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+function authView(v){
+  ["signin","signup","forgot"].forEach(k=>{ $("#auth"+k[0].toUpperCase()+k.slice(1)).hidden = k!==v; });
+  const first = {signin:"#email-login",signup:"#role",forgot:"#email-forgot"}[v];
+  setTimeout(()=>{ const el=$(first); if(el && !matchMedia("(pointer: coarse)").matches) el.focus(); },30);
 }
-function stopRadar(){if(raf)cancelAnimationFrame(raf);raf=null}
-startRadar();
+function renderRole(){
+  const r=ROLES.find(x=>x.v===ROLE);
+  $("#roleSelect .ui-select-value").innerHTML = `${svg(r.icon,16)}<span>${r.l}</span>`;
+  $("#roleSelect .ui-select-content").innerHTML = ROLES.map(x=>`<button type="button" class="ui-opt" role="option" aria-selected="${x.v===ROLE}" data-role="${x.v}">${svg(x.icon,16)}<span style="min-width:0"><span>${x.l}</span><small>${x.d}</small></span>${x.v===ROLE?`<span class="ui-chk">${svg("check",16)}</span>`:""}</button>`).join("");
+}
+function roleOpen(open){
+  const c=$("#roleSelect .ui-select-content"), t=$("#role");
+  c.hidden=!open; t.setAttribute("aria-expanded",String(open));
+  if(open){ const sel=c.querySelector('[aria-selected="true"]')||c.firstElementChild; sel && sel.focus(); }
+}
+function setErr(id,msg){ const e=$(id); e.textContent=msg||""; e.hidden=!msg; }
+function busy(btn,on,label){ btn.disabled=on; if(on){ btn.dataset.l=btn.innerHTML; btn.innerHTML='<span class="spin"></span>'+(label||""); } else if(btn.dataset.l){ btn.innerHTML=btn.dataset.l; } }
+function liveEmail(){ return !!(CFG.emailLogin && CFG.supabaseUrl); }
+async function sbAuth(){
+  if(!(CFG.msLogin || CFG.emailLogin) || !CFG.supabaseUrl) return null;
+  if(AUTH.client) return AUTH.client;
+  if(!window.supabase){ await new Promise((res,rej)=>{ const s=document.createElement("script"); s.src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"; s.onload=res; s.onerror=rej; document.head.appendChild(s); }); }
+  AUTH.client = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseKey);
+  return AUTH.client;
+}
+async function signIn(){
+  const b=$("#ssoBtn"); busy(b,true,"กำลังเชื่อมต่อ Microsoft…");
+  let c=null; if(CFG.msLogin){ try{ c=await sbAuth(); }catch(e){ console.warn(e); } }
+  if(c){
+    const {error}=await c.auth.signInWithOAuth({provider:"azure",options:{scopes:"openid profile email",redirectTo:location.origin+location.pathname}});
+    if(error){ toast("เข้าสู่ระบบไม่สำเร็จ: "+error.message); busy(b,false); }
+    return;
+  }
+  setTimeout(()=>{ busy(b,false); enterApp(); toast("โหมดสาธิต: ยังไม่ได้เชื่อมต่อ Microsoft Entra ID"); },700);
+}
+function resetSSO(){ ["#ssoBtn","#signinBtn","#signupBtn"].forEach(s=>{ const b=$(s); if(b) busy(b,false); }); }
+function userFromEmail(email){ const local=email.split("@")[0]; return local.replace(/[._-]+/g," ").replace(/\b\w/g,m=>m.toUpperCase()); }
+
+document.addEventListener("click",ev=>{
+  const v=ev.target.closest("[data-auth-view]"); if(v){ ev.preventDefault(); authView(v.dataset.authView); return; }
+  if(ev.target.closest("#role")){ roleOpen($("#roleSelect .ui-select-content").hidden); return; }
+  const o=ev.target.closest("[data-role]"); if(o){ ROLE=o.dataset.role; renderRole(); roleOpen(false); $("#role").focus(); return; }
+  if(!ev.target.closest("#roleSelect") && $("#roleSelect .ui-select-content") && !$("#roleSelect .ui-select-content").hidden) roleOpen(false);
+  if(ev.target.closest("#pwToggle")){ const p=$("#password"), show=p.type==="password"; p.type=show?"text":"password"; $("#pwToggle").innerHTML=svg(show?"eyeOff":"eye",16); $("#pwToggle").setAttribute("aria-label",show?"ซ่อนรหัสผ่าน":"แสดงรหัสผ่าน"); return; }
+});
+$("#roleSelect").addEventListener("keydown",ev=>{
+  const c=$("#roleSelect .ui-select-content"); const opts=[...c.querySelectorAll(".ui-opt")]; const i=opts.indexOf(document.activeElement);
+  if(ev.key==="Escape"){ roleOpen(false); $("#role").focus(); }
+  else if(ev.key==="ArrowDown"){ ev.preventDefault(); if(c.hidden) roleOpen(true); else (opts[i+1]||opts[0]).focus(); }
+  else if(ev.key==="ArrowUp"){ ev.preventDefault(); if(!c.hidden) (opts[i-1]||opts[opts.length-1]).focus(); }
+});
+$("#signinForm").addEventListener("submit",async ev=>{
+  ev.preventDefault(); const em=$("#email-login"), pw=$("#password-login"); setErr("#signinErr","");
+  em.removeAttribute("aria-invalid"); pw.removeAttribute("aria-invalid");
+  if(!EMAIL_RE.test(em.value.trim())){ em.setAttribute("aria-invalid","true"); setErr("#signinErr","กรุณากรอกอีเมลให้ถูกต้อง"); em.focus(); return; }
+  if(!pw.value){ pw.setAttribute("aria-invalid","true"); setErr("#signinErr","กรุณากรอกรหัสผ่าน"); pw.focus(); return; }
+  const b=$("#signinBtn"); busy(b,true,"กำลังเข้าสู่ระบบ…");
+  if(liveEmail()){
+    try{ const c=await sbAuth(); const {data,error}=await c.auth.signInWithPassword({email:em.value.trim(),password:pw.value});
+      pw.value=""; if(error){ setErr("#signinErr","อีเมลหรือรหัสผ่านไม่ถูกต้อง"); busy(b,false); return; }
+      userFromSession(data.session); busy(b,false); enterApp(); }catch(e){ setErr("#signinErr","เชื่อมต่อระบบไม่ได้ ลองใหม่อีกครั้ง"); busy(b,false); }
+    return;
+  }
+  pw.value="";
+  setTimeout(()=>{ USER={name:userFromEmail(em.value.trim()),role:em.value.trim(),email:em.value.trim()}; busy(b,false); enterApp(); toast("โหมดสาธิต: ยังไม่ได้ตรวจสอบรหัสผ่านกับระบบจริง"); },600);
+});
+$("#signupForm").addEventListener("submit",async ev=>{
+  ev.preventDefault(); setErr("#signupErr","");
+  const f={first:$("#firstName").value.trim(),last:$("#lastName").value.trim(),user:$("#username").value.trim(),email:$("#email").value.trim(),pw:$("#password").value};
+  const req=[["#firstName",f.first,"กรุณากรอกชื่อ"],["#lastName",f.last,"กรุณากรอกนามสกุล"],["#username",f.user,"กรุณากรอกชื่อผู้ใช้"]];
+  document.querySelectorAll("#signupForm .ui-input").forEach(i=>i.removeAttribute("aria-invalid"));
+  for(const [id,val,msg] of req){ if(!val){ $(id).setAttribute("aria-invalid","true"); setErr("#signupErr",msg); $(id).focus(); return; } }
+  if(!EMAIL_RE.test(f.email)){ $("#email").setAttribute("aria-invalid","true"); setErr("#signupErr","กรุณากรอกอีเมลให้ถูกต้อง"); $("#email").focus(); return; }
+  if(f.pw.length<8){ $("#password").setAttribute("aria-invalid","true"); setErr("#signupErr","รหัสผ่านต้องมีอย่างน้อย 8 ตัวอักษร"); $("#password").focus(); return; }
+  if(!$("#terms").checked){ setErr("#signupErr","กรุณายอมรับข้อกำหนดและเงื่อนไขการใช้งาน"); $("#terms").focus(); return; }
+  const role=ROLES.find(x=>x.v===ROLE); const b=$("#signupBtn"); busy(b,true,"กำลังสร้างบัญชี…");
+  if(liveEmail()){
+    try{ const c=await sbAuth(); const {error}=await c.auth.signUp({email:f.email,password:f.pw,options:{data:{first_name:f.first,last_name:f.last,username:f.user,bcm_role:role.l},emailRedirectTo:location.origin+location.pathname}});
+      $("#password").value=""; busy(b,false);
+      if(error){ setErr("#signupErr","สร้างบัญชีไม่สำเร็จ: "+error.message); return; }
+      toast("สร้างบัญชีแล้ว กรุณายืนยันอีเมลก่อนเข้าสู่ระบบ"); authView("signin"); $("#email-login").value=f.email; }catch(e){ setErr("#signupErr","เชื่อมต่อระบบไม่ได้ ลองใหม่อีกครั้ง"); busy(b,false); }
+    return;
+  }
+  $("#password").value="";
+  setTimeout(()=>{ USER={name:`${f.first} ${f.last}`,role:role.l,email:f.email}; busy(b,false); enterApp(); toast("โหมดสาธิต: สร้างบัญชีแล้ว (ยังไม่ได้บันทึกในระบบจริง)"); },700);
+});
+$("#forgotForm").addEventListener("submit",async ev=>{
+  ev.preventDefault(); const em=$("#email-forgot"); setErr("#forgotErr","");
+  if(!EMAIL_RE.test(em.value.trim())){ em.setAttribute("aria-invalid","true"); setErr("#forgotErr","กรุณากรอกอีเมลให้ถูกต้อง"); return; }
+  em.removeAttribute("aria-invalid");
+  if(liveEmail()){ try{ const c=await sbAuth(); await c.auth.resetPasswordForEmail(em.value.trim(),{redirectTo:location.origin+location.pathname}); }catch(e){} }
+  toast(liveEmail()?"ถ้ามีบัญชีนี้ในระบบ เราได้ส่งลิงก์รีเซ็ตรหัสผ่านไปที่อีเมลแล้ว":"โหมดสาธิต: ยังไม่ได้ส่งอีเมลจริง");
+  authView("signin");
+});
+$("#pwToggle").innerHTML=svg("eye",16);
+renderRole();
+function startRadar(){} function stopRadar(){}
+
+/* ================= LOGIN ================= */
+$("#logout").addEventListener("click",async()=>{ await signOut(); $("#app").hidden=true; $("#login").hidden=false; resetSSO(); document.querySelectorAll("#login form").forEach(f=>f.reset()); authView("signin"); });
+function enterApp(){ $("#login").hidden=true; $("#app").hidden=false; resetSSO(); const r=routeFromHash(); if(r) go(r[0], r[0]==="article"?{article:r[1]}:{}); else go("home"); }
+$("#ssoBtn").addEventListener("click",()=>{ if(!$("#ssoBtn").disabled) signIn(); });
+(()=>{ const m=$("#authMode"); const live=[CFG.msLogin&&"Microsoft SSO",CFG.emailLogin&&"อีเมล/รหัสผ่าน"].filter(Boolean); m.textContent = live.length ? "เชื่อมต่อระบบจริง: "+live.join(" · ") : "โหมดสาธิต · ยังไม่ได้เชื่อมต่อระบบยืนยันตัวตนจริง"; m.classList.toggle("live",live.length>0); })();
 
 checkSession().then(ok=>{ if(!ok && !CFG.msLogin && routeFromHash()) enterApp(); });
 loadRemote();
