@@ -10,7 +10,7 @@ Portal for SCG's Corporate BCM Office. It shows current disaster news across Sou
 | `config.js` | Public runtime config: Supabase URL, publishable key, live-feed endpoint |
 | `api/hazards.js` | Vercel function. Pulls GDACS alerts and USGS M4.5+ earthquakes from the last 21 days, filtered to Southeast Asia, cached 15 minutes |
 | `assets/scg-logo.svg` | Logo slot. **Replace this placeholder with the official SCG logo file from SCG Brand Center** (keep the file name, or update the `src` in `index.html`) |
-| `data/` | Source data: `companies.json` (from BCM_Dashboard_2026.xlsx, as of 23 Sep 2026) and `hazards.json` (curated news, 13 Oct 2026) |
+| `data/` | Source data: `companies.json` (from BCM_Dashboard_2026.xlsx, as of 23 Sep 2026) and `hazards.json` (curated news, 21 Oct 2026) |
 | `supabase/` | Table definitions and seed data |
 | `legacy/` | The previous React/Netlify version of the portal, kept unchanged |
 
@@ -40,7 +40,7 @@ Until then the button runs in demo mode and signs in without Microsoft.
 1. The page renders immediately from the data embedded in `index.html`.
 2. It then reads `portal_companies` and `portal_hazards` from Supabase. If that works, those rows replace the embedded data, so the BCM team can update readiness or hazard news in Supabase without redeploying.
 3. It calls `/api/hazards` for the live GDACS/USGS feed. Those events appear in the Live Feed card and as diamond markers on the map.
-4. Creating an incident in Crisis Hub inserts a row into `portal_incidents`.
+4. EWS, Crisis Hub and Intelligent Map are separate systems; the portal links to them (see Linked systems). `portal_incidents` is kept from the earlier prototype.
 
 ## Supabase tables (project `bcm-readiness-hub`)
 
