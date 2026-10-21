@@ -6,13 +6,32 @@ Portal for SCG's Corporate BCM Office. It shows current disaster news across Sou
 
 | Path | Purpose |
 |---|---|
-| `index.html` | The whole front end: sign in / sign up, home hero with a hub of every BCM system and topic (adapted from the IntegrationsSection component), situation map, hazard news with hover details and detail pages, live feed), Readiness Dashboard, news pages |
+| `index.html` | The whole front end: sign in / sign up, home page (short hero with 4 key numbers, situation map, hazard news with hover details and detail pages, live feed), Readiness Dashboard split into sections, news pages, Thai/English language menu |
 | `config.js` | Public runtime config: Supabase URL, publishable key, live-feed endpoint |
 | `api/hazards.js` | Vercel function. Pulls GDACS alerts and USGS M4.5+ earthquakes from the last 21 days, filtered to Southeast Asia, cached 15 minutes |
 | `assets/scg-logo.png` | SCG logo (transparent PNG, 120 px high) used on the login pages, side menu, top bar and as the favicon |
 | `data/` | Source data: `companies.json` (from BCM_Dashboard_2026.xlsx, as of 23 Sep 2026) and `hazards.json` (curated news, 21 Oct 2026) |
 | `supabase/` | Table definitions and seed data |
 | `legacy/` | The previous React/Netlify version of the portal, kept unchanged |
+
+## Readiness Dashboard sections
+
+The dashboard opens on a grid of section cards. Each card opens one section, and the tabs above switch between them. Each section has its own link:
+
+| Section | Link |
+|---|---|
+| Readiness overview | `#rd-overview` |
+| By BU | `#rd-bu` |
+| Components | `#rd-comp` |
+| Gaps & plan | `#rd-plan` |
+| By country | `#rd-geo` |
+| Companies | `#rd-list` |
+
+Bar charts, pie charts, heatmaps and the map highlight the item under the mouse, dim the rest and show its numbers.
+
+## Language
+
+The TH/EN button in the top bar (and on the login page) switches the whole portal between Thai and English. The choice is kept in the browser (`localStorage` key `bcm-lang`). Translations live in the `I18N` object in `index.html`; hazard news has its own English text in `HAZ_EN`. A new Thai string added to the page needs a matching entry in `I18N`, otherwise it stays in Thai in English mode.
 
 ## Linked systems
 
