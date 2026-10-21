@@ -480,6 +480,94 @@ main{padding-block:24px 64px}
 @media (prefers-reduced-motion:reduce){ .ticker .track{animation:none} }
 
 @media (max-width:860px){.filters{position:static;margin:0;padding:0;background:none;backdrop-filter:none}}
+
+/* ===== v4: Microsoft sign-in, external links, articles, dashboard extras ===== */
+a.app,a.nav-item,a.btn,a.ph-item,.bnav a{text-decoration:none;color:inherit}
+a.btn.primary{color:#fff}
+a.app b svg,a.ph-item b svg{opacity:.55;vertical-align:-1px}
+.btn-ms{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;height:50px;padding:0 16px;border-radius:6px;border:1px solid #8C8C8C;background:#FFFFFF;color:#5E5E5E;font-family:"Segoe UI",-apple-system,system-ui,sans-serif;font-size:15.5px;font-weight:600;transition:background .15s,box-shadow .15s}
+.btn-ms:hover{background:#F3F3F3;box-shadow:0 8px 20px -10px rgba(0,0,0,.6)}
+.btn-ms[disabled]{cursor:wait;opacity:.85}
+.btn-ms .ms-logo{width:21px;height:21px;flex:none}
+.btn-ms .spin{border-color:rgba(0,0,0,.15);border-top-color:#5E5E5E}
+.lg-steps{display:grid;gap:8px;font-size:12.5px;color:#97A3B6}
+.lg-steps div{display:flex;gap:10px;align-items:flex-start}
+.lg-steps i{flex:none;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font:600 11px var(--f-mono);font-style:normal;background:rgba(255,255,255,.07);color:#C9D1DD}
+.lg-foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;font-size:11.5px;color:#6F7D92;border-top:1px solid rgba(255,255,255,.08);padding-top:14px}
+.bnav a{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10.5px;color:var(--muted);padding:6px 0;border-radius:10px}
+
+/* news cards (div) */
+.ncard{cursor:pointer}
+.ncard:focus-visible{outline:2px solid var(--sev-ad);outline-offset:2px}
+.read{border:0;background:none;padding:4px 0;color:var(--sev-ad);font-weight:600;font-size:12px;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.read:hover{text-decoration:underline}
+.bn-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.bn-row:last-child{border-bottom:0}
+.bn-row b{display:block;font-weight:500;font-size:13.5px;line-height:1.45}
+.bn-row small{color:var(--muted);font-size:11.5px;font-family:var(--f-mono)}
+.news-card .bn-row{border-top:1px solid var(--line);border-bottom:0}
+.news-card .bn-row:first-of-type{border-top:0}
+
+/* article */
+.back{font-size:13px}
+.art-hero{position:relative;padding:26px 28px;border-radius:22px;border:1px solid var(--line);background:linear-gradient(135deg,color-mix(in srgb,var(--c) 14%,var(--surface)) 0%,var(--surface) 70%);box-shadow:var(--shadow);display:grid;gap:12px;overflow:hidden}
+.art-hero::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--c)}
+.art-hero h1{font-size:clamp(22px,2.8vw,32px);line-height:1.3;max-width:34ch}
+.art-meta{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:13px;color:var(--muted)}
+.art-meta span{display:inline-flex;align-items:center;gap:6px}
+.art-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:18px;align-items:start}
+.art-body{display:grid;gap:22px}
+.art-body h3{margin-bottom:6px}
+.lead{font-size:16px;line-height:1.75;margin:0;color:var(--ink);max-width:68ch}
+.art-body p{line-height:1.75}
+.facts.big{grid-template-columns:repeat(auto-fit,minmax(160px,1fr))}
+.facts.big b{font-size:19px}
+.steps-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.steps-list li{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:12px;background:var(--surface-2);font-size:13.5px}
+.steps-list li svg{flex:none;color:var(--ok);margin-top:2px}
+.actions.row{flex-direction:row;flex-wrap:wrap;margin-top:0}
+.actions.row .btn{flex:1 1 200px}
+.art-side{display:grid;gap:18px}
+.art-map{grid-template-columns:minmax(0,1fr)}
+.art-map .c-map{min-height:300px}
+
+/* dashboard extras */
+.dash-tabs{display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.dash-tabs button{flex:none;border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:7px 14px;font-size:12.5px;font-weight:500;color:var(--ink-2)}
+.dash-tabs button:hover{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+[id^="sec-"]{scroll-margin-top:calc(var(--appbar-h) + 70px)}
+.wf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.wf-block{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--surface-2)}
+.wf-head{display:flex;justify-content:space-between;align-items:baseline}
+.wf-head b{font-family:var(--f-display);font-size:15px}
+.wf-head .num{font-size:18px;font-weight:500}
+.wf-sub{font-size:11.5px;color:var(--muted);margin:2px 0 10px}
+.wf-cells{display:flex;flex-wrap:wrap;gap:3px}
+.wf-cell{width:15px;height:15px;border-radius:4px;cursor:pointer;transition:transform .12s}
+.wf-cell:hover{transform:scale(1.3);box-shadow:0 0 0 2px var(--surface)}
+.pareto{display:grid;grid-template-columns:96px minmax(0,1fr) 34px 40px;gap:10px;align-items:center;font-size:12.5px;padding:4px 0}
+.pareto .ptrack{min-width:0}
+.pareto b{font-weight:500;text-align:right}
+.pareto small{text-align:right;font-size:11px}
+.tb-cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:18px}
+.lol{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) 36px;gap:8px;align-items:center;font-size:12.5px;padding:5px 0;cursor:pointer;border-radius:8px}
+.lol:hover{background:var(--surface-2)}
+.lol .nm{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.lol .nm small{display:block;font-size:10.5px;color:var(--muted)}
+.lol .lt{position:relative;height:10px;display:block}
+.lol .lt::before{content:"";position:absolute;left:0;right:0;top:4px;height:2px;background:var(--surface-2);border-radius:2px}
+.lol .lt i{position:absolute;left:0;top:4px;height:2px;border-radius:2px}
+.lol .lt b{position:absolute;top:0;width:10px;height:10px;border-radius:50%;transform:translateX(-50%);box-shadow:0 0 0 2px var(--surface)}
+.lol .num{text-align:right}
+
+@media (max-width:1180px){ .art-grid{grid-template-columns:minmax(0,1fr)} }
+@media (max-width:860px){
+  .art-hero{padding:20px 18px}
+  .tb-cols{grid-template-columns:minmax(0,1fr)}
+  .pareto{grid-template-columns:80px minmax(0,1fr) 30px 36px}
+  .wf-grid{grid-template-columns:minmax(0,1fr)}
+  .dash-tabs{margin-inline:-16px;padding-inline:16px}
+}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
@@ -504,18 +592,23 @@ main{padding-block:24px 64px}
   <div class="lg-card">
     <div>
       <div class="eyebrow" style="color:#7C8BA1">เข้าสู่ระบบ</div>
-      <h2 style="margin-top:6px">ยินดีต้อนรับ</h2>
-      <p>ใช้บัญชีพนักงาน SCG ของคุณ ระบบจะยืนยันตัวตนผ่าน Single Sign-On และกำหนดสิทธิ์ตามบทบาท BCM</p>
+      <h2 style="margin-top:6px">ยินดีต้อนรับสู่ BCM Portal</h2>
+      <p>เข้าสู่ระบบด้วยบัญชีพนักงาน SCG ผ่าน Microsoft (Single Sign-On) ระบบจะกำหนดสิทธิ์ตามบทบาท BCM ของคุณ</p>
     </div>
-    <button class="btn-sso" id="ssoBtn" type="button">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-      <span id="ssoLabel">Single Sign-On</span>
+    <button class="btn-ms" id="ssoBtn" type="button">
+      <svg class="ms-logo" viewBox="0 0 21 21" aria-hidden="true"><rect x="1" y="1" width="9" height="9" fill="#F25022"/><rect x="11" y="1" width="9" height="9" fill="#7FBA00"/><rect x="1" y="11" width="9" height="9" fill="#00A4EF"/><rect x="11" y="11" width="9" height="9" fill="#FFB900"/></svg>
+      <span id="ssoLabel">Sign in with Microsoft</span>
     </button>
+    <div class="lg-steps">
+      <div><i>1</i><span>กดปุ่มด้านบน ระบบจะพาไปหน้าเข้าสู่ระบบของ Microsoft</span></div>
+      <div><i>2</i><span>ใช้อีเมลบริษัท (@scg.com) และยืนยันตัวตนตามนโยบายของ SCG</span></div>
+      <div><i>3</i><span>กลับมาที่ BCM Portal พร้อมสิทธิ์ตามบทบาทของคุณ</span></div>
+    </div>
     <div>
       <div class="eyebrow" style="color:#5D6B80;margin-bottom:8px">บทบาทที่รองรับ</div>
       <div class="roles"><span>Corporate BCM</span><span>BU BCM</span><span>Site BCM Co</span><span>LMT / ERT</span><span>CMC</span></div>
     </div>
-    <span class="sample dk" style="align-self:flex-start">Prototype · กดปุ่มเพื่อจำลองการเข้าสู่ระบบ</span>
+    <div class="lg-foot"><span id="authMode">โหมดสาธิต · ยังไม่ได้เชื่อมต่อ Microsoft Entra ID</span><span>ติดต่อ Corporate BCM Office</span></div>
   </div>
 </section>
 
@@ -528,7 +621,7 @@ main{padding-block:24px 64px}
     <nav class="nav-group" id="navInfo"></nav>
     <div class="rail-foot">
       <div class="avatar">B</div>
-      <div style="min-width:0"><div style="color:#fff;font-weight:500">Bhurinbhat</div><div style="color:#5D6B80;font-size:11.5px">Corporate BCM Office</div></div>
+      <div style="min-width:0"><div id="uName" style="color:#fff;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Bhurinbhat</div><div id="uRole" style="color:#5D6B80;font-size:11.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Corporate BCM Office</div></div>
       <button type="button" id="logout">ออก</button>
     </div>
   </aside>
@@ -540,7 +633,7 @@ main{padding-block:24px 64px}
         <span class="ab-clock" id="abClock"></span>
         <button class="icon-btn" type="button" id="themeBtn" aria-label="สลับธีม"></button>
         <button class="icon-btn" type="button" id="bellBtn" aria-label="การแจ้งเตือน" data-go="home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 16V11a6 6 0 0 1 12 0v5l2 2H4z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg><span class="badge" id="bellCount">6</span></button>
-        <div class="ab-user"><div class="avatar">B</div><div><b>Bhurinbhat</b><span>Corporate BCM</span></div></div>
+        <div class="ab-user"><div class="avatar">B</div><div style="min-width:0;max-width:180px"><b id="abName" style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Bhurinbhat</b><span id="abRole" style="display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Corporate BCM</span></div></div>
       </div>
     </header>
     <main id="main"></main>
@@ -650,48 +743,34 @@ const HZ = {
 const SEVC = {em:"var(--sev-em)",wa:"var(--sev-wa)",wt:"var(--sev-wt)",ad:"var(--sev-ad)"};
 const SEV_RANK = {em:0,wa:1,wt:2,ad:3};
 let EVENTS = [
- {"id":"TH-FL-2610-12","type":"flood","sev":"em","sevT":"Emergency","date":"2026-10-12T06:00:00+07:00","upd":"12 ต.ค. 2026 · 06:00",
-  "title":"อุทกภัยภาคกลาง–ตะวันออก กระทบ 2.46 ล้านคน ใน 20 จังหวัดและกรุงเทพฯ",
-  "summary":"ฝนตกหนักต่อเนื่องและน้ำเหนือไหลลงลุ่มน้ำภาคกลาง ระดับน้ำส่วนใหญ่ทรงตัวหรือลดลง แต่ลุ่มน้ำบางปะกงคาดว่าต้องใช้เวลาระบายน้ำ 38 วัน (ถึงกลาง พ.ย.)",
-  "area":"ปทุมธานี · ปราจีนบุรี · นครนายก · ฉะเชิงเทรา · อยุธยา · กรุงเทพฯ","country":"Thailand","zone":[14.05,100.95,135],
-  "erp":12,"sites":["Thai Containers Group - Pathumthani","Thai Containers Group - Navanakorn","Thai Containers Group - Prachinburi","Thai Cane Paper - Prachinburi","Teamplas","Thai Containers Group - Samutprakan","Orient Container - Narkorn Pathom","Prepack Thailand - Samut Songkhram"],
-  "facts":[["ผู้ได้รับผลกระทบ","2,458,895 คน","908,595 ครัวเรือน · 100 อำเภอ"],["ปทุมธานี","248,818 ครัวเรือน","ระดับน้ำทรงตัว"],["เสียชีวิต (ตั้งแต่ 16 ก.ย.)","60 ราย","กระทรวงมหาดไทย ณ 7 ต.ค."],["สถานประกอบการกระทบ","1,315 แห่ง","40 จังหวัด (ก.อุตสาหกรรม)"]],
-  "sources":[{"name":"Nation Thailand","url":"https://www.nationthailand.com/news/general/40072167","date":"12 ต.ค. 2026"},{"name":"Nation Thailand","url":"https://www.nationthailand.com/news/general/40072128","date":"11 ต.ค. 2026"},{"name":"Thailand Explained","url":"https://thailandexplained.substack.com/p/weekly-insight-42-1-7-october-2026","date":"7 ต.ค. 2026"}]},
- {"id":"TH-RN-2610-10","type":"rain","sev":"wa","sevT":"Warning","date":"2026-10-06T12:00:00+07:00","upd":"6 ต.ค. 2026 · เตือนช่วง 10–13 ต.ค.",
-  "title":"เตือนฝนตกหนัก 10–13 ต.ค. เขื่อนหลักใกล้เต็ม เร่งระบายน้ำลุ่มแม่กลอง–ป่าสัก",
-  "summary":"JICC เตือนฝนหนักภาคกลาง ตะวันตก และใต้ เขื่อนป่าสักชลสิทธิ์เต็มและระบายน้ำสู่เขื่อนพระราม 6 เขื่อนวชิราลงกรณ 98% เขื่อนศรีนครินทร์ 90% เขื่อนแก่งกระจานเต็ม",
-  "area":"กาญจนบุรี · ราชบุรี · สมุทรสาคร · สระบุรี · เพชรบุรี","country":"Thailand","zone":[14.05,99.95,150],
-  "erp":12,"sites":["Siam Kraft Industry - Kanchanab","Thai Cane Paper - Kanchanaburi","Thai Paper - Pulp Production-Wangsala","Siam Kraft Industry - Ratchaburi","Thai Containers Group - Ratchaburi","Thai Paper - Pulp Production-Banpong","Orient Container - Samutsakhon","Siam Cement - Kaeng Khoi Plant","Siam Cement - Ta Luang Plant","Saraburirat - SBR"],
-  "facts":[["เขื่อนป่าสักชลสิทธิ์","เต็มความจุ","ระบายสู่เขื่อนพระราม 6"],["เขื่อนวชิราลงกรณ","98%","ระบายมากกว่าน้ำเข้า"],["เขื่อนเจ้าพระยา","2,500 ลบ.ม./วิ","ระดับน้ำ 16.88 ม."],["ช่วงเตือนภัย","10–13 ต.ค.","ฝนปานกลางถึงหนัก"]],
-  "sources":[{"name":"Khaosod English","url":"https://www.khaosodenglish.com/featured/2026/10/06/heavy-rain-forecast-across-thailand-as-authorities-monitor-flood-risks/amp/","date":"6 ต.ค. 2026"}]},
- {"id":"VN-FL-2610-09","type":"flood","sev":"wa","sevT":"Warning","date":"2026-10-09T12:00:00+07:00","upd":"9 ต.ค. 2026",
-  "title":"น้ำท่วมฉับพลันและดินถล่มเวียดนามตอนกลาง เว้ฝนสะสมกว่า 800 มม. ใน 3 วัน",
-  "summary":"ดานังน้ำท่วมสูงกว่า 1 เมตรในบางพื้นที่ ถนนบนภูเขาถูกดินถล่มปิด รัฐบาลส่งทหารราว 130 นายและรถสะเทินน้ำสะเทินบกช่วยอพยพ เตือนฝนตกต่อถึงเช้าวันอาทิตย์",
-  "area":"เว้ · ดานัง · กวางนาม","country":"Vietnam","zone":[16.25,107.9,170],
-  "erp":12,"sites":["Danang Cement","Mien Trung Cement","Song Gianh Cement"],
-  "facts":[["ฝนสะสม 3 วัน (เว้)","> 800 มม.","ที่ราบชายฝั่งและเนินเขาตอนใต้"],["ระดับน้ำในดานัง","> 1 ม.","บางพื้นที่"],["กำลังพลช่วยเหลือ","~130 นาย","ในดานัง"],["สูญหาย","1 ราย","เรือล่มในแม่น้ำ Truong Giang"]],
-  "sources":[{"name":"Mongabay / AP","url":"https://news.mongabay.com/short-article/2026/10/vietnam-mobilizes-troops-after-heavy-rains-trigger-flash-floods-and-raise-risks-of-landslides/","date":"9 ต.ค. 2026"},{"name":"Washington Post","url":"https://www.washingtonpost.com/world/2026/10/09/vietnam-floods-hue-danang-climate-change/2cb3d510-c3bf-11f1-8170-681419af1cc9_story.html","date":"9 ต.ค. 2026"},{"name":"Dan Tri International","url":"https://dtinews.dantri.com.vn/vietnam-today/flood-warning-issued-for-rivers-in-central-vietnam-20261009120516595.htm","date":"9 ต.ค. 2026"}]},
- {"id":"VN-TD-2610-09","type":"tide","sev":"wt","sevT":"Watch","date":"2026-10-09T05:00:00+07:00","upd":"9 ต.ค. 2026 · เฝ้าระวัง 10–12 ต.ค.",
-  "title":"น้ำทะเลหนุนสูงและฝนหนัก นครโฮจิมินห์อาจเกินระดับเตือนภัย 3",
-  "summary":"น้ำขึ้นสูงสุดที่ Vung Tau 4.0–4.05 ม. คาดว่าน้ำในนครโฮจิมินห์สูงสุดช่วง 10–12 ต.ค. แม่น้ำดองไนที่สถานี Ta Lai อยู่ระดับเตือนภัย 2 เสี่ยงน้ำท่วมพื้นที่ต่ำและตลิ่งพัง",
-  "area":"นครโฮจิมินห์ · ดองไน · บิ่ญเซือง","country":"Vietnam","zone":[10.85,106.75,75],
-  "erp":12,"sites":["Buu Long","Bien Hoa Packaging - Dong Nai","Bien Hoa Packaging - Ho Chi Minh","Vina Corrugated Packaging - Ho Chi Minh","Vina Corrugated Packaging - Binh Duong","Tin Thanh Packing","Vietnam Construction Materials","LSP - Vietnam"],
-  "facts":[["น้ำขึ้นสูงสุด Vung Tau","4.0–4.05 ม.","9 ต.ค."],["แม่น้ำดองไน (Ta Lai)","112.5 ม.","ระดับเตือนภัย 2"],["ช่วงน้ำสูงสุด","10–12 ต.ค.","อาจเกินระดับ 3"]],
-  "sources":[{"name":"SGGP English","url":"https://en.sggp.org.vn/heavy-rain-high-tides-may-push-ho-chi-minh-city-water-levels-above-level-3-post130190.html","date":"9 ต.ค. 2026"}]},
- {"id":"ID-HZ-2610-08","type":"haze","sev":"wt","sevT":"Watch","date":"2026-10-08T21:00:00+07:00","upd":"8 ต.ค. 2026",
-  "title":"ไฟป่าอินโดนีเซีย 1,176 จุด หมอกควันข้ามพรมแดน คุณภาพอากาศถึงระดับอันตราย",
-  "summary":"จุดความร้อนเพิ่มขึ้นมากในกาลิมันตันกลางและสุมาตราใต้ ทัศนวิสัยที่ปาลังการายาเหลือ 150 ม. มีเที่ยวบินยกเลิกและล่าช้า ไม่มี Site ของ SCG ในพื้นที่ hotspot โดยตรง ให้ติดตามผลต่อการขนส่งและ supply chain",
-  "area":"กาลิมันตันกลาง · สุมาตราใต้ · จัมบี","country":"Indonesia","zone":[-1.8,111.5,420],
-  "erp":17,"sites":[],
-  "facts":[["จุดความร้อนทั้งประเทศ","1,176 จุด","ความเชื่อมั่นสูง"],["กาลิมันตันกลาง","225 จุด","เพิ่มจาก 182"],["สุมาตราใต้","224 จุด","เพิ่มจาก 71"],["ทัศนวิสัยปาลังการายา","150 ม.","เที่ยวบินได้รับผลกระทบ"]],
-  "sources":[{"name":"Bernama","url":"https://bernama.com/en/news.php?id=2617055","date":"8 ต.ค. 2026"},{"name":"New Straits Times","url":"https://www.nst.com.my/amp/world/region/2026/10/1549997/indonesia-records-1201-hotspots-haze-persists-malaysia","date":"ต.ค. 2026"}]},
- {"id":"PH-EQ-2610-08","type":"quake","sev":"ad","sevT":"Advisory","date":"2026-10-08T08:07:00+08:00","upd":"8 ต.ค. 2026",
-  "title":"แผ่นดินไหวขนาด 5.6 นอกชายฝั่งดาเวาออคซิเดนทัล ฟิลิปปินส์",
-  "summary":"PHIVOLCS ระบุศูนย์กลางห่างเกาะ Balut ราว 28 กม. ลึก 26 กม. รับรู้ได้ถึงระดับ V ที่ Kiamba และ General Santos ไม่คาดว่าจะเกิดความเสียหาย เป็น aftershock ของแผ่นดินไหว M7.8 เมื่อ มิ.ย. 2026",
-  "area":"Sarangani · General Santos · Davao","country":"Philippines","zone":[5.61,125.26,120],
-  "erp":14,"sites":["Mariwasa","United Pulp and Paper","SCG Inter - Coal hub-Philippines"],
-  "facts":[["ขนาด","M 5.6","ลึก 26 กม."],["ความรุนแรงที่รับรู้","ระดับ V","Kiamba, General Santos"],["ระยะถึง Site ใกล้สุด","~950 กม.","Site ในเขตมะนิลา"]],
-  "sources":[{"name":"Manila Bulletin","url":"https://mb.com.ph/2026/10/08/56-magnitude-quake-rocks-davao-occidental-phivolcs","date":"8 ต.ค. 2026"},{"name":"PhilNews","url":"https://philnews.ph/2026/10/08/earthquake-5-6-magnitude-quake-hits-davao-occidental-october-8-2026/","date":"8 ต.ค. 2026"}]}
+ {"id":"TH-FL-2610-20","type":"flood","sev":"wa","sevT":"Warning","date":"2026-10-20T06:00:00+07:00","upd":"20 ต.ค. 2026 · 06:00",
+  "title":"น้ำท่วมภาคกลาง–ตะวันออกเริ่มลดลง แต่ยังกระทบ 1.37 ล้านคนใน 19 จังหวัดและกรุงเทพฯ",
+  "summary":"ระดับน้ำส่วนใหญ่ทรงตัวหรือลดลง แต่ต้องเตรียมรับฝนหนักต่อเนื่องถึง 25 ต.ค. นับตั้งแต่ 16 ก.ย. มีผู้ได้รับผลกระทบสะสมกว่า 5.8 ล้านคนใน 50 จังหวัดและกรุงเทพฯ (AHA Centre)",
+  "area":"กรุงเทพฯ · อยุธยา · ปราจีนบุรี · นครนายก · ฉะเชิงเทรา · นครปฐม · ราชบุรี","country":"Thailand","zone":[14.0,100.75,140],
+  "erp":12,"sites":["Thai Containers Group - Prachinburi","Thai Cane Paper - Prachinburi","Teamplas","Thai Containers Group - Pathumthani","Thai Containers Group - Navanakorn","Thai Containers Group - Samutprakan","Orient Container - Narkorn Pathom","Prepack Thailand - Samut Songkhram","Thai Containers Group - Ratchaburi","Siam Kraft Industry - Ratchaburi"],
+  "facts":[["ผู้ได้รับผลกระทบ","1,367,191 คน","450,944 ครัวเรือน · ข้อมูล ปภ. 20 ต.ค."],["กรุงเทพฯ","210,648 ครัวเรือน","ทรงตัว เริ่มลดลง"],["ปราจีนบุรี","40,308 ครัวเรือน","เสียชีวิตสะสม 26 ราย"],["เสียชีวิตสะสม","80 ราย","ตั้งแต่ 16 ก.ย. (AHA Centre)"]],
+  "sources":[{"name":"Nation Thailand","url":"https://www.nationthailand.com/news/general/40072531","date":"20 ต.ค. 2026"},{"name":"AHA Centre Weekly Disaster Update","url":"https://ahacentre.org/weekly-disaster-update/weekly-disaster-update-12-18-october-2026/","date":"12–18 ต.ค. 2026"}]},
+ {"id":"TH-RN-2610-21","type":"rain","sev":"wa","sevT":"Warning","date":"2026-10-20T17:00:00+07:00","upd":"20 ต.ค. 2026 · เตือนช่วง 21–25 ต.ค.",
+  "title":"กรมอุตุฯ เตือนฝนตกหนักและน้ำท่วมฉับพลัน 21–25 ต.ค. ภาคใต้ ภาคตะวันออก และกรุงเทพฯ",
+  "summary":"ร่องมรสุมพาดผ่านภาคใต้ตอนกลางและมรสุมตะวันตกเฉียงใต้ทำให้ฝนเพิ่มขึ้นในภาคใต้ ภาคตะวันออก ภาคกลางตอนล่าง และกรุงเทพฯ เสี่ยงน้ำท่วมฉับพลัน น้ำป่า และดินถล่ม คลื่นในทะเลอันดามันและอ่าวไทยสูงกว่า 3 เมตรในบริเวณฝนฟ้าคะนอง",
+  "area":"ชลบุรี · ระยอง · นครศรีธรรมราช · สงขลา · สุราษฎร์ธานี · ภูเก็ต · กระบี่","country":"Thailand","zone":[10.6,100.6,380],
+  "erp":12,"sites":["Siam Cement - Thung Song Plant","SFCG - TS","SCGLS - TS","Thai Containers Group - Songkhla","Thai Containers Group - Chonburi","SCGR - CB","MOC - Rayong","ROC - Rayong","Prepack Thailand - Rayong","Thai Containers Rayong"],
+  "facts":[["ช่วงเตือนภัย","21–25 ต.ค.","กรมอุตุนิยมวิทยา"],["คลื่นทะเล","> 3 ม.","อันดามันและอ่าวไทย"],["ฝนหนักเฉพาะแห่ง","ชลบุรี · ระยอง","และภาคใต้ทั้งสองฝั่ง (20–21 ต.ค.)"],["สายด่วนกรมอุตุฯ","1182","อัปเดตทุกเช้า 05:00"]],
+  "sources":[{"name":"Nation Thailand","url":"https://www.nationthailand.com/news/general/40072539","date":"20 ต.ค. 2026"}]},
+ {"id":"SEA-HZ-2610-16","type":"haze","sev":"wa","sevT":"Warning","date":"2026-10-16T17:00:00+08:00","upd":"16 ต.ค. 2026",
+  "title":"ASMC ประกาศเตือนหมอกควันระดับ 3 (สูงสุด) ในอาเซียนตอนใต้ จากไฟป่าอินโดนีเซีย",
+  "summary":"ไฟป่าในอินโดนีเซียทำให้หมอกควันปกคลุมสิงคโปร์และมาเลเซีย 30 พื้นที่ในมาเลเซียมีค่า API ระดับไม่ดีต่อสุขภาพ บางพื้นที่ในภูมิภาคปิดโรงเรียน ให้ติดตามผลต่อพนักงาน การขนส่ง และ supply chain",
+  "area":"กาลิมันตันกลาง · สิงคโปร์ · ยะโฮร์ · สลังงอร์ · กัวลาลัมเปอร์","country":"Indonesia","zone":[0.5,106.5,700],
+  "erp":17,"sites":["Interpress Printers"],
+  "facts":[["ระดับการเตือน","Level 3","สูงสุดในระบบ 0–3 ของ ASMC"],["มาเลเซีย","30 พื้นที่","ค่า API ไม่ดีต่อสุขภาพ"],["Petaling Jaya · Shah Alam","API 167","ตรวจวัด 9:00 น."],["ครั้งที่ 3 ของปี","27 มี.ค. · 26 ส.ค.","ครั้งก่อนหน้า"]],
+  "sources":[{"name":"Malay Mail","url":"https://www.malaymail.com/news/world/2026/10/17/indonesia-fires-trigger-highest-level-regional-haze-alert-as-pollution-spreads-across-southeast-asia/239454","date":"17 ต.ค. 2026"},{"name":"France 24","url":"https://www.france24.com/en/asia-pacific/20261018-months-long-indonesia-wildfires-spew-toxic-haze-across-southeast-asia","date":"18 ต.ค. 2026"}]},
+ {"id":"PH-TY-2610-19","type":"storm","sev":"wt","sevT":"Watch","date":"2026-10-18T23:00:00+08:00","upd":"18 ต.ค. 2026 · 23:00 (PAGASA)",
+  "title":"ไต้ฝุ่น Champi (Rosal) อาจกลับเป็นซูเปอร์ไต้ฝุ่น เข้าเขตฟิลิปปินส์และมุ่งหน้าไต้หวัน",
+  "summary":"PAGASA คาดว่าพายุจะเข้าเขต PAR วันที่ 20 ต.ค. และเคลื่อนไปทางไต้หวันโดยไม่ขึ้นฝั่งฟิลิปปินส์ แต่ลูซอนตอนเหนือและตะวันออกอาจได้รับสัญญาณเตือนระดับ 3–4 ลมกระโชกแรงทั่วลูซอนและวิสายัส และคลื่นสูงมากตามชายฝั่ง",
+  "area":"ลูซอนตอนเหนือ · ลูซอนตะวันออก · บีโคล","country":"Philippines","zone":[17.5,123.5,380],
+  "erp":17,"sites":["Mariwasa","United Pulp and Paper","SCG Inter - Coal hub-Philippines"],
+  "facts":[["ลมสูงสุด","175 กม./ชม.","กระโชก 215 กม./ชม."],["ทิศทาง","ตะวันตกเฉียงเหนือ","15 กม./ชม."],["สัญญาณเตือนสูงสุดที่คาด","No. 3–4","ลูซอนเหนือและตะวันออก"],["ลมกระโชกแรง","ตั้งแต่ 21 ต.ค.","ลูซอน วิสายัส บางส่วนของมินดาเนา"]],
+  "sources":[{"name":"Philstar","url":"https://www.philstar.com/headlines/weather/2026/10/19/2564255/champi-may-re-intensify-super-typhoon-enter-par-tuesday","date":"19 ต.ค. 2026"},{"name":"Rappler","url":"https://www.rappler.com/philippines/weather/super-typhoon-champi-itcz-update-pagasa-forecast-october-19-2026-5pm/","date":"19 ต.ค. 2026"},{"name":"Weathernews","url":"https://wxtech.weathernews.com/en/news/sky20261019-01/","date":"19 ต.ค. 2026"}]}
 ]
 ;
 EVENTS.sort((a,b)=>SEV_RANK[a.sev]-SEV_RANK[b.sev]||b.date.localeCompare(a.date));
@@ -816,7 +895,7 @@ function compStats(list,i){let d=0,a=0,o=0,p=0,m=0,pl=0;list.forEach(c=>{const s
 function pillarVals(list){return PILLARS.map((_,pi)=>{let d=0,a=0;COMP.forEach((c,i)=>{if(c.p===pi){const s=compStats(list,i);d+=s.d;a+=s.a}});return a?d/a:null})}
 function heatBg(v){const s=statusOf(v)[0];const base=s==='ok'?'var(--ok)':s==='wa'?'var(--pend)':'var(--miss)';const k=s==='ok'?55+Math.round((v-.85)/.15*45):s==='wa'?70:Math.round(55+(.6-v)/.6*45);return `color-mix(in srgb, ${base} ${k}%, var(--surface))`}
 function kpi(ic,ac,label,val,sub){return `<div class="kpi" style="--ac:${ac}"><div class="top"><span class="l">${label}</span><span class="ic">${svg(ic,16)}</span></div><span class="v">${val}</span><span class="l">${sub}</span></div>`}
-function renderReadiness(){
+function renderReadinessBase(){
   const L=filtered(), f=S.f, A=avg(L);
   const sel=(id,label,opts,val)=>`<select id="${id}" aria-label="${label}"><option value="">${label}: ทั้งหมด</option>${opts.map(o=>`<option${o===val?' selected':''}>${o}</option>`).join("")}</select>`;
   const full=L.filter(c=>c.pct===1).length, withOver=L.filter(c=>c.overdue>0).length;
@@ -917,7 +996,7 @@ function openCompany(id){
 }
 
 /* ================= SECTIONS ================= */
-function renderSection(k){
+function renderSectionBase(k){
   if(k==="apps") return `<div class="page"><div class="page-head"><div><div class="crumb">P7 · APPS-SERVICES</div><h1>Applications &amp; Services</h1><div class="muted">รวมระบบดิจิทัลด้าน BCM</div></div></div>
    <div class="ph-list">${APPS.map(a=>`<button class="ph-item app" style="--ac:${a.ac}" ${a.route?`data-go="${a.route}"`:""}><span class="ic">${svg(a.icon,19)}</span><b>${a.th}</b><span class="muted">${a.d}</span><code>apps-services/${a.k}</code>${a.route?"":`<span class="sample" style="align-self:flex-start">เชื่อมลิงก์ระบบจริงใน phase ถัดไป</span>`}</button>`).join("")}</div></div>`;
   const s=SITEMAP[k];
@@ -963,9 +1042,9 @@ function renderNav(){
   $("#bnav").innerHTML = [["home","หน้าหลัก","home"],["readiness","Dashboard","gauge"],["ews","EWS","radar"],["crisis","Crisis Hub","siren"]].map(([r,l,i])=>`<button class="${S.route===r?'on':''}" data-go="${r}">${svg(i,21)}${l}</button>`).join("")+`<button id="bMenu">${svg("menu",21)}เมนู</button>`;
   $("#bellCount").textContent = EVENTS.length;
 }
-const ROUTES = ["home","readiness","ews","crisis","apps","news","about","ops","erp","bcp","contact"];
+const ROUTES = ["home","readiness","apps","news","about","ops","erp","bcp","contact"];
 function go(r,opts={}){ Object.assign(S,opts); S.route=r; hidePop(true); renderNav(); render(); $("#rail").classList.remove("open"); window.scrollTo(0,0);
-  if(location.hash.slice(1)!==r){ try{ history.replaceState(null,"","#"+r); }catch(e){} } }
+  const hh=r==="article"?"a-"+S.article:r; if(location.hash.slice(1)!==hh){ try{ history.replaceState(null,"","#"+hh); }catch(e){} } }
 window.addEventListener("hashchange",()=>{ const h=location.hash.slice(1); if(!$("#app").hidden && ROUTES.includes(h) && h!==S.route) go(h); });
 let lastW=innerWidth; window.addEventListener("resize",()=>{ if(innerWidth!==lastW){ lastW=innerWidth; if(!$("#pop").hidden) hidePop(true); } });
 
@@ -1047,7 +1126,7 @@ function renderHome(){
   const tick=EVENTS.map(x=>`<button class="item" style="--c:${SEVC[x.sev]}" data-pop="${x.id}" data-ev-pick="${x.id}"><i></i><b>${esc(x.title)}</b><small>${ago(x.date)}</small></button>`).join("");
   return `<div class="page">
   <div class="greet">
-    <div><div class="crumb">P0 · MAIN PAGE</div><h1>สวัสดี Bhurinbhat</h1><div class="muted">${new Date().toLocaleDateString("th-TH-u-ca-gregory",{weekday:"long",day:"numeric",month:"long",year:"numeric"})} · ภาพรวมความเสี่ยงที่ต้องติดตามวันนี้</div></div>
+    <div><div class="crumb">P0 · MAIN PAGE</div><h1>สวัสดี ${esc((USER.name||"").split(" ")[0])}</h1><div class="muted">${new Date().toLocaleDateString("th-TH-u-ca-gregory",{weekday:"long",day:"numeric",month:"long",year:"numeric"})} · ภาพรวมความเสี่ยงที่ต้องติดตามวันนี้</div></div>
     <div class="risk-chips">
       <div class="risk-chip"><b style="color:var(--sev-em)">${EVENTS.filter(x=>x.sev==="em").length}</b><span>Emergency</span></div>
       <div class="risk-chip"><b style="color:var(--sev-wa)">${EVENTS.filter(x=>x.sev==="wa"||x.sev==="wt").length}</b><span>Warning<br>/ Watch</span></div>
@@ -1064,7 +1143,7 @@ function renderHome(){
       <button class="btn ghost-dk zoom-reset" id="zoomAll" type="button">${svg("globe",15)}ทั้งภูมิภาค</button>
     </div>
     <div class="c-side">
-      <header><h3>ภัยที่กำลังเกิดขึ้น</h3><span class="src-badge" style="color:var(--console-dim)"><i style="--c:var(--ok)"></i>${DS.hazards==="supabase"?"Supabase":"อัปเดต 13 ต.ค. 2026"}</span></header>
+      <header><h3>ภัยที่กำลังเกิดขึ้น</h3><span class="src-badge" style="color:var(--console-dim)"><i style="--c:var(--ok)"></i>${DS.hazards==="supabase"?"Supabase":"อัปเดต 21 ต.ค. 2026"}</span></header>
       <div class="ev-list">${EVENTS.map(x=>`<button class="ev${x.id===S.ev?' on':''}" data-ev-pick="${x.id}" data-pop="${x.id}" style="--hz:${SEVC[x.sev]}"><span class="sb"></span><span class="ev-ico">${svg(HZ[x.type]?.icon||ICON.alert,20)}</span><span style="min-width:0"><b>${esc(x.title)}</b><small><span class="sev ${x.sev}">${x.sevT}</span>${x.country} · ${x.sites&&x.sites.length?x.sites.length+" Sites":"ไม่มี Site ในพื้นที่"} · ${ago(x.date)}</small></span></button>`).join("")}</div>
       <div class="c-summary"><div><b style="color:var(--sev-em)">${EVENTS.filter(x=>x.sev==="em").length}</b><span>Emergency</span></div><div><b style="color:var(--sev-wa)">${EVENTS.filter(x=>x.sev==="wa"||x.sev==="wt").length}</b><span>Warning / Watch</span></div><div><b>${atRisk}</b><span>Site ในพื้นที่เสี่ยง</span></div></div>
     </div>
@@ -1074,7 +1153,7 @@ function renderHome(){
 
   <div class="home-grid">
     <div class="card">
-      <div class="card-head"><div><h3>ข่าวภัยพิบัติล่าสุดในภูมิภาค</h3><div class="card-sub">ชี้เมาส์ (หรือแตะ) ที่ข่าวเพื่อดูรายละเอียด ตัวเลข และ Site ที่เกี่ยวข้อง</div></div><span class="src-badge"><i style="--c:var(--ok)"></i>${DS.hazards==="supabase"?"จาก Supabase":"คัดจากสื่อ ณ 13 ต.ค. 2026"}</span></div>
+      <div class="card-head"><div><h3>ข่าวภัยพิบัติล่าสุดในภูมิภาค</h3><div class="card-sub">ชี้เมาส์ (หรือแตะ) ที่ข่าวเพื่อดูรายละเอียด ตัวเลข และ Site ที่เกี่ยวข้อง</div></div><span class="src-badge"><i style="--c:var(--ok)"></i>${DS.hazards==="supabase"?"จาก Supabase":"คัดจากสื่อ ณ 21 ต.ค. 2026"}</span></div>
       <div class="news-grid" style="grid-template-columns:repeat(auto-fill,minmax(240px,1fr))">${EVENTS.map(newsCard).join("")}</div>
     </div>
     <div class="card">
@@ -1098,7 +1177,7 @@ function renderHome(){
     </div>
     <div class="card">
       <div class="card-head"><h3>Applications &amp; Services</h3></div>
-      <div class="apps">${APPS.map(a=>`<button class="app" style="--ac:${a.ac}" data-go="${a.route||'apps'}"><span class="ic">${svg(a.icon,19)}</span><span><b>${a.th}</b><span>${a.d}</span></span></button>`).join("")}</div>
+      <div class="apps">${APPS.map(a=>appTile(a)).join("")}</div>
     </div>
   </div>
   <div class="muted" style="font-size:12px;display:flex;flex-wrap:wrap;gap:6px 16px"><span class="src-badge"><i style="--c:${DS.companies==='supabase'?'var(--ok)':'var(--na)'}"></i>ความพร้อม: ${DS.companies==='supabase'?'Supabase':'ข้อมูลในหน้า'} (BCM_Dashboard_2026.xlsx)</span><span class="src-badge"><i style="--c:${DS.hazards==='supabase'?'var(--ok)':'var(--na)'}"></i>ข่าวภัย: ${DS.hazards==='supabase'?'Supabase':'ข้อมูลในหน้า'}</span><span class="src-badge"><i style="--c:${DS.live==='ok'?'var(--ok)':'var(--na)'}"></i>Live feed: ${DS.live==='ok'?'เชื่อมต่อแล้ว':DS.live==='off'?'ไม่ได้เปิดใช้':DS.live}</span><span>ตำแหน่ง Site บนแผนที่เป็นค่าประมาณระดับจังหวัด</span></div>
@@ -1245,12 +1324,297 @@ $("#themeBtn").addEventListener("click",()=>{ const cur=document.documentElement
 function tickClock(){ const d=new Date(); const s=d.toLocaleString("th-TH-u-ca-gregory",{weekday:"short",day:"numeric",month:"short",hour:"2-digit",minute:"2-digit",timeZone:"Asia/Bangkok"})+" น."; const c=$("#abClock"); if(c) c.textContent=s; }
 tickClock(); setInterval(tickClock,30000);
 
+/* ================= v4: external apps, Microsoft sign-in, articles, richer dashboard ================= */
+const LINKS = {
+  crisis: "https://crisis-task-hub-pilot.vercel.app/login",
+  ews: "https://bcm.scg.com/view/application/EWS_Early_Warning_System_A00/page/Copy_of_1_1_Home_Page_A00",
+  imap: "https://bcm.scg.com/view/application/Water_Dashboard_A00",
+};
+APPS.splice(0, APPS.length,
+  {k:"ews",th:"Early Warning System",d:"Dashboard และการแจ้งเตือนภัย",icon:"radar",href:LINKS.ews,ac:"var(--sev-wa)"},
+  {k:"crisis",th:"Crisis Hub",d:"สร้าง ติดตาม รายงาน Incident",icon:"siren",href:LINKS.crisis,ac:"var(--brand)"},
+  {k:"imap",th:"Intelligent Map",d:"แผนที่ลุ่มน้ำ Site และการแจ้งเตือน",icon:"map",href:LINKS.imap,ac:"var(--sev-ad)"},
+  {k:"water",th:"Water Dashboard",d:"ติดตามระดับน้ำและน้ำท่วม",icon:"water",ac:"#0EA5B7"},
+  {k:"call",th:"Call Tree",d:"ยืนยันข้อมูลติดต่อพนักงาน",icon:"phone",ac:"var(--ok)"},
+  {k:"sos",th:"International SOS",d:"การแพทย์และการเดินทาง",icon:"globe",ac:"#7C5CDB"},
+);
+let USER = {name:"Bhurinbhat", role:"Corporate BCM Office", email:""};
+function extA(kind,label,icon,cls="btn"){ return `<a class="${cls}" href="${LINKS[kind]}" target="_blank" rel="noopener">${svg(icon,16)}<span>${label}</span>${svg("ext",13)}</a>`; }
+function appTile(a,cls="app"){
+  const inner = `<span class="ic">${svg(a.icon,19)}</span><span><b>${a.th}${a.href?" "+svg("ext",12):""}</b><span>${a.d}</span></span>`;
+  return a.href ? `<a class="${cls}" style="--ac:${a.ac}" href="${a.href}" target="_blank" rel="noopener">${inner}</a>`
+                : `<button class="${cls}" style="--ac:${a.ac}" data-go="apps">${inner}</button>`;
+}
+function syncUser(){
+  const ini = (USER.name||"?").trim().charAt(0).toUpperCase();
+  document.querySelectorAll(".avatar").forEach(a=>a.textContent=ini);
+  [["#uName",USER.name],["#abName",USER.name],["#uRole",USER.role],["#abRole",USER.role]].forEach(([s,v])=>{ const el=$(s); if(el) el.textContent=v; });
+}
+
+/* ---- nav ---- */
+function navExt(kind,label,icon){ return `<a class="nav-item" href="${LINKS[kind]}" target="_blank" rel="noopener">${svg(icon)}<span>${label}</span><span class="tag">${svg("ext",12)}</span></a>`; }
+function renderNav(){
+  $("#navMain").innerHTML = `<div class="eyebrow">Portal</div>`+navBtn("home","หน้าหลัก","home",`<span class="live">${EVENTS.length}</span>`)+navBtn("readiness","Readiness Dashboard","gauge")+navBtn("news","ข่าวสารและแจ้งเตือน","bell");
+  $("#navApps").innerHTML = `<div class="eyebrow">Applications &amp; Services</div>`+navExt("ews","Early Warning (EWS)","radar")+navExt("crisis","Crisis Hub","siren")+navExt("imap","Intelligent Map","map")+navBtn("apps","แอปพลิเคชันทั้งหมด","globe");
+  $("#navInfo").innerHTML = `<div class="eyebrow">ข้อมูล BCM</div>`+["about","ops","erp","bcp","contact"].map(k=>navBtn(k,SITEMAP[k].th,SITEMAP[k].icon,`<span class="tag">${SITEMAP[k].id}</span>`)).join("");
+  const on = r => S.route===r || (r==="news" && S.route==="article");
+  $("#bnav").innerHTML = [["home","หน้าหลัก","home"],["readiness","Dashboard","gauge"],["news","ข่าวสาร","bell"]].map(([r,l,i])=>`<button class="${on(r)?'on':''}" data-go="${r}">${svg(i,21)}${l}</button>`).join("")
+    + `<a href="${LINKS.crisis}" target="_blank" rel="noopener">${svg("siren",21)}Crisis Hub</a>` + `<button id="bMenu">${svg("menu",21)}เมนู</button>`;
+  $("#bellCount").textContent = EVENTS.length;
+  syncUser();
+}
+
+/* ---- hazard UI pieces (EWS / Crisis Hub open the real systems) ---- */
+function popHTML(e){
+  const {s,ready,appl}=erpReady(e);
+  return `<div class="pop-head" style="--c:${SEVC[e.sev]}"><div style="display:flex;align-items:center;gap:8px;justify-content:space-between"><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="sev ${e.sev}">${e.sevT}</span><span class="chip" style="font-size:11px">${HZ[e.type]?.l||e.type}</span></div><button class="x pop-close" data-pop-close aria-label="ปิด">✕</button></div>
+    <h4>${esc(e.title)}</h4><div class="when">${e.upd} · ${ago(e.date)}</div></div>
+  <div class="pop-body">
+    <p>${esc(e.summary)}</p>
+    <div class="muted" style="font-size:12px;display:flex;gap:6px;align-items:flex-start">${svg("pin",14)}<span>${esc(e.area)}</span></div>
+    <div class="facts">${e.facts.map(f=>`<div><span>${esc(f[0])}</span><b>${esc(f[1])}</b><small>${esc(f[2]||"")}</small></div>`).join("")}</div>
+    <div class="pop-sites">${e.sites&&e.sites.length?donut([{l:"พร้อม",v:ready,c:"var(--ok)"},{l:"ยังไม่พร้อม",v:Math.max(0,appl-ready),c:"var(--miss)"}],54,7,`${ready}/${appl}`):`<span class="ev-ico" style="--hz:var(--sev-ad);width:44px;height:44px">${svg("building",20)}</span>`}
+      <div style="font-size:12.5px">${e.sites&&e.sites.length?`<b>${e.sites.length} Site ของ SCG</b> อยู่ในพื้นที่เสี่ยง<div class="muted">${COMP[e.erp].k} พร้อมใช้ ${ready} จาก ${appl} Site</div>`:`<b>ไม่มี Site ในพื้นที่โดยตรง</b><div class="muted">ติดตามผลกระทบต่อการขนส่งและ supply chain</div>`}</div></div>
+  </div>
+  <div class="pop-actions"><button class="btn" data-article="${e.id}">${svg("doc",15)}อ่านรายละเอียด</button>${extA("crisis","Crisis Hub","siren","btn primary")}</div>`;
+}
+function impactHTML(e){
+  const {s:sites,ready,appl}=erpReady(e);
+  const cnt=k=>sites.filter(c=>c.st[e.erp].s===k).length;
+  const segs=[{l:"ดำเนินการแล้ว",v:ready,c:"var(--ok)"},{l:"Pending",v:cnt("pending"),c:"var(--pend)"},{l:"Overdue",v:cnt("overdue"),c:"var(--over)"},{l:"Missing",v:cnt("missing"),c:"var(--miss)"},{l:"Planned",v:cnt("planned"),c:"var(--plan)"}];
+  const has = e.sites && e.sites.length;
+  return `<section class="card impact">
+    <div class="imp-head">
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="sev ${e.sev}">${e.sevT}</span><span class="num muted" style="font-size:11.5px">${e.id}</span></div>
+      <h2>${esc(e.title)}</h2>
+      <div class="muted" style="font-size:12.5px">${esc(e.area)}<br>${e.upd}</div>
+      ${has?`<div style="display:flex;align-items:center;gap:14px;margin-top:6px">${donut(segs,108,14,`${ready}/${appl}`,"พร้อม")}<div style="font-size:12.5px"><b>${COMP[e.erp].k}</b><div class="muted">Site ในพื้นที่ที่มีแผนรับมือภัยนี้แล้ว</div></div></div>`:""}
+      <button class="btn" data-article="${e.id}" style="align-self:flex-start">${svg("doc",15)}อ่านข่าวฉบับเต็ม</button>
+    </div>
+    <div>
+      <div class="card-head" style="margin-bottom:6px"><div><h3>${has?`Site ของ SCG ในพื้นที่ผลกระทบ (${sites.length})`:"ผลกระทบต่อ SCG"}</h3><div class="card-sub">${has?"คลิกเพื่อดู Checklist ความพร้อมของ Site":esc(e.summary)}</div></div></div>
+      ${has?sites.map(c=>{const st=statusOf(c.pct);return `<div class="site-row" data-co="${c.id}"><div style="min-width:0"><b>${esc(c.name)}</b><small>${c.bu} · ${c.country} · ${c.cls}</small></div><div class="mini"><div class="bar"><span style="width:${c.pct*100}%;background:${st[2]}"></span></div><span class="num">${Math.round(c.pct*100)}%</span></div><div>${stChip(c.st[e.erp])}</div></div>`}).join(""):`<div class="facts" style="margin-top:6px">${e.facts.map(f=>`<div><span>${esc(f[0])}</span><b>${esc(f[1])}</b><small>${esc(f[2]||"")}</small></div>`).join("")}</div>`}
+    </div>
+    <div>
+      <div class="eyebrow" style="margin-bottom:10px">ตัวชี้วัดสถานการณ์</div>
+      <div class="ind-list">${e.facts.slice(0,3).map(i=>`<div><span>${esc(i[0])}</span><b>${esc(i[1])}</b><small>${esc(i[2]||"")}</small></div>`).join("")}</div>
+      <div class="actions">
+        ${extA("ews","เปิด Early Warning System","radar")}
+        ${extA("crisis","ยกระดับเป็น Incident ใน Crisis Hub","siren","btn primary")}
+        ${extA("imap","ดูใน Intelligent Map","map")}
+      </div>
+    </div>
+  </section>`;
+}
+function newsCard(e,mode="home"){
+  const {ready,appl}=erpReady(e);
+  const act = mode==="home" ? `data-ev-pick="${e.id}"` : `data-article="${e.id}"`;
+  return `<div class="ncard${mode==="home"&&e.id===S.ev?' on':''}" style="--c:${SEVC[e.sev]}" data-pop="${e.id}" ${act} tabindex="0" role="button" aria-label="${esc(e.title)}">
+    <div class="top"><span class="ic">${svg(HZ[e.type]?.icon||ICON.alert,19)}</span><div style="min-width:0"><span class="sev ${e.sev}">${e.sevT}</span><div class="muted" style="font-size:11.5px;margin-top:3px">${HZ[e.type]?.l||""} · ${e.country==="All"?"ทุกประเทศ":e.country}</div></div></div>
+    <h4>${esc(e.title)}</h4>
+    <div class="meta"><span>${svg("pin",12)} ${esc(e.area.split(" · ").slice(0,2).join(" · "))}</span><span>${svg("clock",12)} ${ago(e.date)}</span></div>
+    <div class="foot"><span>${e.sites&&e.sites.length?`<b>${e.sites.length}</b> Site · ERP พร้อม <b>${ready}/${appl}</b>`:"ไม่มี Site ในพื้นที่โดยตรง"}</span><button class="read" data-article="${e.id}">อ่านรายละเอียด ${svg("ext",12)}</button></div>
+  </div>`;
+}
+
+/* ---- articles ---- */
+function bcmNewsList(){ const out=[]; Object.entries(NEWS).forEach(([cat,v],i)=>v.items.forEach((n,j)=>out.push({id:`bn-${i}-${j}`,cat,ac:v.ac,i:v.i,title:n[0],date:n[1]}))); return out; }
+const NEXT_STEPS = {
+  em:["เปิดใช้แผน ERP ที่เกี่ยวข้องและจัดตั้ง War Room","ยกระดับการบัญชาการเป็น BU BCM / CMC ตามขอบเขตผลกระทบ","ยืนยันความปลอดภัยพนักงานผ่าน Call Tree","รายงานสถานการณ์ (SITREP) ทุก 6 ชั่วโมงผ่าน Crisis Hub"],
+  wa:["ทบทวนแผน ERP และเตรียมทีม LMT / ERT ให้พร้อม","ตรวจสอบ Call Tree และช่องทางสื่อสารฉุกเฉิน","ป้องกันทรัพย์สินและวัตถุดิบสำคัญในพื้นที่เสี่ยง","ติดตามประกาศจากหน่วยงานรัฐอย่างน้อยทุก 12 ชั่วโมง"],
+  wt:["เฝ้าระวังข้อมูลผ่าน Early Warning System","แจ้ง BCM Co ของ Site ในพื้นที่ให้ติดตามสถานการณ์","ตรวจสอบความพร้อมของแผน ERP ที่เกี่ยวข้อง"],
+  ad:["ติดตามข่าวสารอย่างต่อเนื่อง","แจ้งผู้เกี่ยวข้องตามความเหมาะสม"],
+};
+function renderArticle(id){
+  const e=evById(id); if(e) return hazardArticle(e);
+  const n=bcmNewsList().find(x=>x.id===id); if(n) return bcmArticle(n);
+  return `<div class="page"><div class="card"><h3>ไม่พบข่าวนี้</h3><p class="muted">ข่าวอาจถูกปิดการแสดงผลแล้ว</p><button class="btn" data-go="news">กลับไปหน้าข่าวสาร</button></div></div>`;
+}
+function hazardArticle(e){
+  const {s:sites,ready,appl}=erpReady(e); const has=e.sites&&e.sites.length;
+  const cnt=k=>sites.filter(c=>c.st[e.erp].s===k).length;
+  const others = EVENTS.filter(x=>x.id!==e.id).slice(0,3);
+  return `<div class="page article">
+    <div><button class="link back" data-go="news">← ข่าวสารและแจ้งเตือน</button></div>
+    <header class="art-hero" style="--c:${SEVC[e.sev]}">
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="sev ${e.sev}">${e.sevT}</span><span class="chip">${HZ[e.type]?.l||e.type}</span><span class="num muted" style="font-size:11.5px">${e.id}</span></div>
+      <h1>${esc(e.title)}</h1>
+      <div class="art-meta"><span>${svg("pin",14)} ${esc(e.area)}</span><span>${svg("clock",14)} ${e.upd} · ${ago(e.date)}</span></div>
+    </header>
+    <div class="art-grid">
+      <article class="card art-body">
+        <p class="lead">${esc(e.summary)}</p>
+        <div class="facts big">${e.facts.map(f=>`<div><span>${esc(f[0])}</span><b>${esc(f[1])}</b><small>${esc(f[2]||"")}</small></div>`).join("")}</div>
+        <section><h3>แนวทางดำเนินการที่แนะนำ</h3><div class="card-sub" style="margin-bottom:8px">ตามระดับการแจ้งเตือน ${e.sevT} · ใช้แผน ${COMP[e.erp].k}</div>
+          <ol class="steps-list">${(NEXT_STEPS[e.sev]||[]).map(t=>`<li>${svg("check",15)}<span>${t}</span></li>`).join("")}</ol></section>
+        <section><h3>แหล่งข่าว</h3><div class="srcs">${e.sources.map(x=>`<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.name)} ${svg("ext",12)}<span>${esc(x.date||"")}</span></a>`).join("")}</div></section>
+        <div class="actions row">${extA("ews","เปิด Early Warning System","radar")}${extA("crisis","ยกระดับเป็น Incident ใน Crisis Hub","siren","btn primary")}${extA("imap","Intelligent Map","map")}</div>
+      </article>
+      <aside class="art-side">
+        <div class="console art-map"><div class="c-map">${mapConsole(e)}<div class="map-legend"><span><i style="background:var(--ok)"></i>On Track</span><span><i style="background:var(--pend)"></i>Behind</span><span><i style="background:var(--miss)"></i>Critical</span></div></div></div>
+        <div class="card">
+          <div class="card-head"><div><h3>${has?`Site ของ SCG ในพื้นที่ (${sites.length})`:"Site ของ SCG"}</h3><div class="card-sub">${has?`${COMP[e.erp].k} พร้อมใช้ ${ready} จาก ${appl} Site`:"ไม่มี Site ในพื้นที่โดยตรง"}</div></div>
+          ${has?donut([{l:"ดำเนินการแล้ว",v:ready,c:"var(--ok)"},{l:"Pending",v:cnt("pending"),c:"var(--pend)"},{l:"Overdue",v:cnt("overdue"),c:"var(--over)"},{l:"Missing",v:cnt("missing"),c:"var(--miss)"}],64,9,`${ready}/${appl}`):""}</div>
+          ${has?sites.map(c=>{const st=statusOf(c.pct);return `<div class="site-row" data-co="${c.id}"><div style="min-width:0"><b>${esc(c.name)}</b><small>${c.bu} · ${c.cls}</small></div><div class="mini"><div class="bar"><span style="width:${c.pct*100}%;background:${st[2]}"></span></div><span class="num">${Math.round(c.pct*100)}%</span></div><div>${stChip(c.st[e.erp])}</div></div>`}).join(""):`<p class="muted" style="margin:0;font-size:13px">ติดตามผลกระทบต่อการขนส่ง ลูกค้า และ supply chain ในภูมิภาค</p>`}
+        </div>
+      </aside>
+    </div>
+    <div class="card"><div class="card-head"><h3>ข่าวอื่นที่กำลังติดตาม</h3><button class="link" data-go="news">ดูทั้งหมด →</button></div><div class="news-grid">${others.map(x=>newsCard(x,"page")).join("")}</div></div>
+  </div>`;
+}
+function bcmArticle(n){
+  const same = bcmNewsList().filter(x=>x.cat===n.cat && x.id!==n.id);
+  return `<div class="page article">
+    <div><button class="link back" data-go="news">← ข่าวสารและแจ้งเตือน</button></div>
+    <header class="art-hero" style="--c:${n.ac}">
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="chip" style="color:${n.ac};font-weight:600">${n.cat}</span><span class="sample">เนื้อหาตัวอย่าง</span></div>
+      <h1>${esc(n.title)}</h1>
+      <div class="art-meta"><span>${svg("clock",14)} ${n.date}</span><span>${svg("org",14)} Corporate BCM Office</span></div>
+    </header>
+    <div class="art-grid">
+      <article class="card art-body">
+        <p class="lead">${esc(n.title)} เป็นข่าวจาก ${n.cat} ของ Corporate BCM Office</p>
+        <p>หน้านี้แสดงโครงของบทความฉบับเต็ม เนื้อหาจริงจะดึงจากระบบจัดการเนื้อหาของ BCM Portal เมื่อทีมเผยแพร่บทความ ส่วนประกอบของบทความ ได้แก่ สรุปประเด็นสำคัญ รายละเอียด เอกสารแนบ และผู้ติดต่อ</p>
+        <section><h3>ประเด็นสำคัญ</h3><ol class="steps-list"><li>${svg("check",15)}<span>สรุปสาระสำคัญของข่าวสำหรับ BCM Co และ LMT</span></li><li>${svg("check",15)}<span>สิ่งที่แต่ละ BU / Site ต้องดำเนินการ และกำหนดเวลา</span></li><li>${svg("check",15)}<span>เอกสารและแบบฟอร์มที่เกี่ยวข้อง</span></li></ol></section>
+        <section><h3>ติดต่อ</h3><p class="muted" style="margin:0">Corporate BCM Office · SCG</p></section>
+      </article>
+      <aside class="art-side"><div class="card"><div class="card-head"><h3>ข่าวอื่นใน ${n.cat}</h3></div>${same.map(x=>`<div class="bn-row"><div style="min-width:0"><b>${esc(x.title)}</b><small>${x.date}</small></div><button class="read" data-article="${x.id}">อ่าน ${svg("ext",12)}</button></div>`).join("")}</div></aside>
+    </div>
+  </div>`;
+}
+function renderNewsPage(){
+  return `<div class="page">
+    <div class="page-head"><div><div class="crumb">P2 · NEWS</div><h1>ข่าวสารและแจ้งเตือน</h1><div class="muted">ข่าวภัยพิบัติที่กระทบพื้นที่ปฏิบัติการของ SCG และประกาศจาก Corporate BCM Office</div></div><span class="src-badge"><i style="--c:var(--ok)"></i>${DS.hazards==="supabase"?"ข่าวภัยจาก Supabase":"ข่าวภัยคัดจากสื่อ ณ 21 ต.ค. 2026"}</span></div>
+    <div class="card"><div class="card-head"><div><h3>อัปเดตและแจ้งเตือนความเสี่ยง</h3><div class="card-sub">คลิกที่ข่าวหรือปุ่ม "อ่านรายละเอียด" เพื่อเปิดหน้ารายละเอียด</div></div></div>
+      <div class="news-grid">${EVENTS.map(e=>newsCard(e,"page")).join("")}</div></div>
+    <div class="news">${Object.entries(NEWS).map(([k,v],i)=>`<div class="news-card" style="--ac:${v.ac}"><div class="tag"><i>${v.i}</i>${k}</div>${v.items.map((n,j)=>`<div class="news-item bn-row"><div style="min-width:0"><b>${n[0]}</b><small>${n[1]}</small></div><button class="read" data-article="bn-${i}-${j}">อ่านรายละเอียด ${svg("ext",12)}</button></div>`).join("")}</div>`).join("")}</div>
+  </div>`;
+}
+function renderSection(k){
+  if(k==="news") return renderNewsPage();
+  if(k==="apps") return `<div class="page"><div class="page-head"><div><div class="crumb">P7 · APPS-SERVICES</div><h1>Applications &amp; Services</h1><div class="muted">ระบบดิจิทัลด้าน BCM · ระบบที่มีลิงก์จะเปิดในแท็บใหม่</div></div></div>
+    <div class="ph-list">${APPS.map(a=>appTile(a,"ph-item app")).join("")}</div></div>`;
+  return renderSectionBase(k);
+}
+
+/* ---- Readiness Dashboard: extra visualizations ---- */
+function waffleCard(L){
+  const blocks = BUS.map(b=>{ const a=L.filter(c=>c.bu===b).sort((x,y)=>y.pct-x.pct); if(!a.length) return "";
+    const v=avg(a), s=statusOf(v), n=k=>a.filter(c=>statusOf(c.pct)[0]===k).length;
+    return `<div class="wf-block"><div class="wf-head"><b>${b}</b><span class="num" style="color:${s[2]}">${Math.round(v*100)}%</span></div>
+      <div class="wf-sub">${a.length} Site · <span style="color:var(--ok)">${n("ok")}</span> · <span style="color:var(--pend)">${n("wa")}</span> · <span style="color:var(--miss)">${n("cr")}</span></div>
+      <div class="wf-cells">${a.map(c=>`<span class="wf-cell" data-co="${c.id}" style="background:${statusOf(c.pct)[2]}" ${tipAttr(`<b>${esc(c.name)}</b><br>${c.country} · ${c.cls}<br>${c.done}/${c.app} รายการ · <b>${pctTxt(c.pct)}</b>`)}></span>`).join("")}</div></div>`; }).join("");
+  return `<div class="card" id="sec-bu"><div class="card-head"><div><h3>ทุก Site แยกตาม BU</h3><div class="card-sub">1 ช่อง = 1 บริษัท/Site เรียงจากพร้อมมากไปน้อย · คลิกเพื่อดู Checklist</div></div>
+    <div class="legend"><span class="st"><i style="background:var(--ok)"></i>On Track ≥85%</span><span class="st"><i style="background:var(--pend)"></i>Behind 60–84%</span><span class="st"><i style="background:var(--miss)"></i>Critical &lt;60%</span></div></div>
+    <div class="wf-grid">${blocks}</div></div>`;
+}
+function histCard(L){
+  const bins=Array.from({length:10},(_,i)=>L.filter(c=>Math.min(9,Math.floor(c.pct*10+1e-9))===i));
+  const W=560,H=240,p={l:36,r:12,t:22,b:34}, mx=Math.max(5,Math.ceil(Math.max(...bins.map(b=>b.length))/5)*5);
+  const bw=(W-p.l-p.r)/10, y=v=>p.t+(1-v/mx)*(H-p.t-p.b), x=v=>p.l+v*(W-p.l-p.r);
+  let g=""; for(let t=0;t<=mx;t+=mx/5){ g+=`<line x1="${p.l}" x2="${W-p.r}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)"/><text x="${p.l-6}" y="${y(t)+4}" text-anchor="end" fill="var(--muted)" style="font:10.5px var(--f-mono)">${t}</text>`; }
+  bins.forEach((b,i)=>{ const h=y(0)-y(b.length), c=statusOf((i+.5)/10)[2];
+    g+=`<rect x="${p.l+i*bw+1}" y="${y(b.length)}" width="${bw-2}" height="${Math.max(0,h)}" rx="4" fill="${c}" ${tipAttr(`<b>${i*10}–${i===9?100:i*10+9}%</b><br>${b.length} Site${b.length?'<br>'+b.slice(0,5).map(c=>esc(c.name)).join('<br>')+(b.length>5?'<br>…':''):''}`)}/>`;
+    if(b.length) g+=`<text x="${p.l+i*bw+bw/2}" y="${y(b.length)-6}" text-anchor="middle" fill="var(--ink)" style="font:500 11px var(--f-mono)">${b.length}</text>`; });
+  for(let i=0;i<=10;i+=2) g+=`<text x="${x(i/10)}" y="${H-12}" text-anchor="middle" fill="var(--muted)" style="font:10.5px var(--f-mono)">${i*10}%</text>`;
+  const m=avg(L); g+=`<line x1="${x(m)}" x2="${x(m)}" y1="${p.t-6}" y2="${y(0)}" stroke="var(--ink)" stroke-width="2" stroke-dasharray="4 3"/><text x="${x(m)-6}" y="${p.t+4}" text-anchor="end" fill="var(--ink)" style="font:600 11px var(--f-body)">เฉลี่ย ${Math.round(m*100)}%</text>`;
+  return `<div class="card"><div class="card-head"><div><h3>การกระจายระดับความพร้อม</h3><div class="card-sub">จำนวน Site ในแต่ละช่วงความคืบหน้า</div></div></div><svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block" role="img" aria-label="ฮิสโตแกรมความพร้อม">${g}</svg></div>`;
+}
+function paretoCard(L){
+  const rows=COMP.map((c,i)=>{const s=compStats(L,i);return{c,i,m:s.m,p:s.p,o:s.o,t:s.m+s.p+s.o}}).filter(r=>r.t>0).sort((a,b)=>b.t-a.t).slice(0,10);
+  const mx=Math.max(1,...rows.map(r=>r.t)), tot=rows.reduce((a,r)=>a+r.t,0)||1; let cum=0;
+  return `<div class="card"><div class="card-head"><div><h3>ช่องว่างที่ต้องปิดมากที่สุด</h3><div class="card-sub">รายการ Missing + Pending + Overdue ต่อองค์ประกอบ (10 อันดับแรก)</div></div>
+    <div class="legend"><span class="st"><i style="background:var(--miss)"></i>Missing</span><span class="st"><i style="background:var(--pend)"></i>Pending</span><span class="st"><i style="background:var(--over)"></i>Overdue</span></div></div>
+    ${rows.length?rows.map(r=>{cum+=r.t;return `<div class="pareto" ${tipAttr(`<b>${r.c.th}</b><br>Missing ${r.m} · Pending ${r.p} · Overdue ${r.o}<br>สะสม ${Math.round(cum/tot*100)}% ของช่องว่างใน 10 อันดับ`)}><span>${r.c.k}</span><div class="ptrack"><div class="bar" style="width:${r.t/mx*100}%;height:14px">${r.m?`<span style="flex:${r.m};background:var(--miss)"></span>`:""}${r.p?`<span style="flex:${r.p};background:var(--pend)"></span>`:""}${r.o?`<span style="flex:${r.o};background:var(--over)"></span>`:""}</div></div><b class="num">${r.t}</b><small class="num muted">${Math.round(cum/tot*100)}%</small></div>`}).join(""):`<p class="muted">ไม่มีช่องว่างตามตัวกรองนี้</p>`}
+  </div>`;
+}
+function monthlyCard(L){
+  const per=Array.from({length:12},(_,m)=>{ const items=[]; L.forEach(c=>c.st.forEach((x,i)=>{ if(x.m===m) items.push(COMP[i].k); })); return items; });
+  const W=560,H=240,p={l:34,r:10,t:22,b:34}, mx=Math.max(5,Math.ceil(Math.max(...per.map(a=>a.length))/10)*10);
+  const bw=(W-p.l-p.r)/12, y=v=>p.t+(1-v/mx)*(H-p.t-p.b);
+  let g=""; for(let t=0;t<=mx;t+=mx/5){ g+=`<line x1="${p.l}" x2="${W-p.r}" y1="${y(t)}" y2="${y(t)}" stroke="var(--line)"/><text x="${p.l-6}" y="${y(t)+4}" text-anchor="end" fill="var(--muted)" style="font:10.5px var(--f-mono)">${Math.round(t)}</text>`; }
+  g+=`<rect x="${p.l+AS_OF_M*bw}" y="${p.t-8}" width="${bw}" height="${y(0)-p.t+8}" fill="var(--surface-2)"/>`;
+  per.forEach((a,m)=>{ const col=m<AS_OF_M?"var(--over)":m===AS_OF_M?"var(--pend)":"var(--sev-ad)"; const cnt={}; a.forEach(k=>cnt[k]=(cnt[k]||0)+1); const top=Object.entries(cnt).sort((x,y)=>y[1]-x[1]).slice(0,4);
+    g+=`<rect x="${p.l+m*bw+3}" y="${y(a.length)}" width="${bw-6}" height="${y(0)-y(a.length)}" rx="4" fill="${col}" ${tipAttr(`<b>${MTH[m]} 2026</b> · ${a.length} รายการ${m<AS_OF_M?' (เลยกำหนด)':''}${top.length?'<br>'+top.map(([k,v])=>`${k}: ${v}`).join('<br>'):''}`)}/>`;
+    if(a.length) g+=`<text x="${p.l+m*bw+bw/2}" y="${y(a.length)-6}" text-anchor="middle" fill="var(--ink)" style="font:500 11px var(--f-mono)">${a.length}</text>`;
+    g+=`<text x="${p.l+m*bw+bw/2}" y="${H-12}" text-anchor="middle" fill="${m===AS_OF_M?'var(--ink)':'var(--muted)'}" style="font:${m===AS_OF_M?600:400} 10.5px var(--f-body)">${MTH[m].replace(".","").slice(0,3)}</text>`; });
+  return `<div class="card"><div class="card-head"><div><h3>แผนงานที่ต้องปิดรายเดือน</h3><div class="card-sub">จำนวนรายการที่กำหนดเดือนแล้วเสร็จไว้ (ทุกองค์ประกอบ) · แถบเทา = เดือนของข้อมูล</div></div>
+    <div class="legend"><span class="st"><i style="background:var(--over)"></i>เลยกำหนด</span><span class="st"><i style="background:var(--pend)"></i>เดือนนี้</span><span class="st"><i style="background:var(--sev-ad)"></i>วางแผนไว้</span></div></div>
+    <svg viewBox="0 0 ${W} ${H}" width="100%" style="display:block" role="img" aria-label="แผนงานรายเดือน">${g}</svg></div>`;
+}
+function topBottomCard(L){
+  const s=[...L].sort((a,b)=>b.pct-a.pct), top=s.slice(0,7), bot=s.slice(-7).reverse();
+  const row=c=>{const st=statusOf(c.pct);return `<div class="lol" data-co="${c.id}" ${tipAttr(`<b>${esc(c.name)}</b><br>${c.bu} · ${c.country}<br>${c.done}/${c.app} รายการ`)}><span class="nm">${esc(c.plant&&c.plant.length<24?c.plant:c.name)}<small>${c.bu}</small></span><span class="lt"><i style="width:${c.pct*100}%;background:${st[2]}"></i><b style="left:${c.pct*100}%;background:${st[2]}"></b></span><span class="num">${Math.round(c.pct*100)}%</span></div>`};
+  return `<div class="card"><div class="card-head"><div><h3>พร้อมสูงสุด และต้องเร่งดำเนินการ</h3><div class="card-sub">7 อันดับแรกและท้ายตามตัวกรอง · คลิกเพื่อดู Checklist</div></div></div>
+    <div class="tb-cols"><div><div class="eyebrow" style="color:var(--ok);margin-bottom:6px">พร้อมสูงสุด</div>${top.map(row).join("")}</div><div><div class="eyebrow" style="color:var(--miss);margin-bottom:6px">ต้องเร่งดำเนินการ</div>${bot.map(row).join("")}</div></div></div>`;
+}
+function renderReadiness(){
+  let h=renderReadinessBase(); const L=filtered();
+  const tabs=`<nav class="dash-tabs" aria-label="ส่วนของ Dashboard">${[["sec-overview","ภาพรวม"],["sec-bu","ราย BU"],["sec-comp","องค์ประกอบ"],["sec-plan","ช่องว่าง & แผนงาน"],["sec-geo","ประเทศ"],["sec-list","รายบริษัท"]].map(([id,l])=>`<button data-scroll="${id}">${l}</button>`).join("")}</nav>`;
+  h=h.replace('<div class="dash-hero">', tabs+'<div class="dash-hero" id="sec-overview">');
+  h=h.replace('<div class="grid-r">', waffleCard(L)+'<div class="grid-r" id="sec-comp">');
+  const mk='<div class="card">\n    <div class="card-head"><div><h3>การกระจายความพร้อมของแต่ละ BU';
+  h=h.replace(mk, `<div class="grid2" id="sec-plan">${paretoCard(L)}${monthlyCard(L)}</div><div class="grid2" id="sec-plan2">${histCard(L)}${topBottomCard(L)}</div>`+mk);
+  h=h.replace('<div class="grid2">\n    <div class="card">\n      <div class="card-head"><div><h3>ความพร้อมรายประเทศ','<div class="grid2" id="sec-geo">\n    <div class="card">\n      <div class="card-head"><div><h3>ความพร้อมรายประเทศ');
+  h=h.replace('<h3>รายบริษัท / Site</h3>','<h3 id="sec-list">รายบริษัท / Site</h3>');
+  return h;
+}
+
+/* ---- render + routing ---- */
+function render(){
+  const r=S.route, m=$("#main"); hideTip();
+  m.innerHTML = r==="home"?renderHome(): r==="readiness"?renderReadiness(): r==="article"?renderArticle(S.article): renderSection(r);
+  if(r==="readiness"){
+    const upd=()=>{S.f={bu:$("#fBu").value,country:$("#fCountry").value,cls:$("#fCls").value,q:$("#fQ").value};S.rows=20;render()};
+    ["#fBu","#fCountry","#fCls"].forEach(s=>$(s).addEventListener("change",upd));
+    let t;$("#fQ").addEventListener("input",()=>{clearTimeout(t);t=setTimeout(()=>{const p=$("#fQ").selectionStart;upd();const q=$("#fQ");q.focus();q.setSelectionRange(p,p)},300)});
+  }
+  syncUser();
+}
+function routeFromHash(){ const h=location.hash.slice(1); if(h.startsWith("a-")) return ["article",h.slice(2)]; return ROUTES.includes(h)?[h,null]:null; }
+window.addEventListener("hashchange",()=>{ if($("#app").hidden) return; const r=routeFromHash(); if(!r) return; if(r[0]==="article"&&r[1]!==S.article) go("article",{article:r[1]}); });
+document.addEventListener("click",ev=>{
+  const a=ev.target.closest("[data-article]"); if(a){ ev.preventDefault(); ev.stopPropagation(); hidePop(true); go("article",{article:a.dataset.article}); return; }
+  const sc=ev.target.closest("[data-scroll]"); if(sc){ ev.preventDefault(); ev.stopPropagation(); const el=document.getElementById(sc.dataset.scroll); if(el) el.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"start"}); return; }
+},true);
+document.addEventListener("keydown",ev=>{ if((ev.key==="Enter"||ev.key===" ") && ev.target.matches && ev.target.matches(".ncard")){ ev.preventDefault(); ev.target.click(); } });
+
+/* ---- Sign in with Microsoft (Supabase Auth · Azure provider) ---- */
+const AUTH = {client:null};
+async function sbAuth(){
+  if(!CFG.msLogin || !CFG.supabaseUrl) return null;
+  if(AUTH.client) return AUTH.client;
+  if(!window.supabase){ await new Promise((res,rej)=>{ const s=document.createElement("script"); s.src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"; s.onload=res; s.onerror=rej; document.head.appendChild(s); }); }
+  AUTH.client = window.supabase.createClient(CFG.supabaseUrl, CFG.supabaseKey);
+  return AUTH.client;
+}
+function userFromSession(sess){ const u=sess.user||{}, m=u.user_metadata||{}; USER={name:m.full_name||m.name||(u.email||"").split("@")[0]||"ผู้ใช้", role:u.email||"SCG", email:u.email||""}; }
+async function signIn(){
+  const b=$("#ssoBtn"); b.disabled=true; $("#ssoLabel").textContent="กำลังเชื่อมต่อ Microsoft…";
+  let c=null; try{ c=await sbAuth(); }catch(e){ console.warn(e); }
+  if(c){
+    const {error}=await c.auth.signInWithOAuth({provider:"azure",options:{scopes:"openid profile email",redirectTo:location.origin+location.pathname}});
+    if(error){ toast("เข้าสู่ระบบไม่สำเร็จ: "+error.message); resetSSO(); }
+    return;
+  }
+  setTimeout(()=>{ enterApp(); toast("โหมดสาธิต: ยังไม่ได้เชื่อมต่อ Microsoft Entra ID"); },700);
+}
+async function checkSession(){
+  let c=null; try{ c=await sbAuth(); }catch(e){ return false; }
+  if(!c) return false;
+  const {data}=await c.auth.getSession();
+  if(data && data.session){ userFromSession(data.session); enterApp(); return true; }
+  return false;
+}
+async function signOut(){ try{ if(AUTH.client) await AUTH.client.auth.signOut(); }catch(e){} }
+
 /* ================= LOGIN ================= */
-$("#logout").addEventListener("click",()=>{$("#app").hidden=true;$("#login").hidden=false;resetSSO();startRadar()});
-const LOCK='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>';
-function resetSSO(){const b=$("#ssoBtn");b.disabled=false;const sp=b.querySelector(".spin");if(sp)sp.outerHTML=LOCK;$("#ssoLabel").textContent="Single Sign-On"}
-function enterApp(){ $("#login").hidden=true; $("#app").hidden=false; stopRadar(); resetSSO(); const h=location.hash.slice(1); go(["readiness","ews","crisis"].includes(h)?h:"home"); }
-$("#ssoBtn").addEventListener("click",()=>{ const b=$("#ssoBtn");b.disabled=true;b.querySelector("svg").outerHTML='<span class="spin"></span>';$("#ssoLabel").textContent="กำลังยืนยันตัวตน…"; setTimeout(enterApp,900); });
+$("#logout").addEventListener("click",async()=>{ await signOut(); $("#app").hidden=true;$("#login").hidden=false;resetSSO();startRadar() });
+const MSLOGO=$("#ssoBtn .ms-logo").outerHTML;
+function resetSSO(){const b=$("#ssoBtn");b.disabled=false;const sp=b.querySelector(".spin");if(sp)sp.outerHTML=MSLOGO;$("#ssoLabel").textContent="Sign in with Microsoft"}
+function enterApp(){ $("#login").hidden=true; $("#app").hidden=false; stopRadar(); resetSSO(); const r=routeFromHash(); if(r) go(r[0], r[0]==="article"?{article:r[1]}:{}); else go("home"); }
+$("#ssoBtn").addEventListener("click",()=>{ const b=$("#ssoBtn"); if(b.disabled) return; b.querySelector(".ms-logo").outerHTML='<span class="spin"></span>'; signIn(); });
+$("#authMode").textContent = CFG.msLogin ? "เชื่อมต่อ Microsoft Entra ID แล้ว" : "โหมดสาธิต · ยังไม่ได้เชื่อมต่อ Microsoft Entra ID";
 $("#lgSites").textContent=CO.length; $("#lgCountries").textContent=COUNTRIES.length; $("#lgEvents").textContent=EVENTS.length;
 /* login backdrop: radar sweep over the real site positions */
 let raf=null;
@@ -1277,7 +1641,7 @@ function startRadar(){
 function stopRadar(){if(raf)cancelAnimationFrame(raf);raf=null}
 startRadar();
 
-if(["#home","#readiness","#ews","#crisis"].includes(location.hash)){ enterApp(); }
+checkSession().then(ok=>{ if(!ok && !CFG.msLogin && routeFromHash()) enterApp(); });
 loadRemote();
 </script>
 </body>

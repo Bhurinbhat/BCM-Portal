@@ -6,13 +6,34 @@ Portal for SCG's Corporate BCM Office. It shows current disaster news across Sou
 
 | Path | Purpose |
 |---|---|
-| `index.html` | The whole front end: SSO login, landing page (situation map, hazard news with hover details, live feed), Readiness Dashboard, EWS and Crisis Hub screens |
+| `index.html` | The whole front end: Sign in with Microsoft, landing page (situation map, hazard news with hover details and detail pages, live feed), Readiness Dashboard, news pages |
 | `config.js` | Public runtime config: Supabase URL, publishable key, live-feed endpoint |
 | `api/hazards.js` | Vercel function. Pulls GDACS alerts and USGS M4.5+ earthquakes from the last 21 days, filtered to Southeast Asia, cached 15 minutes |
 | `assets/scg-logo.svg` | Logo slot. **Replace this placeholder with the official SCG logo file from SCG Brand Center** (keep the file name, or update the `src` in `index.html`) |
 | `data/` | Source data: `companies.json` (from BCM_Dashboard_2026.xlsx, as of 23 Sep 2026) and `hazards.json` (curated news, 13 Oct 2026) |
 | `supabase/` | Table definitions and seed data |
 | `legacy/` | The previous React/Netlify version of the portal, kept unchanged |
+
+## Linked systems
+
+| App | URL |
+|---|---|
+| Crisis Hub | https://crisis-task-hub-pilot.vercel.app/login |
+| Early Warning System (EWS) | https://bcm.scg.com/view/application/EWS_Early_Warning_System_A00/page/Copy_of_1_1_Home_Page_A00 |
+| Intelligent Map | https://bcm.scg.com/view/application/Water_Dashboard_A00 |
+
+Links live in the `LINKS` object in `index.html` and open in a new tab.
+
+## Sign in with Microsoft
+
+The login page uses Supabase Auth with the Azure (Microsoft Entra ID) provider. To turn it on:
+
+1. In Microsoft Entra ID, register an app (single tenant, SCG). Add the redirect URI `https://hhdwvmpquojqkmjsjevk.supabase.co/auth/v1/callback` and create a client secret.
+2. In Supabase → Authentication → Providers → Azure, enter the Application (client) ID, the secret, and the tenant URL `https://login.microsoftonline.com/<tenant-id>`.
+3. In Supabase → Authentication → URL Configuration, add the portal URL (for example `https://bcm-portal-seven.vercel.app`) to Redirect URLs.
+4. Set `msLogin: true` in `config.js` and redeploy.
+
+Until then the button runs in demo mode and signs in without Microsoft.
 
 ## Data flow
 
@@ -35,4 +56,4 @@ Add or edit a row in `portal_hazards` (Supabase Table Editor). Fields: `severity
 
 - Site positions on the map are approximate (province level). The workbook has no coordinates.
 - BU status thresholds (On Track ≥ 85%, Behind 60–84%, Critical < 60%) are prototype defaults.
-- SSO is simulated. Connect Microsoft Entra ID (or Supabase Auth with Azure) before real use.
+- Sign in with Microsoft runs in demo mode until the steps above are done.
