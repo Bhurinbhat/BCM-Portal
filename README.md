@@ -9,7 +9,7 @@ Portal for SCG's Corporate BCM Office. It shows current disaster news across Sou
 | `index.html` | The whole front end: Sign in with Microsoft, landing page (situation map, hazard news with hover details and detail pages, live feed), Readiness Dashboard, news pages |
 | `config.js` | Public runtime config: Supabase URL, publishable key, live-feed endpoint |
 | `api/hazards.js` | Vercel function. Pulls GDACS alerts and USGS M4.5+ earthquakes from the last 21 days, filtered to Southeast Asia, cached 15 minutes |
-| `assets/scg-logo.svg` | Logo slot. **Replace this placeholder with the official SCG logo file from SCG Brand Center** (keep the file name, or update the `src` in `index.html`) |
+| `assets/scg-logo.png` | SCG logo (transparent PNG, 120 px high) used on the login pages, side menu, top bar and as the favicon |
 | `data/` | Source data: `companies.json` (from BCM_Dashboard_2026.xlsx, as of 23 Sep 2026) and `hazards.json` (curated news, 21 Oct 2026) |
 | `supabase/` | Table definitions and seed data |
 | `legacy/` | The previous React/Netlify version of the portal, kept unchanged |
