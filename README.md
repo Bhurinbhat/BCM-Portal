@@ -6,7 +6,7 @@ Portal for SCG's Corporate BCM Office. It shows current disaster news across Sou
 
 | Path | Purpose |
 |---|---|
-| `index.html` | The whole front end: Sign in with Microsoft, landing page (situation map, hazard news with hover details and detail pages, live feed), Readiness Dashboard, news pages |
+| `index.html` | The whole front end: sign in / sign up, home hero with a hub of every BCM system and topic (adapted from the IntegrationsSection component), situation map, hazard news with hover details and detail pages, live feed), Readiness Dashboard, news pages |
 | `config.js` | Public runtime config: Supabase URL, publishable key, live-feed endpoint |
 | `api/hazards.js` | Vercel function. Pulls GDACS alerts and USGS M4.5+ earthquakes from the last 21 days, filtered to Southeast Asia, cached 15 minutes |
 | `assets/scg-logo.png` | SCG logo (transparent PNG, 120 px high) used on the login pages, side menu, top bar and as the favicon |

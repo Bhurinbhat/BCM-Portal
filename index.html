@@ -636,6 +636,35 @@ a.app b svg,a.ph-item b svg{opacity:.55;vertical-align:-1px}
 .ui-opt .ui-chk{position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--ink)}
 .ui-opt small{display:block;color:var(--muted);font-size:11.5px}
 @media (max-width:480px){ .ui-card-content{padding:0 20px 20px} .ui-grid2{grid-template-columns:minmax(0,1fr)} }
+
+/* ===== v6: post-login hero (IntegrationsSection, adapted) ===== */
+.hub{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:40px;align-items:center;border:1px solid var(--line);border-radius:24px;padding:32px;background:var(--surface);box-shadow:var(--shadow)}
+.hub-eyebrow{margin:0;text-transform:uppercase;font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--muted)}
+.hub-title{margin:8px 0 16px;font-family:var(--f-display);font-size:clamp(40px,5.2vw,72px);line-height:1.05;font-weight:700;letter-spacing:-.02em;color:var(--ink)}
+.hub-title span{color:var(--brand)}
+.hub-lead{margin:0 0 24px;color:var(--ink-2);font-size:15.5px;line-height:1.7;max-width:56ch}
+.hub-actions{display:flex;flex-wrap:wrap;gap:12px}
+.ui-btn.dark{background:var(--ink);color:var(--surface);padding:0 20px}
+.ui-btn.dark:hover{opacity:.9}
+.hub-actions .ui-btn{height:42px;padding:0 20px}
+.hub-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:28px;padding-top:20px;border-top:1px solid var(--line)}
+.hub-stats b{display:block;font-family:var(--f-mono);font-weight:500;font-size:24px;line-height:1.1;color:var(--ink)}
+.hub-stats span{font-size:12px;color:var(--muted)}
+.hub-date{margin:14px 0 0;font-size:12px;color:var(--muted)}
+.hub-right{display:flex;flex-direction:column;align-items:center;gap:14px}
+.oct-grid{display:grid;grid-template-columns:repeat(6,minmax(0,64px));gap:16px;justify-content:center}
+.oct{position:relative;width:100%;max-width:64px;aspect-ratio:1;padding:2px;border:0;background:var(--line);clip-path:polygon(25% 0%,75% 0%,100% 25%,100% 75%,75% 100%,25% 100%,0% 75%,0% 25%);display:block;cursor:pointer;transition:transform .18s,background .18s}
+.oct-in{display:grid;place-items:center;width:100%;height:100%;background:var(--surface);color:var(--c);clip-path:polygon(25% 0%,75% 0%,100% 25%,100% 75%,75% 100%,25% 100%,0% 75%,0% 25%);transition:background .18s,color .18s}
+.oct:hover,.oct:focus-visible{transform:translateY(-3px);background:var(--c, var(--ink));outline:none}
+.oct:hover .oct-in,.oct:focus-visible .oct-in{background:color-mix(in srgb,var(--c) 10%,var(--surface))}
+.hub-hint{margin:0;font-size:11.5px;color:var(--muted);text-align:center}
+@media (max-width:1180px){ .hub{grid-template-columns:minmax(0,1fr);gap:28px} }
+@media (max-width:860px){
+  .hub{padding:22px 18px;border-radius:20px}
+  .hub-stats{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .oct-grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;width:100%}
+  .hub-actions .ui-btn{flex:1 1 100%}
+}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
@@ -1231,7 +1260,7 @@ function liveMarks(){
   if(!LIVE||!LIVE.events) return "";
   return LIVE.events.filter(x=>x.lat!=null).map(x=>{const [px,py]=P(x.lat,x.lon);return `<g ${tipAttr(`<b>${esc(x.title)}</b><br>${esc(x.source)} · Alert ${esc(x.alert||'-')}`)}><rect x="${px-5}" y="${py-5}" width="10" height="10" transform="rotate(45 ${px} ${py})" fill="${LIVE_C[x.alert]||'var(--sev-ad)'}" stroke="#fff" stroke-width="1" vector-effect="non-scaling-stroke"/></g>`}).join("");
 }
-function renderHome(){
+function renderHomeBase(){
   const e=evById(S.ev)||EVENTS[0]; S.ev=e.id;
   const overall=avg(CO);
   const buRows=BUS.map(b=>{const a=CO.filter(c=>c.bu===b);return{b,n:a.length,v:avg(a)}});
@@ -1835,6 +1864,72 @@ $("#forgotForm").addEventListener("submit",async ev=>{
 $("#pwToggle").innerHTML=svg("eye",16);
 renderRole();
 function startRadar(){} function stopRadar(){}
+
+/* ================= v6: post-login hero (IntegrationsSection, adapted) ================= */
+Object.assign(ICON,{
+  calendar:'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  exit:'<path d="M14 4h5v16h-5"/><path d="M10 8l-4 4 4 4M6 12h10"/>',
+  link2:'<path d="M9 17H7a5 5 0 0 1 0-10h2M15 7h2a5 5 0 0 1 0 10h-2M8 12h8"/>',
+  flame:'<path d="M12 3c1 4 5 5 5 10a5 5 0 0 1-10 0c0-3 2-4 2-7 1.5 1 2.5 2 3 4 .5-3-.5-5 0-7z"/>',
+});
+const HUB = [
+  {t:"Early Warning System",d:"Dashboard และการแจ้งเตือนภัย",icon:"radar",href:()=>LINKS.ews,c:"var(--sev-wa)"},
+  {t:"Crisis Hub",d:"สร้าง ติดตาม และรายงาน Incident",icon:"siren",href:()=>LINKS.crisis,c:"var(--brand)"},
+  {t:"Intelligent Map",d:"แผนที่ลุ่มน้ำ Site และการแจ้งเตือน",icon:"map",href:()=>LINKS.imap,c:"var(--sev-ad)"},
+  {t:"Water Dashboard",d:"ติดตามระดับน้ำและน้ำท่วม",icon:"water",go:"apps",c:"#0EA5B7"},
+  {t:"Call Tree",d:"ยืนยันข้อมูลติดต่อพนักงาน",icon:"phone",go:"apps",c:"var(--ok)"},
+  {t:"International SOS",d:"บริการการแพทย์และความปลอดภัยการเดินทาง",icon:"globe",go:"apps",c:"#7C5CDB"},
+  {t:"Readiness Dashboard",d:"ความพร้อม BCM ของ 147 บริษัท/Site",icon:"gauge",go:"readiness",c:"var(--ok)"},
+  {t:"ข่าวสารและแจ้งเตือน",d:"BCM Watch · In Focus · Announcement",icon:"bell",go:"news",c:"var(--sev-wa)"},
+  {t:"รู้จัก BCM",d:"ภาพรวม หลักการ ISO 22301 และคำศัพท์",icon:"book",go:"about",c:"var(--sev-ad)"},
+  {t:"SCG BCM Framework",d:"กรอบแนวปฏิบัติ BCM ขององค์กร",icon:"link2",go:"ops",c:"var(--ink-2)"},
+  {t:"โครงสร้างการกำกับดูแล",d:"Corporate BCM · BU BCM · Site · ERT · CMC",icon:"org",go:"ops",c:"var(--ink-2)"},
+  {t:"แผนประจำปี & Calendar",d:"Milestone การอบรม และการซ้อมแผน",icon:"calendar",go:"ops",c:"var(--sev-ad)"},
+  {t:"ข้อกำหนดการตรวจประเมิน",d:"Internal / External audit และ Maturity",icon:"check",go:"ops",c:"var(--ok)"},
+  {t:"Natural Hazards ERP",d:"น้ำท่วม แผ่นดินไหว พายุ ภัยแล้ง",icon:"shield",go:"erp",c:"var(--sev-ad)"},
+  {t:"Man-made Incidents ERP",d:"อัคคีภัย ระเบิด สารเคมีรั่วไหล ไฟฟ้าดับ",icon:"flame",go:"erp",c:"var(--brand)"},
+  {t:"Evacuation Plans",d:"การอพยพ จุดรวมพล และการนับยอด",icon:"exit",go:"erp",c:"var(--sev-wa)"},
+  {t:"BCP Manuals",d:"BCP รายกลุ่มธุรกิจและกลยุทธ์การกู้คืน",icon:"doc",go:"bcp",c:"var(--ink-2)"},
+  {t:"Crisis Management Manual",d:"โครงสร้างและคู่มือการบริหารวิกฤต",icon:"alert",go:"bcp",c:"var(--brand)"},
+];
+function hubTile(h){
+  const tip = tipAttr(`<b>${h.t}</b><br>${h.d}${h.href?'<br><span style="opacity:.7">เปิดในแท็บใหม่ ↗</span>':''}`);
+  const inner = `<span class="oct-in">${svg(h.icon,24)}</span>`;
+  return h.href ? `<a class="oct" style="--c:${h.c}" href="${h.href()}" target="_blank" rel="noopener" aria-label="${h.t}" ${tip}>${inner}</a>`
+                : `<button class="oct" style="--c:${h.c}" data-go="${h.go}" aria-label="${h.t}" ${tip}>${inner}</button>`;
+}
+function heroHTML(){
+  const now = new Date().toLocaleDateString("th-TH-u-ca-gregory",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+  const atRisk = new Set(EVENTS.flatMap(x=>x.sites||[])).size;
+  return `<section class="hub">
+    <div class="hub-left">
+      <p class="hub-eyebrow">SCG BCM Portal · สวัสดี ${esc((USER.name||"").split(" ")[0])}</p>
+      <h2 class="hub-title">เตรียมพร้อม รับมือ <span>ฟื้นตัว</span></h2>
+      <p class="hub-lead">ศูนย์รวมระบบและข้อมูลด้าน Business Continuity Management ของ SCG ติดตามภัยที่กำลังเกิดขึ้น ตรวจสอบความพร้อมของทุก Site และเข้าสู่ EWS, Crisis Hub และ Intelligent Map ได้จากที่เดียว</p>
+      <div class="hub-actions">
+        <button class="ui-btn dark" data-go="readiness">${svg("gauge",16)}เปิด Readiness Dashboard</button>
+        <button class="ui-btn outline" data-go="news">ข่าวสารและแจ้งเตือน →</button>
+      </div>
+      <div class="hub-stats">
+        <div><b style="color:var(--sev-em)">${EVENTS.filter(x=>x.sev==="em").length}</b><span>Emergency</span></div>
+        <div><b style="color:var(--sev-wa)">${EVENTS.filter(x=>x.sev==="wa"||x.sev==="wt").length}</b><span>Warning / Watch</span></div>
+        <div><b>${atRisk}</b><span>Site ในพื้นที่เสี่ยง</span></div>
+        <div><b>${Math.round(avg(CO)*100)}%</b><span>ความพร้อมเฉลี่ย</span></div>
+      </div>
+      <p class="hub-date">${now}</p>
+    </div>
+    <div class="hub-right">
+      <div class="oct-grid">${HUB.map(hubTile).join("")}</div>
+      <p class="hub-hint">ชี้เมาส์ที่ไอคอนเพื่อดูชื่อระบบ · ไอคอนที่มี ↗ เปิดระบบภายนอกในแท็บใหม่</p>
+    </div>
+  </section>`;
+}
+function renderHome(){
+  let h = renderHomeBase();
+  const a = h.indexOf('<div class="greet">'), b = h.indexOf('<div class="ticker">');
+  if(a>-1 && b>a) h = h.slice(0,a) + heroHTML() + "\n  " + h.slice(b);
+  return h;
+}
 
 /* ================= LOGIN ================= */
 $("#logout").addEventListener("click",async()=>{ await signOut(); $("#app").hidden=true; $("#login").hidden=false; resetSSO(); document.querySelectorAll("#login form").forEach(f=>f.reset()); authView("signin"); });
