@@ -6,7 +6,7 @@ Portal for SCG's Corporate BCM Office. It shows current disaster news across Sou
 
 | Path | Purpose |
 |---|---|
-| `index.html` | The whole front end: sign in / sign up, home page (short hero with 4 key numbers, situation map, hazard news with hover details and detail pages, live feed), Readiness Dashboard split into sections, news pages, Thai/English language menu |
+| `index.html` | The whole front end: sign in / sign up, home page (short hero with 4 key numbers, situation map, hazard news with hover details and detail pages, live feed), Readiness Dashboard split into sections, ICS key-contacts chart, news pages, Thai/English language menu |
 | `config.js` | Public runtime config: Supabase URL, publishable key, live-feed endpoint |
 | `api/hazards.js` | Vercel function. Pulls GDACS alerts and USGS M4.5+ earthquakes from the last 21 days, filtered to Southeast Asia, cached 15 minutes |
 | `assets/scg-logo.png` | SCG logo (transparent PNG, 120 px high) used on the login pages, side menu, top bar and as the favicon |
@@ -28,6 +28,28 @@ The dashboard opens on a grid of section cards. Each card opens one section, and
 | Companies | `#rd-list` |
 
 Bar charts, pie charts, heatmaps and the map highlight the item under the mouse, dim the rest and show its numbers.
+
+## ICS key contacts (ผัง ICS ผู้รับผิดชอบ)
+
+Sidebar menu "ผัง ICS ผู้รับผิดชอบ" (`#ics`, or `#ics-SCGP` for one BU) shows who is responsible during an incident:
+
+- Corporate level: CMC Chair and Corporate BCM Office.
+- Each BU (SCGC, SCGP, CGS, SL, SCGD, D&R, CBM): an ICS chart with the Incident Commander, Command Staff (Safety, Liaison, Public Information) and General Staff (Operations, Planning, Logistics, Finance/Admin), plus the BU BCM Coordinator.
+- Each site from `portal_companies`: Site Incident Commander (LMT leader), ERT Leader and Site BCM Coordinator. Click a site for its own chart, the event affecting it and who it reports to.
+- Events with affected sites appear as filters at the top, and sites in hazard areas are listed first. A hazard's detail page has a button that opens the ICS chart filtered to its sites.
+
+Names and phone numbers come from the Supabase table `portal_ics_contacts`. Only signed-in users can read it (RLS: `select` for `authenticated` only; the public key has no access), so names show only after Sign in with Microsoft is turned on. Until then the page shows the structure with "รอระบุชื่อ" in each slot.
+
+Fill the table in the Supabase Table Editor, one row per person:
+
+| Column | Value |
+|---|---|
+| `bu` | `SCG` for corporate roles, otherwise the BU code as in `portal_companies.bu` |
+| `site_name` | empty for BU-level roles; for site roles, exactly `portal_companies.name` |
+| `role` | `cmc_chair`, `corp_bcm` (corporate) · `ic`, `safety`, `liaison`, `pio`, `ops`, `plan`, `log`, `fin`, `bcm_co` (BU) · `site_ic`, `ert`, `site_bcm` (site) |
+| `person_name`, `position`, `phone`, `email`, `backup_name`, `backup_phone` | contact details |
+
+Each (bu, site_name, role) slot can have one row.
 
 ## Language
 

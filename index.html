@@ -762,6 +762,136 @@ svg path[data-tip]:hover{filter:brightness(1.15);stroke:var(--ink);stroke-width:
   .cls-donuts{grid-template-columns:repeat(3,minmax(0,1fr))}
   .appbar .lang-btn{background:transparent;border-color:#223047;color:#C9D1DD}
 }
+
+/* ===== v8: ICS chart ===== */
+.page.ics{display:flex;flex-direction:column;gap:18px}
+.page.ics .page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.ics-note{display:flex;align-items:center;gap:10px;padding:11px 14px;border:1px dashed color-mix(in srgb,var(--brand) 40%,var(--line));border-radius:12px;background:color-mix(in srgb,var(--brand) 5%,var(--surface));font-size:13px;color:var(--ink-2)}
+.ics-note svg{color:var(--brand);flex:none}
+.ics-evbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.ics-evl{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--ink)}
+.ics-chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:12.5px;color:var(--ink-2);max-width:100%}
+.ics-chip i{width:8px;height:8px;border-radius:50%;background:var(--c,var(--muted));flex:none}
+.ics-chip b{font-family:var(--f-mono);font-weight:500;color:var(--muted)}
+.ics-chip:hover{background:var(--surface-2)}
+.ics-chip.on{background:var(--ink);color:var(--surface);border-color:var(--ink)}.ics-chip.on b{color:inherit}
+.ics-n{font:500 11px var(--f-mono);opacity:.65}
+.ics-dot{width:7px;height:7px;border-radius:50%;background:var(--sev-wa);display:inline-block}
+.ics-corp .ics-row{max-width:760px;margin:0 auto}
+
+/* person card */
+.ics-card{position:relative;text-align:left;border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:14px 14px 13px;display:flex;flex-direction:column;gap:2px;min-width:0;box-shadow:0 1px 0 rgba(16,21,33,.03);transition:border-color .15s,box-shadow .15s}
+.ics-card::before{content:"";position:absolute;left:0;top:12px;bottom:12px;width:3px;border-radius:0 3px 3px 0;background:var(--c,var(--line))}
+.ics-card:hover{border-color:color-mix(in srgb,var(--c,var(--ink)) 45%,var(--line));box-shadow:0 10px 24px -16px rgba(16,21,33,.4)}
+.ics-card.lead{padding:16px 18px;border-color:color-mix(in srgb,var(--brand) 35%,var(--line));background:linear-gradient(180deg,color-mix(in srgb,var(--brand) 6%,var(--surface)),var(--surface))}
+.ics-role{font-size:12.5px;font-weight:600;color:var(--ink)}
+.ics-en{font:500 10.5px var(--f-mono);color:var(--muted);letter-spacing:.02em;margin-bottom:6px}
+.ics-name{font-family:var(--f-display);font-size:16px;font-weight:600;color:var(--ink);margin-top:4px}
+.ics-card.lead .ics-name{font-size:19px}
+.ics-pos{font-size:12px;color:var(--muted)}
+.ics-act{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.ics-act a{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:4px 9px;border-radius:8px;background:var(--surface-2);color:var(--ink);text-decoration:none}
+.ics-act a:hover{background:color-mix(in srgb,var(--brand) 10%,var(--surface-2))}
+.ics-bk{font-size:11.5px;color:var(--muted);margin-top:6px}
+.ics-bk a{color:inherit}
+.ics-empty{display:inline-block;margin-top:6px;font-size:12px;color:var(--muted);padding:3px 9px;border:1px dashed var(--line);border-radius:7px}
+.ics-card.empty{background:var(--surface)}
+
+/* tree */
+.ics-tree{display:flex;flex-direction:column;align-items:center;padding:6px 0 4px;position:relative}
+.ics-top{width:min(340px,100%)}
+.ics-stem{width:2px;height:22px;background:var(--line)}
+.ics-band{position:relative;width:100%;border:1px solid var(--line);border-radius:16px;padding:22px 14px 14px;background:var(--surface-2)}
+.ics-band-l{position:absolute;top:-10px;left:50%;transform:translateX(-50%);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:1px 12px;font:600 11px var(--f-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.ics-row{display:grid;gap:12px}
+.ics-row.r2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.ics-row.r3{grid-template-columns:repeat(3,minmax(0,1fr));max-width:880px;margin:0 auto}
+.ics-row.r4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.ics-side{width:min(340px,100%);margin-top:16px;align-self:flex-end}
+.ics-tree .ics-row:has(.ics-card:hover) .ics-card:not(:hover){opacity:.55}
+.ics-tree .ics-card{transition:opacity .15s,border-color .15s,box-shadow .15s}
+
+/* BU overview grid */
+.ics-bugrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.ics-bu{text-align:left;border:1px solid var(--line);border-radius:18px;background:var(--surface);padding:18px;display:flex;flex-direction:column;gap:12px;box-shadow:var(--shadow);transition:transform .18s,border-color .18s,box-shadow .18s}
+.ics-bu:hover{transform:translateY(-3px);border-color:color-mix(in srgb,var(--brand) 40%,var(--line))}
+.ics-bu:hover .ics-go{color:var(--brand)}
+.ics-bu-h{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.ics-bu-h b{font-family:var(--f-display);font-size:24px;font-weight:600}
+.ics-bu-h .sev{font-size:10.5px}
+.ics-bu-ic{display:flex;flex-direction:column;gap:2px;padding:10px 12px;border-radius:12px;background:var(--surface-2)}
+.ics-bu-ic small{font-size:11.5px;color:var(--muted)}
+.ics-bu-ic .ics-empty{margin-top:2px;align-self:flex-start}
+.ics-bu-m{display:flex;gap:16px;font-size:12.5px;color:var(--muted)}.ics-bu-m b{font-family:var(--f-mono);font-weight:500;font-size:15px;color:var(--ink)}
+.ics-fill{display:flex;flex-direction:column;gap:5px}.ics-fill small{font-size:11.5px;color:var(--muted)}
+.ics-fill .bar{height:6px}
+.ics-go{font-size:12.5px;font-weight:600;color:var(--muted)}
+
+/* site list */
+.ics-q{width:min(320px,100%)}
+.ics-head-row,.ics-site{display:grid;grid-template-columns:minmax(0,1.5fr) repeat(3,minmax(0,1fr));gap:14px;align-items:center}
+.ics-head-row{padding:8px 14px;font-size:11.5px;font-weight:600;color:var(--muted);border-bottom:1px solid var(--line)}
+.ics-cgroup{display:flex;flex-direction:column}
+.ics-ctry{display:flex;align-items:center;gap:6px;padding:14px 14px 6px;font-size:12px;font-weight:600;color:var(--ink-2)}
+.ics-ctry span{font:500 11px var(--f-mono);color:var(--muted)}
+.ics-site{padding:11px 14px;border-radius:12px;cursor:pointer;transition:background .15s,opacity .15s}
+.ics-site:hover,.ics-site:focus-visible{background:var(--surface-2);outline:none}
+.ics-sites:has(.ics-site:hover) .ics-site:not(:hover){opacity:.6}
+.ics-sname{display:flex;flex-direction:column;gap:2px;min-width:0}
+.ics-sname b{font-size:13.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ics-sname small{font-size:11.5px;color:var(--muted)}
+.ics-evs{display:flex;gap:4px;flex-wrap:wrap;margin-top:3px}.ics-evs .sev{font-size:10px;padding:1px 7px}
+.ics-cell{display:flex;flex-direction:column;gap:1px;min-width:0;font-size:12.5px}
+.ics-cell small{display:none;font-size:11px;color:var(--muted)}
+.ics-cell b{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ics-cell a{font:500 11.5px var(--f-mono);color:var(--muted)}
+.ics-cell .ics-empty{margin-top:0;align-self:flex-start;font-size:11px;padding:1px 7px}
+
+/* site modal */
+.ics-modal{position:fixed;inset:0;z-index:60;background:rgba(8,12,20,.55);backdrop-filter:blur(3px);display:grid;place-items:center;padding:20px}
+.ics-dialog{width:min(640px,100%);max-height:calc(100dvh - 40px);overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:0 30px 70px -20px rgba(0,0,0,.5);padding:22px;display:flex;flex-direction:column;gap:16px}
+.ics-dh{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.ics-dh h3{margin:2px 0 4px;font-size:20px}
+.ics-dh .x{border:0;background:var(--surface-2);width:34px;height:34px;border-radius:10px;flex:none;color:var(--ink)}
+.ics-dev{display:flex;flex-direction:column;gap:6px}
+.ics-dev a{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink);text-decoration:none;padding:8px 10px;border-radius:10px;background:var(--surface-2)}
+.ics-dev a:hover{text-decoration:underline}
+.ics-up{display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:13px;color:var(--ink-2);padding:10px 12px;border:1px solid var(--line);border-radius:12px}
+.ics-up a{color:inherit}.ics-up .ics-empty{margin:0}
+.ics-mtree{display:flex;flex-direction:column;align-items:center}
+.ics-mtree > .ics-card{width:min(320px,100%)}
+.ics-mtree .ics-row{width:100%}
+.ics-dfoot{display:flex;justify-content:flex-end;gap:10px;flex-wrap:wrap}
+.ics-dfoot .ui-btn{height:40px;padding:0 16px;display:inline-flex;align-items:center;gap:7px;text-decoration:none}
+body.ics-open{overflow:hidden}
+
+@media (max-width:1180px){ .ics-row.r4{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:860px){
+  .bnav{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .bnav button,.bnav a{font-size:10px;white-space:nowrap}
+  .ics-tree .ics-row.r3,.ics-tree .ics-row.r4{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .ics-tree .ics-card{padding:12px 10px 11px 12px}
+  .ics-tree .ics-en{display:none}
+  .ics-corp .ics-row.r2{grid-template-columns:minmax(0,1fr)}
+  .ics-band{padding:22px 10px 10px}
+  .ics-side{align-self:stretch;width:100%}
+  .ics-head-row{display:none}
+  .ics-site{grid-template-columns:minmax(0,1fr);gap:8px;border:1px solid var(--line);margin:0 0 8px}
+  .ics-cell{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center}
+  .ics-cell small{display:block}
+  .ics-cell b{grid-column:2}.ics-cell a{grid-column:2;justify-self:end}
+  .ics-cell .ics-empty{justify-self:end}
+  .ics-print{display:none}
+  .ics-modal{padding:0;place-items:end stretch}
+  .ics-dialog{border-radius:20px 20px 0 0;max-height:88dvh;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px))}
+  .ics-q{width:100%}
+  .page.ics .card-head{flex-wrap:wrap}
+}
+@media print{
+  .rail,.appbar,#bnav,.ics-tabs,.ics-evbar,.ics-print,.ics-q,.ics-note,.lang-float{display:none!important}
+  .ics-site{break-inside:avoid}
+  .ics-sites:has(.ics-site:hover) .ics-site{opacity:1!important}
+}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
@@ -891,6 +1021,21 @@ svg path[data-tip]:hover{filter:brightness(1.15);stroke:var(--ink);stroke-width:
 
 /* ================= v7: Thai / English ================= */
 const I18N = {
+ // v8 ICS
+ "ผัง ICS ผู้รับผิดชอบ":"ICS key contacts","ผัง ICS":"ICS","ประธาน CMC":"CMC Chair","Crisis Management Committee ระดับองค์กร":"Corporate Crisis Management Committee","ประสานงานทุก BU และติดตามสถานการณ์":"Coordinates all BUs and monitors the situation",
+ "ผู้บัญชาการเหตุการณ์":"Incident Commander","ผู้นำ CMC ของ BU":"BU CMC leader","เจ้าหน้าที่ความปลอดภัย":"Safety Officer","เจ้าหน้าที่ประสานงาน":"Liaison Officer","เจ้าหน้าที่ประชาสัมพันธ์":"Public Information Officer",
+ "ฝ่ายปฏิบัติการ":"Operations","ฝ่ายวางแผน":"Planning","ฝ่ายสนับสนุน":"Logistics","ฝ่ายการเงินและธุรการ":"Finance / Admin","BCM Coordinator ของ BU":"BU BCM Coordinator",
+ "หัวหน้า LMT ของ Site":"Site Incident Commander","หัวหน้า ERT":"ERT Leader","BCM Coordinator ของ Site":"Site BCM Coordinator",
+ "รอระบุชื่อ":"Name pending","สำรอง:":"Backup:","กำลังโหลดรายชื่อ…":"Loading contacts…","ยังไม่มีรายชื่อในตาราง portal_ics_contacts":"No contacts in portal_ics_contacts yet","โหลดรายชื่อไม่สำเร็จ":"Could not load contacts",
+ "รายชื่อจะแสดงเมื่อเข้าสู่ระบบด้วย Microsoft SSO":"Names appear after signing in with Microsoft SSO","ตอนนี้แสดงโครงสร้างและตำแหน่งไว้ก่อน":"showing the structure and roles for now",
+ "ไม่พบ Site ตามเงื่อนไข":"No sites match","รายงานต่อ:":"Reports to:","ความพร้อม BCM":"BCM readiness","ดู Checklist ความพร้อม":"Open readiness checklist","เปิด Crisis Hub":"Open Crisis Hub",
+ "ทุก BU":"All BUs","เหตุการณ์ที่กำลังติดตาม":"Events being monitored","ทุก Site":"All sites","ระดับองค์กร":"Corporate level",
+ "ดูผัง ICS →":"View ICS chart →","กรอกแล้ว":"Filled","ตำแหน่ง":"roles","ผัง ICS ระดับ BU ·":"BU ICS chart ·","← ทุก BU":"← All BUs",
+ "ผู้รับผิดชอบหลักของแต่ละ BU และ Site สำหรับเรียกดูเมื่อเกิดเหตุการณ์":"Key people for each BU and site, ready to look up when an incident happens",
+ "พิมพ์ / PDF":"Print / PDF","Site / โรงงาน":"Sites / plants","Site ในพื้นที่ภัยแสดงก่อน · คลิกเพื่อดูผัง ICS ของ Site":"Sites in hazard areas first · click a site to see its ICS chart",
+ "ค้นหา Site หรือชื่อผู้รับผิดชอบ":"Search site or person","ผัง ICS ของ Site ในพื้นที่":"ICS chart of affected sites","ประเทศ":"countries",
+ "เลือก BU หรือค้นหาเพื่อดู Site อื่น":"Pick a BU or search to see other sites","Site ในพื้นที่ภัย":"Sites in hazard areas",
+
  // navigation & shell
  "หน้าหลัก":"Home","ข่าวสารและแจ้งเตือน":"News & Alerts","แอปพลิเคชันทั้งหมด":"All applications","แอปพลิเคชันอื่น ๆ":"Other applications","ข้อมูล BCM":"BCM information",
  "รู้จัก BCM":"About BCM","การดำเนินงาน BCM ใน SCG":"BCM Operation in SCG","คู่มือ ERP":"ERP Manuals","คู่มือ BCP":"BCP Manuals","ติดต่อเรา":"Contact us",
@@ -2320,6 +2465,256 @@ function renderHome(){
   if(a>-1&&b>a) h=h.slice(0,a)+heroHTML()+"\n  "+h.slice(b);
   return h.replace('<div class="page">','<div class="page home-lite">');
 }
+
+/* ================= v8: ICS chart (key people per BU and site) ================= */
+Object.assign(ICON,{
+  users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  print:'<path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>',
+  lock:'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>'
+});
+ROUTES.push("ics");
+
+/* ICS roles. key = value of `role` in Supabase table portal_ics_contacts */
+const ICS_CORP = [
+  {k:"cmc_chair", t:"ประธาน CMC", en:"CMC Chair", d:"Crisis Management Committee ระดับองค์กร"},
+  {k:"corp_bcm",  t:"Corporate BCM Office", en:"Corporate BCM Office", d:"ประสานงานทุก BU และติดตามสถานการณ์"},
+];
+const ICS_IC = {k:"ic", t:"ผู้บัญชาการเหตุการณ์", en:"Incident Commander", d:"ผู้นำ CMC ของ BU"};
+const ICS_CMD = [
+  {k:"safety",  t:"เจ้าหน้าที่ความปลอดภัย", en:"Safety Officer"},
+  {k:"liaison", t:"เจ้าหน้าที่ประสานงาน", en:"Liaison Officer"},
+  {k:"pio",     t:"เจ้าหน้าที่ประชาสัมพันธ์", en:"Public Information Officer"},
+];
+const ICS_GEN = [
+  {k:"ops",  t:"ฝ่ายปฏิบัติการ", en:"Operations Section Chief"},
+  {k:"plan", t:"ฝ่ายวางแผน", en:"Planning Section Chief"},
+  {k:"log",  t:"ฝ่ายสนับสนุน", en:"Logistics Section Chief"},
+  {k:"fin",  t:"ฝ่ายการเงินและธุรการ", en:"Finance / Admin Section Chief"},
+];
+const ICS_BUCO = {k:"bcm_co", t:"BCM Coordinator ของ BU", en:"BU BCM Coordinator"};
+const ICS_SITE = [
+  {k:"site_ic",  t:"หัวหน้า LMT ของ Site", en:"Site Incident Commander"},
+  {k:"ert",      t:"หัวหน้า ERT", en:"ERT Leader"},
+  {k:"site_bcm", t:"BCM Coordinator ของ Site", en:"Site BCM Coordinator"},
+];
+const ICS_BU_ORDER = ["SCGC","SCGP","CGS","SL","SCGD","D&R","CBM"];
+const ICS_BU_ROLES = [ICS_IC,...ICS_CMD,...ICS_GEN,ICS_BUCO];
+
+/* rows: {bu, site_name|null, role, person_name, position, phone, email, backup_name, backup_phone} */
+let ICS_ROWS = [];
+const ICS_STATE = {src:"none", loading:false, tried:false};
+async function loadICS(){
+  if(ICS_STATE.tried) return; ICS_STATE.tried=true;
+  let c=null; try{ c=await sbAuth(); }catch(e){}
+  if(!c){ ICS_STATE.src="demo"; return; }
+  try{
+    const {data:{session}} = await c.auth.getSession();
+    if(!session){ ICS_STATE.src="nosession"; return; }
+    ICS_STATE.loading=true; if(S.route==="ics") render();
+    const {data,error} = await c.from("portal_ics_contacts").select("bu,site_name,role,person_name,position,phone,email,backup_name,backup_phone,updated_at");
+    if(error) throw error;
+    ICS_ROWS = data||[]; ICS_STATE.src="supabase";
+  }catch(e){ console.warn("ICS contacts unavailable",e); ICS_STATE.src="error"; }
+  ICS_STATE.loading=false; if(S.route==="ics") render();
+}
+const icsKey = (bu,site,role) => bu+"|"+(site||"")+"|"+role;
+let ICS_IDX = null, ICS_IDX_N = -1;
+function icsGet(bu,site,role){
+  if(ICS_IDX_N!==ICS_ROWS.length){ ICS_IDX=new Map(ICS_ROWS.map(r=>[icsKey(r.bu,r.site_name,r.role),r])); ICS_IDX_N=ICS_ROWS.length; }
+  return ICS_IDX.get(icsKey(bu,site,role))||null;
+}
+const icsBus = () => [...ICS_BU_ORDER.filter(b=>CO.some(c=>c.bu===b)), ...[...new Set(CO.map(c=>c.bu))].filter(b=>!ICS_BU_ORDER.includes(b))];
+function icsSiteEvents(){ const m=new Map(); EVENTS.forEach(e=>(e.sites||[]).forEach(n=>{ if(!m.has(n)) m.set(n,[]); m.get(n).push(e); })); return m; }
+
+function personCard(role,p,opts={}){
+  const label = LANG==="en"?role.en:role.t;
+  const sub = LANG==="en"?"":`<small class="ics-en">${role.en}</small>`;
+  const body = p
+    ? `<b class="ics-name">${esc(p.person_name||"")}</b>${p.position?`<span class="ics-pos">${esc(p.position)}</span>`:""}
+       <div class="ics-act">${p.phone?`<a href="tel:${esc(String(p.phone).replace(/[^\d+]/g,""))}">${svg("phone",13)}${esc(p.phone)}</a>`:""}${p.email?`<a href="mailto:${esc(p.email)}">${svg("mail",13)}อีเมล</a>`:""}</div>
+       ${p.backup_name?`<span class="ics-bk">สำรอง: ${esc(p.backup_name)}${p.backup_phone?` · <a href="tel:${esc(String(p.backup_phone).replace(/[^\d+]/g,""))}">${esc(p.backup_phone)}</a>`:""}</span>`:""}`
+    : `<span class="ics-empty">รอระบุชื่อ</span>`;
+  return `<div class="ics-card${p?"":" empty"}${opts.lead?" lead":""}" style="${opts.c?`--c:${opts.c}`:""}"><span class="ics-role">${label}</span>${sub}${body}</div>`;
+}
+function filledCount(bu){
+  const sites=CO.filter(c=>c.bu===bu);
+  const total=ICS_BU_ROLES.length+sites.length*ICS_SITE.length;
+  const n=ICS_BU_ROLES.filter(r=>icsGet(bu,null,r.k)).length + sites.reduce((s,c)=>s+ICS_SITE.filter(r=>icsGet(bu,c.name,r.k)).length,0);
+  return [n,total];
+}
+function icsNotice(){
+  if(ICS_STATE.loading) return `<div class="ics-note">กำลังโหลดรายชื่อ…</div>`;
+  if(ICS_STATE.src==="supabase" && ICS_ROWS.length) return "";
+  const msg = ICS_STATE.src==="supabase" ? "ยังไม่มีรายชื่อในตาราง portal_ics_contacts"
+    : ICS_STATE.src==="error" ? "โหลดรายชื่อไม่สำเร็จ"
+    : "รายชื่อจะแสดงเมื่อเข้าสู่ระบบด้วย Microsoft SSO";
+  return `<div class="ics-note">${svg("lock",15)}<span><b>${msg}</b> · ตอนนี้แสดงโครงสร้างและตำแหน่งไว้ก่อน</span></div>`;
+}
+
+function icsTree(bu){
+  const g=(r,o)=>personCard(r,icsGet(bu,null,r.k),o);
+  return `<div class="ics-tree">
+    <div class="ics-top">${g(ICS_IC,{lead:true,c:"var(--brand)"})}</div>
+    <div class="ics-stem"></div>
+    <div class="ics-band"><span class="ics-band-l">Command Staff</span><div class="ics-row r3">${ICS_CMD.map(r=>g(r,{c:"var(--sev-wa)"})).join("")}</div></div>
+    <div class="ics-stem"></div>
+    <div class="ics-band"><span class="ics-band-l">General Staff</span><div class="ics-row r4">${ICS_GEN.map(r=>g(r,{c:"var(--ok)"})).join("")}</div></div>
+    <div class="ics-side">${g(ICS_BUCO,{c:"var(--ink-2)"})}</div>
+  </div>`;
+}
+
+function icsSiteRows(sites,evMap){
+  if(!sites.length) return `<div class="muted" style="padding:16px">ไม่พบ Site ตามเงื่อนไข</div>`;
+  const byC={}; sites.forEach(c=>(byC[c.country]=byC[c.country]||[]).push(c));
+  return Object.entries(byC).sort((a,b)=>b[1].length-a[1].length).map(([ctry,list])=>`
+    <div class="ics-cgroup"><div class="ics-ctry">${svg("pin",13)} ${ctry} <span>${list.length}</span></div>
+    ${list.map(c=>{ const st=statusOf(c.pct), ev=evMap.get(c.name)||[];
+      const p=r=>{ const x=icsGet(c.bu,c.name,r.k); return `<div class="ics-cell"><small>${LANG==="en"?r.en:r.t}</small>${x?`<b>${esc(x.person_name)}</b>${x.phone?`<a href="tel:${esc(String(x.phone).replace(/[^\d+]/g,""))}">${esc(x.phone)}</a>`:""}`:`<span class="ics-empty">รอระบุชื่อ</span>`}</div>`; };
+      return `<div class="ics-site" role="button" tabindex="0" data-ics-site="${c.id}">
+        <div class="ics-sname"><b>${esc(c.name)}</b><small>${c.bu}${c.sub?" · "+esc(c.sub):""} · <span style="color:${st[2]}">${Math.round(c.pct*100)}%</span></small>
+          ${ev.length?`<div class="ics-evs">${ev.map(e=>`<span class="sev ${e.sev}">${e.sevT}</span>`).join("")}</div>`:""}</div>
+        ${ICS_SITE.map(p).join("")}
+      </div>`; }).join("")}</div>`).join("");
+}
+
+function icsModal(c,evMap){
+  const ev=evMap.get(c.name)||[], st=statusOf(c.pct);
+  const up=icsGet(c.bu,null,"ic");
+  return `<div class="ics-modal" data-ics-close>
+    <div class="ics-dialog" role="dialog" aria-modal="true" aria-label="${esc(c.name)}">
+      <div class="ics-dh"><div><span class="eyebrow">${c.bu} · ${c.country}</span><h3>${esc(c.name)}</h3>
+        <small class="muted">ความพร้อม BCM <b style="color:${st[2]}">${Math.round(c.pct*100)}%</b> · ${st[1]}</small></div>
+        <button class="x" data-ics-close aria-label="ปิด">✕</button></div>
+      ${ev.length?`<div class="ics-dev">${ev.map(e=>`<a href="#a-${e.id}" data-go-article="${e.id}"><span class="sev ${e.sev}">${e.sevT}</span>${esc(e.title)}</a>`).join("")}</div>`:""}
+      <div class="ics-up">${svg("org",14)} รายงานต่อ: <b>${LANG==="en"?ICS_IC.en:ICS_IC.t} ${c.bu}</b> ${up?`· ${esc(up.person_name)}${up.phone?` · <a href="tel:${esc(String(up.phone).replace(/[^\d+]/g,""))}">${esc(up.phone)}</a>`:""}`:`· <span class="ics-empty">รอระบุชื่อ</span>`}</div>
+      <div class="ics-mtree">
+        ${personCard(ICS_SITE[0],icsGet(c.bu,c.name,"site_ic"),{lead:true,c:"var(--brand)"})}
+        <div class="ics-stem"></div>
+        <div class="ics-row r2">${ICS_SITE.slice(1).map(r=>personCard(r,icsGet(c.bu,c.name,r.k),{c:"var(--ok)"})).join("")}</div>
+      </div>
+      <div class="ics-dfoot"><button class="ui-btn outline" data-go="readiness" data-ics-close>ดู Checklist ความพร้อม</button><a class="ui-btn dark" href="${LINKS.crisis}" target="_blank" rel="noopener">${svg("siren",15)}เปิด Crisis Hub</a></div>
+    </div></div>`;
+}
+
+function renderICS(){
+  if(!ICS_STATE.tried) setTimeout(loadICS,0);
+  const bus=icsBus(), evMap=icsSiteEvents(), bu=S.icsBu&&bus.includes(S.icsBu)?S.icsBu:null;
+  const evNow=EVENTS.filter(e=>(e.sites||[]).length);
+  const evSel=S.icsEv?EVENTS.find(e=>e.id===S.icsEv):null;
+  const q=(S.icsQ||"").trim().toLowerCase();
+  let sites=CO.filter(c=>!bu||c.bu===bu);
+  if(evSel) sites=sites.filter(c=>(evSel.sites||[]).includes(c.name));
+  if(q) sites=sites.filter(c=>(c.name+" "+c.plant+" "+c.country+" "+c.bu).toLowerCase().includes(q) || ICS_SITE.some(r=>{const x=icsGet(c.bu,c.name,r.k);return x&&String(x.person_name).toLowerCase().includes(q)}));
+  const onlyHit = !bu && !evSel && !q;
+  if(onlyHit) sites=sites.filter(c=>evMap.has(c.name));
+  sites.sort((a,b)=>(evMap.has(b.name)-evMap.has(a.name))||a.country.localeCompare(b.country)||a.name.localeCompare(b.name));
+
+  const tabs=`<div class="ds-tabs ics-tabs" role="tablist">
+    <button class="${!bu?"on":""}" data-ics-bu="">${svg("globe",15)}ทุก BU</button>
+    ${bus.map(b=>{const n=CO.filter(c=>c.bu===b).length, hit=CO.filter(c=>c.bu===b&&evMap.has(c.name)).length;
+      return `<button class="${bu===b?"on":""}" data-ics-bu="${esc(b)}">${b} <span class="ics-n">${n}</span>${hit?`<i class="ics-dot" title="Site ในพื้นที่ภัย ${hit}"></i>`:""}</button>`;}).join("")}
+  </div>`;
+
+  const evBar = evNow.length?`<div class="ics-evbar"><span class="ics-evl">${svg("alert",15)}เหตุการณ์ที่กำลังติดตาม</span>
+    <button class="ics-chip${!evSel?" on":""}" data-ics-ev="">ทุก Site</button>
+    ${evNow.map(e=>{const n=CO.filter(c=>(!bu||c.bu===bu)&&(e.sites||[]).includes(c.name)).length;
+      return `<button class="ics-chip${evSel&&evSel.id===e.id?" on":""}" data-ics-ev="${e.id}" style="--c:${SEVC[e.sev]}"><i></i>${esc(e.title.length>46?e.title.slice(0,44)+"…":e.title)} <b>${n}</b></button>`;}).join("")}
+  </div>`:"";
+
+  let top;
+  if(!bu){
+    top = `<div class="card ics-corp"><div class="card-head"><div><h3>ระดับองค์กร</h3><div class="card-sub">SCG Crisis Management</div></div></div>
+      <div class="ics-row r2">${ICS_CORP.map(r=>personCard(r,icsGet("SCG",null,r.k),{lead:r.k==="cmc_chair",c:"var(--brand)"})).join("")}</div></div>
+      <div class="ics-bugrid">${bus.map(b=>{
+        const list=CO.filter(c=>c.bu===b), ic=icsGet(b,null,"ic"), hit=list.filter(c=>evMap.has(c.name)).length, [f,t]=filledCount(b), ctry=[...new Set(list.map(c=>c.country))];
+        return `<button class="ics-bu" data-ics-bu="${esc(b)}">
+          <div class="ics-bu-h"><b>${b}</b>${hit?`<span class="sev wa">${hit} Site ในพื้นที่ภัย</span>`:""}</div>
+          <div class="ics-bu-ic"><small>${LANG==="en"?ICS_IC.en:ICS_IC.t}</small>${ic?`<b>${esc(ic.person_name)}</b>`:`<span class="ics-empty">รอระบุชื่อ</span>`}</div>
+          <div class="ics-bu-m"><span><b>${list.length}</b> Site</span><span><b>${ctry.length}</b> ประเทศ</span></div>
+          <div class="ics-fill"><div class="bar"><span style="width:${t?f/t*100:0}%;background:var(--ok)"></span></div><small>กรอกแล้ว ${f}/${t}</small></div>
+          <span class="ics-go">ดูผัง ICS →</span></button>`;}).join("")}</div>`;
+  } else {
+    const [f,t]=filledCount(bu);
+    top = `<div class="card"><div class="card-head"><div><h3>ผัง ICS ระดับ BU · ${bu}</h3><div class="card-sub">กรอกแล้ว ${f}/${t} ตำแหน่ง</div></div><button class="link" data-ics-bu="">← ทุก BU</button></div>${icsTree(bu)}</div>`;
+  }
+
+  const modalCo = S.icsSite!=null ? CO.find(c=>c.id===S.icsSite) : null;
+  return `<div class="page ics">
+    <div class="page-head"><div><div class="crumb">ICS · INCIDENT COMMAND SYSTEM</div><h1>ผัง ICS ผู้รับผิดชอบ</h1>
+      <p class="muted" style="margin:6px 0 0">ผู้รับผิดชอบหลักของแต่ละ BU และ Site สำหรับเรียกดูเมื่อเกิดเหตุการณ์</p></div>
+      <button class="ui-btn outline ics-print" onclick="window.print()">${svg("print",15)}พิมพ์ / PDF</button></div>
+    ${icsNotice()}${evBar}${tabs}${top}
+    <div class="card"><div class="card-head"><div><h3>${onlyHit?"Site ในพื้นที่ภัย":"Site / โรงงาน"+(bu?" · "+bu:"")} <span class="muted" style="font-weight:500">(${sites.length})</span></h3><div class="card-sub">${onlyHit?"เลือก BU หรือค้นหาเพื่อดู Site อื่น":"Site ในพื้นที่ภัยแสดงก่อน"} · คลิกเพื่อดูผัง ICS ของ Site</div></div>
+      <input class="ui-input ics-q" id="icsQ" type="search" placeholder="ค้นหา Site หรือชื่อผู้รับผิดชอบ" value="${esc(S.icsQ||"")}"></div>
+      <div class="ics-head-row"><span>Site</span>${ICS_SITE.map(r=>`<span>${LANG==="en"?r.en:r.t}</span>`).join("")}</div>
+      <div class="ics-sites">${icsSiteRows(sites,evMap)}</div></div>
+    ${modalCo?icsModal(modalCo,evMap):""}
+  </div>`;
+}
+
+/* nav: add ICS menu */
+function renderNav(){
+  $("#navMain").innerHTML = `<div class="eyebrow">Portal</div>`+navBtn("home","หน้าหลัก","home",`<span class="live">${EVENTS.length}</span>`)+navBtn("readiness","Readiness Dashboard","gauge")+navBtn("ics","ผัง ICS ผู้รับผิดชอบ","org")+navBtn("news","ข่าวสารและแจ้งเตือน","bell");
+  $("#navApps").innerHTML = `<div class="eyebrow">Applications &amp; Services</div>`+navExt("ews","Early Warning (EWS)","radar")+navExt("crisis","Crisis Hub","siren")+navExt("imap","Intelligent Map","map")+navBtn("apps","แอปพลิเคชันทั้งหมด","globe");
+  $("#navInfo").innerHTML = `<div class="eyebrow">ข้อมูล BCM</div>`+["about","ops","erp","bcp","contact"].map(k=>navBtn(k,SITEMAP[k].th,SITEMAP[k].icon,`<span class="tag">${SITEMAP[k].id}</span>`)).join("");
+  const on = r => S.route===r || (r==="news" && S.route==="article");
+  $("#bnav").innerHTML = [["home","หน้าหลัก","home"],["readiness","Dashboard","gauge"],["ics","ผัง ICS","org"],["news","ข่าวสาร","bell"]].map(([r,l,i])=>`<button class="${on(r)?'on':''}" data-go="${r}">${svg(i,21)}${l}</button>`).join("")
+    + `<a href="${LINKS.crisis}" target="_blank" rel="noopener">${svg("siren",21)}Crisis Hub</a>` + `<button id="bMenu">${svg("menu",21)}เมนู</button>`;
+  $("#bellCount").textContent = EVENTS.length;
+  syncUser();
+}
+
+/* routing: #ics, #ics-<BU> */
+function icsHash(){ return "ics"+(S.icsBu?"-"+encodeURIComponent(S.icsBu):""); }
+const _routeFromHash7 = routeFromHash;
+routeFromHash = function(){
+  const h=location.hash.slice(1);
+  if(h==="ics" || h.startsWith("ics-")){ let b=null; try{ b=h.startsWith("ics-")?decodeURIComponent(h.slice(4)):null; }catch(e){} return ["ics",null,{icsBu:b}]; }
+  return _routeFromHash7();
+};
+const _go7 = go;
+go = function(r,opts={}){
+  if(r==="ics" && !("icsBu" in opts)) opts.icsBu=S.icsBu||null;
+  if(r!=="ics") S.icsSite=null;
+  _go7(r,opts);
+  if(r==="ics"){ const hh=icsHash(); if(location.hash.slice(1)!==hh){ try{ history.replaceState(null,"","#"+hh); }catch(e){} } }
+};
+window.addEventListener("hashchange",()=>{ if($("#app").hidden) return; const r=routeFromHash(); if(r && r[0]==="ics" && (S.route!=="ics" || r[2].icsBu!==S.icsBu)) go("ics",r[2]); });
+
+const _render7 = render;
+render = function(){
+  if(S.route!=="ics") return _render7();
+  applyLangToEvents(); hideTip();
+  const y=window.scrollY;
+  $("#main").innerHTML = renderICS();
+  const q=$("#icsQ"); if(q){ let t; q.addEventListener("input",()=>{ clearTimeout(t); t=setTimeout(()=>{ const p=q.selectionStart; S.icsQ=q.value; render(); const n=$("#icsQ"); n.focus(); n.setSelectionRange(p,p); },250); }); }
+  window.scrollTo(0,y);
+  document.body.classList.toggle("ics-open", S.icsSite!=null);
+  syncUser();
+};
+
+document.addEventListener("click",ev=>{
+  if(S.route!=="ics") return;
+  const b=ev.target.closest("[data-ics-bu]"); if(b){ ev.preventDefault(); go("ics",{icsBu:b.dataset.icsBu||null}); return; }
+  const e=ev.target.closest("[data-ics-ev]"); if(e){ ev.preventDefault(); S.icsEv=e.dataset.icsEv||null; render(); return; }
+  const s=ev.target.closest("[data-ics-site]"); if(s && !ev.target.closest("a")){ ev.preventDefault(); S.icsSite=+s.dataset.icsSite; render(); return; }
+  const a=ev.target.closest("[data-go-article]"); if(a){ ev.preventDefault(); S.icsSite=null; go("article",{article:a.dataset.goArticle}); return; }
+  const c=ev.target.closest("[data-ics-close]");
+  if(c && (c!==ev.target.closest(".ics-modal") || ev.target===c)){ S.icsSite=null; if(c.dataset.go) return; render(); }
+},true);
+document.addEventListener("keydown",ev=>{ const s=ev.target.closest&&ev.target.closest("[data-ics-site]"); if(s&&(ev.key==="Enter"||ev.key===" ")){ ev.preventDefault(); S.icsSite=+s.dataset.icsSite; render(); return; } if(ev.key==="Escape" && S.route==="ics" && S.icsSite!=null){ S.icsSite=null; render(); } });
+
+/* hazard detail: jump to the ICS of affected sites */
+const _hazardArticle7 = hazardArticle;
+hazardArticle = function(e){
+  let h=_hazardArticle7(e);
+  if((e.sites||[]).length){
+    const btn=`<button class="btn" data-ics-from="${e.id}">${svg("org",16)}ผัง ICS ของ Site ในพื้นที่</button>`;
+    h=h.replace('<div class="actions row">','<div class="actions row">'+btn);
+  }
+  return h;
+};
+document.addEventListener("click",ev=>{ const b=ev.target.closest("[data-ics-from]"); if(b){ ev.preventDefault(); S.icsEv=b.dataset.icsFrom; S.icsQ=""; go("ics",{icsBu:null}); } });
 
 /* ================= LOGIN ================= */
 $("#logout").addEventListener("click",async()=>{ await signOut(); $("#app").hidden=true; $("#login").hidden=false; resetSSO(); document.querySelectorAll("#login form").forEach(f=>f.reset()); authView("signin"); });
