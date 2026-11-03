@@ -36,6 +36,7 @@ The page refreshes its data every 5 minutes while it is open (and again when the
 
 - `/api/trending` feeds the **Trending** section on the home page (War & conflict, Cyber Threat) and the news page tabs `#news-conflict`, `#news-cyber`, `#news-disaster`. Each story opens a detail panel with tags, other outlets reporting it, related stories and a link to the original article. Trending terms come with a 24-hour volume chart; clicking a term filters the list.
 - `/api/hazards` (GDACS, USGS) is turned into hazard cards automatically. An event becomes a card when it is Orange/Red, an earthquake of M6+, or has SCG sites within its radius (earthquake 90–350 km by magnitude, cyclone 300 km, flood 160 km, other 100 km). Sites in that radius are listed with their ERP readiness.
+- Disaster stories in ASEAN media (Thai and English) also become hazard cards when they carry a warning/evacuation signal or are reported by 3+ outlets in the last 48 hours. These cards have no map zone or site list; they link to every outlet that reported the story.
 - Curated hazard news from Supabase (`portal_hazards`) is shown for 7 days after `published_at`, then gives way to the live events. If no live event qualifies, the latest curated items stay on screen.
 
 Headlines are shown in the language of the source; the TH/EN switch does not translate them.
