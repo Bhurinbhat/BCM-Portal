@@ -982,6 +982,37 @@ body.ics-open{overflow:hidden}
   .tr-dialog{border-radius:20px 20px 0 0;max-height:90dvh;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px))}
   .tr-card .card-head{flex-wrap:wrap}
 }
+
+/* sources by topic */
+.tr-cols{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px;align-items:start}
+.tr-main{display:flex;flex-direction:column;gap:16px;min-width:0}
+.tr-side{position:sticky;top:calc(var(--appbar-h,64px) + 16px)}
+.src-card{display:flex;flex-direction:column;gap:10px}
+.src-group{display:flex;flex-direction:column;gap:2px}
+.src-group+.src-group{border-top:1px solid var(--line);padding-top:10px}
+.src-group .tr-sub-h small{font-weight:400;margin-left:4px}
+.src-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 8px;padding:8px;border-radius:10px;align-items:start;transition:background .15s}
+.src-row:hover{background:var(--surface-2)}
+.src-row.on{background:color-mix(in srgb,var(--kc,var(--brand)) 10%,var(--surface))}
+.src-row.none{opacity:.6}
+.src-name{grid-column:1;display:flex;align-items:center;gap:8px;border:0;background:none;padding:0;text-align:left;font-size:13px;font-weight:600;color:var(--ink);min-width:0}
+.src-name span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.src-name b{font:500 11px var(--f-mono);color:var(--muted);background:var(--surface-2);border-radius:999px;padding:1px 7px}
+.src-name:not(:disabled):hover span{text-decoration:underline}
+.src-home{grid-column:2;grid-row:1;color:var(--muted);display:grid;place-items:center;width:24px;height:24px;border-radius:6px}
+.src-home:hover{background:var(--surface);color:var(--ink)}
+.src-latest{grid-column:1/-1;display:flex;flex-direction:column;gap:1px;font-size:12px;color:var(--ink-2);text-decoration:none;min-width:0}
+.src-latest > span{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.src-latest small{font-size:11px;color:var(--muted)}
+a.src-latest:hover > span{text-decoration:underline}
+.src-chips{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12px}
+.src-chip{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:3px 9px;font-size:11.5px;color:var(--ink-2);max-width:200px}
+.src-chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.src-chip b{font:500 10.5px var(--f-mono);color:var(--muted)}
+.src-chip.off{border-color:color-mix(in srgb,var(--ok) 40%,var(--line))}
+.src-chip.off svg{color:var(--ok)}
+.src-chip:hover{background:var(--surface-2)}
+@media (max-width:1180px){ .tr-cols{grid-template-columns:minmax(0,1fr)} .tr-side{position:static} }
 </style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
@@ -1139,6 +1170,11 @@ const I18N = {
  "เพิ่ม":"Added","ครบกำหนดแก้":"due","ใช้ใน Ransomware":"Used in ransomware","ข่าวใน 6 ชม.":"in the last 6h","นาทีที่แล้ว":"min ago",
  "ข้อมูลอัตโนมัติจาก":"Automatic update from","ระดับการแจ้งเตือน":"alert level","ขนาด":"magnitude","Site ของ SCG อยู่ในรัศมี":"SCG sites within","ไม่มี Site ของ SCG ในรัศมี":"No SCG sites within","กม.":"km","Site ในรัศมี":"Sites in radius","ประเภท":"Type",
  "ภูเขาไฟ":"Volcano","ภัยแล้ง":"Drought","ข้อมูลคัดสรร":"Curated",
+ "แหล่งข่าวตามหัวข้อ":"Sources by topic","คลิกชื่อแหล่งเพื่อกรองข่าว":"click a source to filter","หน่วยงานทางการ":"Official agencies","ข่าวจากหรืออ้างถึงหน่วยงาน":"news from or citing the agency",
+ "สื่อที่รายงานมากที่สุด":"Most active outlets","ยังไม่มีข่าวในช่วงนี้":"No stories in this period","เว็บไซต์หน่วยงาน":"Agency website","ระบบเตือนภัยอัตโนมัติ":"Automated alert systems",
+ "21 วันล่าสุด · อาเซียน":"last 21 days · ASEAN","ยังไม่มีเหตุการณ์ในภูมิภาค":"No events in the region","แหล่งข่าว":"Sources",
+ "กระทรวงกลาโหม / กองทัพ":"Ministry of Defence / Armed forces","กระทรวงการต่างประเทศ":"Ministry of Foreign Affairs","สกมช. / ThaiCERT":"NCSA / ThaiCERT",
+ "ปภ. กรมป้องกันและบรรเทาสาธารณภัย":"DDPM (Disaster Prevention and Mitigation)","กรมอุตุนิยมวิทยา":"Thai Meteorological Department","สทนช. / กรมชลประทาน":"ONWR / Royal Irrigation Dept.",
 
  // navigation & shell
  "หน้าหลัก":"Home","ข่าวสารและแจ้งเตือน":"News & Alerts","แอปพลิเคชันทั้งหมด":"All applications","แอปพลิเคชันอื่น ๆ":"Other applications","ข้อมูล BCM":"BCM information",
@@ -2986,7 +3022,7 @@ function trCard(kind){
   const kev = kind==="cyber" && d.kev && d.kev.length ? `<div class="tr-kev"><div class="tr-sub-h">${svg("alert",13)}ช่องโหว่ที่ถูกโจมตีจริงล่าสุด (CISA KEV)</div>${d.kev.slice(0,3).map(v=>`<a href="${esc(v.url)}" target="_blank" rel="noopener" class="tr-kev-row"><b>${esc(v.cve)}</b><span data-notr>${esc(v.vendor)} ${esc(v.product)}</span><small>${esc(v.added)}${v.ransomware?' · <em>Ransomware</em>':''}</small></a>`).join("")}</div>`:"";
   return `<div class="card tr-card" style="--kc:${K.c}">${head}
     <div class="tr-trend">${sparkBars(d.hist,K.c)}<div class="tr-chips">${trTermChips(kind,d.terms)}</div></div>
-    <div class="tr-list">${items.map(x=>trItem(x,kind)).join("")}</div>${kev}
+    <div class="tr-list">${items.map(x=>trItem(x,kind)).join("")}</div>${trSrcChips(kind)}${kev}
     <button class="link tr-all" data-tr-tab="${kind}">ดูทั้งหมด ${d.stories||d.items.length} เรื่อง →</button></div>`;
 }
 function trendSectionHTML(){
@@ -3018,22 +3054,58 @@ function closeTrModal(){ document.querySelectorAll(".tr-modal").forEach(m=>m.rem
 
 /* ---------- news page: tabs for live streams ---------- */
 const NTABS=[["hazard","ภัยธรรมชาติ","radar"],["conflict","สงคราม & ความขัดแย้ง","swords"],["cyber","Cyber Threat","shieldAlert"],["disaster","ข่าวภัยพิบัติจากสื่อ","globe"]];
+/* ---------- sources by topic ---------- */
+function srcMatch(x,src){
+  if(!src) return true;
+  if(src.startsWith("o:")){ const n=src.slice(2); return x.official===n || (x.related||[]).some(r=>r.official===n); }
+  const n=src.slice(2); return x.source===n || (x.related||[]).some(r=>r.source===n);
+}
+function srcRow(o,kind,active){
+  const key=(o.official?"o:":"s:")+o.name, l=o.latest;
+  return `<div class="src-row${active===key?" on":""}${o.count?"":" none"}">
+    <button class="src-name" data-tr-src="${esc(key)}" data-tr-kind="${kind}" ${o.count?"":"disabled"}><span ${o.official?"":"data-notr"}>${esc(o.name)}</span><b>${o.count}</b></button>
+    ${l?`<a class="src-latest" href="${esc(l.link)}" target="_blank" rel="noopener"><span data-notr>${esc(l.title)}</span><small>${o.official&&l.source?`<span data-notr>${esc(l.source)}</span> · `:""}${l.date?`<span data-ago="${esc(l.date)}">${agoShort(l.date)}</span>`:""}</small></a>`:`<span class="src-latest muted">ยังไม่มีข่าวในช่วงนี้</span>`}
+    ${o.home?`<a class="src-home" href="${esc(o.home)}" target="_blank" rel="noopener" aria-label="เว็บไซต์หน่วยงาน" ${tipAttr("เว็บไซต์หน่วยงาน")}>${svg("ext",13)}</a>`:""}
+  </div>`;
+}
+function trSourcesHTML(kind,extra){
+  const d=TR.data&&TR.data[kind]; if(!d||!d.outlets) return "";
+  const off=d.outlets.filter(o=>o.official), med=d.outlets.filter(o=>!o.official), act=S.trSrc||null;
+  return `<div class="card src-card"><div class="card-head"><div><h3>แหล่งข่าวตามหัวข้อ</h3><div class="card-sub">${TR_KIND[kind].t} · คลิกชื่อแหล่งเพื่อกรองข่าว</div></div></div>
+    ${extra||""}
+    ${off.length?`<div class="src-group"><div class="tr-sub-h">${svg("shield",13)}หน่วยงานทางการ <small class="muted">ข่าวจากหรืออ้างถึงหน่วยงาน</small></div>${off.map(o=>srcRow(o,kind,act)).join("")}</div>`:""}
+    ${med.length?`<div class="src-group"><div class="tr-sub-h">${svg("globe",13)}สื่อที่รายงานมากที่สุด</div>${med.slice(0,10).map(o=>srcRow(o,kind,act)).join("")}</div>`:""}
+  </div>`;
+}
+function trSrcChips(kind){
+  const d=TR.data&&TR.data[kind]; if(!d||!d.outlets) return "";
+  const list=[...d.outlets.filter(o=>o.official&&o.count), ...d.outlets.filter(o=>!o.official).slice(0,3)].slice(0,6);
+  if(!list.length) return "";
+  return `<div class="src-chips"><span class="muted">แหล่งข่าว</span>${list.map(o=>`<button class="src-chip${o.official?" off":""}" data-tr-src="${esc((o.official?"o:":"s:")+o.name)}" data-tr-kind="${kind}">${o.official?svg("shield",11):""}<span ${o.official?"":"data-notr"}>${esc(o.name)}</span><b>${o.count}</b></button>`).join("")}</div>`;
+}
+function liveSourceRows(){
+  if(!LIVE||!LIVE.events) return "";
+  const g=LIVE.events.filter(x=>x.source==="GDACS"), u=LIVE.events.filter(x=>x.source==="USGS");
+  const row=(name,list,home)=>`<div class="src-row"><span class="src-name static"><span>${name}</span><b>${list.length}</b></span>${list[0]?`<a class="src-latest" href="${esc(list[0].url||home)}" target="_blank" rel="noopener"><span data-notr>${esc(list[0].title)}</span><small>${list[0].from?`<span data-ago="${esc(list[0].from)}">${agoShort(list[0].from)}</span>`:""}</small></a>`:`<span class="src-latest muted">ยังไม่มีเหตุการณ์ในภูมิภาค</span>`}<a class="src-home" href="${home}" target="_blank" rel="noopener">${svg("ext",13)}</a></div>`;
+  return `<div class="src-group"><div class="tr-sub-h">${svg("radar",13)}ระบบเตือนภัยอัตโนมัติ <small class="muted">21 วันล่าสุด · อาเซียน</small></div>${row("GDACS",g,"https://www.gdacs.org")}${row("USGS",u,"https://earthquake.usgs.gov")}</div>`;
+}
+
 function trStreamPage(kind){
   const d=TR.data&&TR.data[kind], K=TR_KIND[kind];
   if(!d) return `<div class="card">${TR.status==="error"?`<div class="muted">เชื่อมต่อแหล่งข่าวไม่ได้ในขณะนี้ ระบบจะลองใหม่อัตโนมัติ</div>`:`<div class="live-list">${"<div class='skeleton'></div>".repeat(6)}</div>`}</div>`;
-  const term=S.trTerm||null, sea=!!S.trSea, q=(S.trQ||"").toLowerCase();
-  let items=d.items.filter(x=>(!term||x.topics.includes(term)||x.places.includes(term))&&(!sea||x.sea)&&(!q||(x.title+" "+x.source).toLowerCase().includes(q)));
+  const term=S.trTerm||null, sea=!!S.trSea, q=(S.trQ||"").toLowerCase(), src=S.trSrc||null;
+  let items=d.items.filter(x=>(!term||x.topics.includes(term)||x.places.includes(term))&&(!sea||x.sea)&&srcMatch(x,src)&&(!q||(x.title+" "+x.source).toLowerCase().includes(q)));
   const sort=S.trSort||"score"; items=[...items].sort(sort==="time"?(a,b)=>String(b.date).localeCompare(String(a.date)):(a,b)=>b.score-a.score);
   const kev = kind==="cyber" && d.kev && d.kev.length ? `<div class="card"><div class="card-head"><div><h3>ช่องโหว่ที่ถูกโจมตีจริงล่าสุด</h3><div class="card-sub">CISA Known Exploited Vulnerabilities · ตรวจว่า SCG ใช้ผลิตภัณฑ์เหล่านี้หรือไม่</div></div></div>
     <div class="kev-table">${d.kev.map(v=>`<a href="${esc(v.url)}" target="_blank" rel="noopener"><b>${esc(v.cve)}</b><span data-notr>${esc(v.vendor)} · ${esc(v.product)}</span><span class="kev-name" data-notr>${esc(v.name)}</span><small>เพิ่ม ${esc(v.added)} · ครบกำหนดแก้ ${esc(v.due)}${v.ransomware?' · <em>ใช้ใน Ransomware</em>':''}</small></a>`).join("")}</div></div>`:"";
-  return `<div class="tr-page" style="--kc:${K.c}">
+  return `<div class="tr-page" style="--kc:${K.c}"><div class="tr-cols"><div class="tr-main">
     <div class="card"><div class="card-head"><div class="tr-h"><span class="tr-ic" style="--c:${K.c}">${svg(K.icon,18)}</span><div><h3>${K.t}</h3><div class="card-sub">${d.count} ข่าว · ${d.stories||d.items.length} เรื่อง · ${d.sources} แหล่งข่าว · 24 ชม. ล่าสุด</div></div></div>${trStatusLine()}</div>
-      <div class="tr-trend big">${sparkBars(d.hist,K.c)}<div class="tr-chips">${term?`<button class="tr-chip on" data-tr-term="" data-tr-kind="${kind}">✕ ${esc(term)}</button>`:""}${trTermChips(kind,d.terms,10,term)}</div></div>
+      <div class="tr-trend big">${sparkBars(d.hist,K.c)}<div class="tr-chips">${src?`<button class="tr-chip on" data-tr-src="" data-tr-kind="${kind}">✕ <span data-notr>${esc(src.slice(2))}</span></button>`:""}${term?`<button class="tr-chip on" data-tr-term="" data-tr-kind="${kind}">✕ ${esc(term)}</button>`:""}${trTermChips(kind,d.terms,10,term)}</div></div>
       <div class="tr-filters"><input class="ui-input" id="trQ" type="search" placeholder="ค้นหาข่าว" value="${esc(S.trQ||"")}">
         <label class="tr-toggle"><input type="checkbox" id="trSea" ${sea?"checked":""}> เฉพาะอาเซียน</label>
         <div class="tr-seg"><button class="${sort==="score"?"on":""}" data-tr-sort="score">สำคัญสุด</button><button class="${sort==="time"?"on":""}" data-tr-sort="time">ล่าสุด</button></div></div>
       <div class="tr-list full">${items.length?items.map(x=>trItem(x,kind)).join(""):`<div class="muted" style="padding:14px">ไม่พบข่าวตามเงื่อนไข</div>`}</div>
-    </div>${kev}</div>`;
+    </div>${kev}</div><aside class="tr-side">${trSourcesHTML(kind, kind==="disaster"?liveSourceRows():"")}</aside></div></div>`;
 }
 const _renderNewsPage8 = renderNewsPage;
 renderNewsPage = function(){
@@ -3041,7 +3113,7 @@ renderNewsPage = function(){
   let h=_renderNewsPage8();
   const tabs=`<div class="ds-tabs tr-tabs" role="tablist">${NTABS.map(([k,l,i])=>{const n=k==="hazard"?EVENTS.length:(TR.data&&TR.data[k]?(TR.data[k].stories||TR.data[k].items.length):"…");return `<button class="${tab===k?"on":""}" data-tr-tab="${k}">${svg(i,15)}${l} <span class="ics-n">${n}</span></button>`}).join("")}</div>`;
   const a=h.indexOf('<div class="card">');
-  if(tab==="hazard") return h.slice(0,a)+tabs+h.slice(a);
+  if(tab==="hazard"){ const z=h.lastIndexOf("</div>"); return h.slice(0,a)+tabs+h.slice(a,z)+trSourcesHTML("disaster",liveSourceRows())+h.slice(z); }
   return h.slice(0,a)+tabs+trStreamPage(tab)+`</div>`;
 };
 
@@ -3079,7 +3151,8 @@ render = function(){
 document.addEventListener("click",ev=>{
   const o=ev.target.closest("[data-tr-open]"); if(o){ ev.preventDefault(); openTrModal(o.dataset.trOpen); return; }
   const c=ev.target.closest("[data-tr-close]"); if(c && (ev.target===c || c.classList.contains("x"))){ closeTrModal(); return; }
-  const tb=ev.target.closest("[data-tr-tab]"); if(tb){ ev.preventDefault(); S.trTerm=null; S.trQ=""; go("news",{ntab:tb.dataset.trTab}); return; }
+  const tb=ev.target.closest("[data-tr-tab]"); if(tb){ ev.preventDefault(); S.trTerm=null; S.trQ=""; S.trSrc=null; go("news",{ntab:tb.dataset.trTab}); return; }
+  const sr=ev.target.closest("[data-tr-src]"); if(sr){ ev.preventDefault(); const k=sr.dataset.trKind; S.trSrc=sr.dataset.trSrc||null; S.trTerm=null; if(S.route!=="news"||S.ntab!==k) go("news",{ntab:k}); else { render(); const l=document.querySelector(".tr-main"); if(l && window.innerWidth<1180) l.scrollIntoView({behavior:"smooth"}); } return; }
   const tm=ev.target.closest("[data-tr-term]"); if(tm){ ev.preventDefault(); S.trTerm=tm.dataset.trTerm||null; if(S.route!=="news"||S.ntab!==tm.dataset.trKind) go("news",{ntab:tm.dataset.trKind}); else render(); return; }
   const so=ev.target.closest("[data-tr-sort]"); if(so){ S.trSort=so.dataset.trSort; render(); return; }
   if(ev.target.closest("[data-tr-refresh]")){ const b=ev.target.closest("[data-tr-refresh]"); b.classList.add("spin"); TR.at=0; refreshAll(); return; }

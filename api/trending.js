@@ -13,6 +13,9 @@ const FEEDS = {
     { id: "gn-world", url: GN('(war OR "armed conflict" OR airstrike OR "missile strike" OR "border clash" OR insurgency OR ceasefire) when:1d') },
     { id: "gn-sea", url: GN('(Thailand OR Cambodia OR Myanmar OR Vietnam OR Indonesia OR Philippines OR Malaysia OR Laos OR "South China Sea") (clash OR conflict OR military OR fighting OR troops OR unrest) when:3d') },
     { id: "gn-th", lang: "th", url: GN('(ปะทะ OR สงคราม OR ความขัดแย้ง OR ชายแดน OR ทหาร OR หยุดยิง) when:2d', "th") },
+    { id: "gov-th-def", lang: "th", official: "กระทรวงกลาโหม / กองทัพ", home: "https://www.mod.go.th", url: GN('(กระทรวงกลาโหม OR กองทัพบก OR กองทัพภาค OR ศบ.ทก.) (ชายแดน OR ปะทะ OR สู้รบ OR ความมั่นคง) when:5d', "th") },
+    { id: "gov-th-mfa", lang: "th", official: "กระทรวงการต่างประเทศ", home: "https://www.mfa.go.th", url: GN('("กระทรวงการต่างประเทศ" OR "กต.") (เมียนมา OR กัมพูชา OR สู้รบ OR อพยพ OR ความขัดแย้ง OR คนไทย) when:7d', "th") },
+    { id: "un-asean", official: "UN / ASEAN", home: "https://asean.org", url: GN('(ASEAN OR "United Nations" OR UNHCR) (Myanmar OR Cambodia OR "South China Sea") (conflict OR fighting OR airstrike OR ceasefire) when:7d') },
   ],
   cyber: [
     { id: "gn-cyber", url: GN('(ransomware OR cyberattack OR "data breach" OR "zero-day" OR DDoS OR "threat actor") when:1d') },
@@ -20,10 +23,17 @@ const FEEDS = {
     { id: "gn-cyber-th", lang: "th", url: GN('(แฮก OR แรนซัมแวร์ OR "ข้อมูลรั่ว" OR "โจมตีทางไซเบอร์" OR "ภัยไซเบอร์") when:3d', "th") },
     { id: "thn", url: "https://feeds.feedburner.com/TheHackersNews", src: "The Hacker News" },
     { id: "bleeping", url: "https://www.bleepingcomputer.com/feed/", src: "BleepingComputer" },
+    { id: "gov-ncsa", lang: "th", official: "สกมช. / ThaiCERT", home: "https://www.ncsa.or.th", url: GN('(สกมช. OR ThaiCERT OR ไทยเซิร์ต OR "สำนักงานคณะกรรมการการรักษาความมั่นคงปลอดภัยไซเบอร์แห่งชาติ") when:14d', "th") },
+    { id: "gov-cisa", official: "CISA", src: "CISA", home: "https://www.cisa.gov/news-events/cybersecurity-advisories", url: "https://www.cisa.gov/cybersecurity-advisories/all.xml" },
+    { id: "gov-csa-sg", official: "CSA Singapore / ASEAN CERT", home: "https://www.csa.gov.sg", url: GN('("Cyber Security Agency of Singapore" OR "CSA Singapore" OR "ASEAN CERT" OR VNCERT OR "BSSN" OR "MyCERT") when:14d') },
   ],
   disaster: [
     { id: "gn-dis-sea", url: GN('(flood OR typhoon OR earthquake OR landslide OR "tropical storm" OR haze OR wildfire) (Thailand OR Vietnam OR Indonesia OR Philippines OR Malaysia OR Myanmar OR Cambodia OR Laos) when:2d') },
     { id: "gn-dis-th", lang: "th", url: GN('(น้ำท่วม OR พายุ OR แผ่นดินไหว OR ดินถล่ม OR ฝนตกหนัก OR PM2.5 OR ไฟป่า) when:2d', "th") },
+    { id: "gov-ddpm", lang: "th", official: "ปภ. กรมป้องกันและบรรเทาสาธารณภัย", home: "https://www.disaster.go.th", url: GN('(ปภ. OR "กรมป้องกันและบรรเทาสาธารณภัย") (น้ำท่วม OR พายุ OR ภัย OR เตือน OR อพยพ) when:5d', "th") },
+    { id: "gov-tmd", lang: "th", official: "กรมอุตุนิยมวิทยา", home: "https://www.tmd.go.th", url: GN('("กรมอุตุนิยมวิทยา" OR "กรมอุตุฯ") (ประกาศ OR เตือน OR พายุ OR ฝน) when:3d', "th") },
+    { id: "gov-onwr", lang: "th", official: "สทนช. / กรมชลประทาน", home: "https://www.onwr.go.th", url: GN('(สทนช. OR กรมชลประทาน OR "การบริหารจัดการน้ำ") (น้ำท่วม OR ระดับน้ำ OR เขื่อน OR เตือน) when:5d', "th") },
+    { id: "gov-aha", official: "AHA Centre (ASEAN)", home: "https://ahacentre.org", url: GN('("AHA Centre" OR "ASEAN Coordinating Centre for Humanitarian Assistance") when:14d') },
   ],
 };
 const KEV_URL = "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json";
@@ -91,28 +101,31 @@ function parseRSS(xml, feed) {
     const d = new Date(strip(tag(it, "pubDate")) || strip(tag(it, "dc:date")));
     let desc = strip(tag(it, "description"));
     if (!feed.src) desc = ""; // Google News descriptions only repeat the headline
-    return { title, link, source, date: isNaN(d) ? null : d.toISOString(), summary: desc.slice(0, 400), lang: feed.lang || "en", feed: feed.id };
+    return { title, link, source, date: isNaN(d) ? null : d.toISOString(), summary: desc.slice(0, 400), lang: feed.lang || "en", feed: feed.id, official: feed.official || null };
   }).filter((x) => x.title && x.link);
 }
 
 const norm = (t) => t.toLowerCase().replace(/[^\p{L}\p{N} ]/gu, "").replace(/\s+/g, " ").trim().slice(0, 70);
 
 function enrich(items, kind, now) {
-  const seen = new Set(), out = [];
+  const seen = new Map(), out = [];
   items.sort((a, b) => String(b.date).localeCompare(String(a.date)));
   for (const x of items) {
-    const k = norm(x.title); if (!k || seen.has(k)) continue; seen.add(k);
+    const k = norm(x.title); if (!k) continue;
+    if (seen.has(k)) { const kept = seen.get(k); if (kept && x.official && !kept.official) kept.official = x.official; continue; }
+    seen.set(k, null);
     if (x.date && now - new Date(x.date) > 8 * 864e5) continue;
     const text = x.title + " " + x.summary;
     const region = SEA.filter(([, re]) => re.test(text)).map(([n]) => n);
     const places = [...region, ...WORLD.filter(([, re]) => re.test(text)).map(([n]) => n)];
     const topics = TOPICS[kind].filter(([, re]) => re.test(text)).map(([n]) => n);
-    if (kind !== "cyber" && !topics.length && !places.length) continue;
+    if (kind !== "cyber" && !x.official && !topics.length && !places.length) continue;
     const ageH = x.date ? (now - new Date(x.date)) / 36e5 : 48;
     const high = HIGH[kind].test(text);
     const social = /facebook|tiktok|youtube|x\.com|twitter|instagram/i.test(x.source);
-    const score = (social ? -2 : 0) + (high ? 3 : 0) + (region.length ? 3 : 0) + (region.includes("Thailand") ? 2 : 0) + topics.length * 0.5 + Math.max(0, 3 - ageH / 8);
-    out.push({ ...x, id: kind[0] + "-" + hash(k), places, topics, sea: region.length > 0, level: high ? (region.length ? "high" : "elevated") : region.length ? "elevated" : "info", score: +score.toFixed(2) });
+    const score = (social ? -2 : 0) + (x.official ? 1.5 : 0) + (high ? 3 : 0) + (region.length ? 3 : 0) + (region.includes("Thailand") ? 2 : 0) + topics.length * 0.5 + Math.max(0, 3 - ageH / 8);
+    const item = { ...x, id: kind[0] + "-" + hash(k), places, topics, sea: region.length > 0, level: high ? (region.length ? "high" : "elevated") : region.length ? "elevated" : "info", score: +score.toFixed(2) };
+    out.push(item); seen.set(k, item);
   }
   return out;
 }
@@ -133,7 +146,7 @@ function cluster(items) {
   for (const x of items) {
     x.tk = toks(x.title); x.gr = grams(x.title);
     const h = heads.find((h) => similar(h, x));
-    if (h) { h.related.push({ title: x.title, link: x.link, source: x.source, date: x.date }); h.size++; h.places = [...new Set([...h.places, ...x.places])]; h.topics = [...new Set([...h.topics, ...x.topics])]; if (x.date && (!h.date || x.date < h.date)) h.first = x.date; }
+    if (h) { h.related.push({ title: x.title, link: x.link, source: x.source, date: x.date, official: x.official }); if (x.official && !h.official) h.official = x.official; h.size++; h.places = [...new Set([...h.places, ...x.places])]; h.topics = [...new Set([...h.topics, ...x.topics])]; if (x.date && (!h.date || x.date < h.date)) h.first = x.date; }
     else heads.push(Object.assign(x, { related: [], size: 1 }));
   }
   heads.forEach((h) => { delete h.tk; delete h.gr; h.related = h.related.slice(0, 6); h.score = +(h.score + Math.min(h.size - 1, 6) * 0.6).toFixed(2); });
@@ -160,7 +173,25 @@ async function stream(kind, now, errors) {
   const sources = [...new Set(flat.map((x) => x.source).filter(Boolean))].length;
   const tr = trends(flat, kind, now);
   const items = cluster(flat).sort((a, b) => b.score - a.score);
-  return { count: flat.length, stories: items.length, sources, ...tr, items: items.slice(0, 50) };
+  return { count: flat.length, stories: items.length, sources, ...tr, outlets: outlets(flat, kind), items: items.slice(0, 50) };
+}
+
+// Source directory for one topic: official agencies (always listed, even with no story today) then media outlets by volume.
+function outlets(flat, kind) {
+  const m = new Map();
+  const add = (key, o) => { if (!m.has(key)) m.set(key, { ...o, count: 0, latest: null, ids: [] }); return m.get(key); };
+  FEEDS[kind].filter((f) => f.official).forEach((f) => add("o:" + f.official, { name: f.official, official: true, home: f.home || null }));
+  for (const x of flat) {
+    const hit = [add("s:" + (x.source || "?").toLowerCase(), { name: x.source || "?", official: false, home: null })];
+    if (x.official && m.has("o:" + x.official)) hit.push(m.get("o:" + x.official));
+    for (const e of hit) {
+      e.count++;
+      if (!e.latest || String(x.date) > String(e.latest.date)) e.latest = { title: x.title, link: x.link, date: x.date, source: x.source };
+    }
+  }
+  const list = [...m.values()].map(({ ids, ...o }) => o);
+  const off = list.filter((o) => o.official), med = list.filter((o) => !o.official && o.name !== "?").sort((a, b) => b.count - a.count || String(b.latest && b.latest.date).localeCompare(String(a.latest && a.latest.date)));
+  return [...off, ...med.slice(0, 14)];
 }
 
 async function kev(errors) {

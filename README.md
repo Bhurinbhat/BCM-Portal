@@ -39,6 +39,16 @@ The page refreshes its data every 5 minutes while it is open (and again when the
 - Disaster stories in ASEAN media (Thai and English) also become hazard cards when they carry a warning/evacuation signal or are reported by 3+ outlets in the last 48 hours. These cards have no map zone or site list; they link to every outlet that reported the story.
 - Curated hazard news from Supabase (`portal_hazards`) is shown for 7 days after `published_at`, then gives way to the live events. If no live event qualifies, the latest curated items stay on screen.
 
+Each topic also has a **source directory** (news-page side panel and source chips on the home cards):
+
+| Topic | Official agencies tracked | Plus |
+|---|---|---|
+| War & conflict | Ministry of Defence / armed forces, Ministry of Foreign Affairs, UN / ASEAN | top media outlets by volume |
+| Cyber threat | NCSA / ThaiCERT, CISA advisories (direct feed), CSA Singapore / ASEAN CERTs | The Hacker News, BleepingComputer, top outlets |
+| Disasters | DDPM, Thai Meteorological Department, ONWR / Royal Irrigation Dept., AHA Centre | GDACS and USGS automated alerts |
+
+For agencies the portal tracks news *from or citing* the agency (Google News search on the agency name), except CISA which is read from its own RSS feed. Each row shows the number of stories, the latest headline with a link, and a link to the agency website; clicking a source filters the news list. Feeds are configured in `FEEDS` in `api/trending.js` (`official` and `home` mark an agency).
+
 Headlines are shown in the language of the source; the TH/EN switch does not translate them.
 
 ## ICS key contacts (ผัง ICS ผู้รับผิดชอบ)
