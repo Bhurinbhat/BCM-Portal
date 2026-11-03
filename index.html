@@ -2897,7 +2897,7 @@ async function loadTrending(){
     const r = await fetch(TREND_API+(TREND_API.includes("?")?"&":"?")+"t="+Math.floor(Date.now()/REFRESH_MS));
     if(!r.ok) throw new Error(r.status);
     TR.data = await r.json(); TR.at = Date.now(); TR.status="ok"; rebuildEvents();
-  }catch(e){ console.warn("trending unavailable",e); TR.status = TR.data ? "ok" : "error"; }
+  }catch(e){ console.warn("trending unavailable",e); TR.status = TR.data ? "ok" : "error"; if(!TR.data) setTimeout(loadTrending, 15000); }
   softRender();
 }
 async function loadLiveHazards(){

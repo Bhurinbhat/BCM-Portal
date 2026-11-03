@@ -119,7 +119,7 @@ function enrich(items, kind, now) {
     const region = SEA.filter(([, re]) => re.test(text)).map(([n]) => n);
     const places = [...region, ...WORLD.filter(([, re]) => re.test(text)).map(([n]) => n)];
     const topics = TOPICS[kind].filter(([, re]) => re.test(text)).map(([n]) => n);
-    if (kind !== "cyber" && !x.official && !topics.length && !places.length) continue;
+    if (kind !== "cyber" && !topics.length && !(x.official ? region.length : places.length)) continue;
     const ageH = x.date ? (now - new Date(x.date)) / 36e5 : 48;
     const high = HIGH[kind].test(text);
     const social = /facebook|tiktok|youtube|x\.com|twitter|instagram/i.test(x.source);
@@ -190,7 +190,7 @@ function outlets(flat, kind) {
     }
   }
   const list = [...m.values()].map(({ ids, ...o }) => o);
-  const off = list.filter((o) => o.official), med = list.filter((o) => !o.official && o.name !== "?").sort((a, b) => b.count - a.count || String(b.latest && b.latest.date).localeCompare(String(a.latest && a.latest.date)));
+  const off = list.filter((o) => o.official), med = list.filter((o) => !o.official && o.name !== "?" && !/facebook|tiktok|youtube|instagram|twitter|^x$/i.test(o.name)).sort((a, b) => b.count - a.count || String(b.latest && b.latest.date).localeCompare(String(a.latest && a.latest.date)));
   return [...off, ...med.slice(0, 14)];
 }
 
