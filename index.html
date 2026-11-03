@@ -1013,6 +1013,36 @@ a.src-latest:hover > span{text-decoration:underline}
 .src-chip.off svg{color:var(--ok)}
 .src-chip:hover{background:var(--surface-2)}
 @media (max-width:1180px){ .tr-cols{grid-template-columns:minmax(0,1fr)} .tr-side{position:static} }
+
+/* live feed: breaking news */
+.lf-tabs{margin-bottom:10px}
+.lf-tabs b{font:500 10.5px var(--f-mono);opacity:.7}
+.bk-list{display:flex;flex-direction:column}
+.bk-item{display:grid;grid-template-columns:46px minmax(0,1fr);gap:10px;text-align:left;border:0;background:none;padding:9px 6px;border-radius:10px;color:var(--ink);transition:background .15s,opacity .15s}
+.bk-item+.bk-item{border-top:1px solid var(--line)}
+.bk-item:hover{background:var(--surface-2)}
+.bk-list:has(.bk-item:hover) .bk-item:not(:hover){opacity:.6}
+.bk-time{font:500 12px var(--f-mono);color:var(--muted);padding-top:2px}
+.bk-item.urgent .bk-time{color:var(--sev-em)}
+.bk-body{display:flex;flex-direction:column;gap:4px;min-width:0}
+.bk-body > b{font-size:13px;font-weight:500;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.bk-flag{font-size:10px;font-weight:700;color:#fff;background:var(--sev-em);border-radius:4px;padding:1px 6px;animation:trpulse 2s infinite}
+.bk-lang{font:600 9.5px var(--f-mono);border:1px solid var(--line);border-radius:4px;padding:0 4px;color:var(--muted)}
+.bk-foot{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;margin-top:8px;font-size:11.5px}
+.bk-foot .tr-live{font-size:10.5px}
+/* cyber registry */
+.src-row.reg{grid-template-columns:minmax(0,1fr) auto}
+.reg-pub{grid-column:1/-1;font-size:11px;color:var(--muted)}
+.reg-pub em{font-style:normal;color:var(--sev-wa)}
+.src-name.static{cursor:default}
+.ref-tag{font-style:normal;font:600 10px var(--f-mono);color:var(--muted);border:1px dashed var(--line);border-radius:999px;padding:0 7px}
+.reg-more{grid-column:1/-1;font-size:11.5px;color:var(--muted)}
+.reg-more summary{cursor:pointer;list-style:none;font-size:11px;color:var(--brand);width:max-content}
+.reg-more summary::-webkit-details-marker{display:none}
+.reg-more dl{margin:6px 0 2px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 10px}
+.reg-more dt{font-weight:600;color:var(--ink-2)}
+.reg-more dd{margin:0;color:var(--ink-2)}
+.epss{font-weight:600;color:var(--ink-2)}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
@@ -1175,6 +1205,12 @@ const I18N = {
  "21 วันล่าสุด · อาเซียน":"last 21 days · ASEAN","ยังไม่มีเหตุการณ์ในภูมิภาค":"No events in the region","แหล่งข่าว":"Sources",
  "กระทรวงกลาโหม / กองทัพ":"Ministry of Defence / Armed forces","กระทรวงการต่างประเทศ":"Ministry of Foreign Affairs","สกมช. / ThaiCERT":"NCSA / ThaiCERT",
  "ปภ. กรมป้องกันและบรรเทาสาธารณภัย":"DDPM (Disaster Prevention and Mitigation)","กรมอุตุนิยมวิทยา":"Thai Meteorological Department","สทนช. / กรมชลประทาน":"ONWR / Royal Irrigation Dept.",
+ "ข่าวด่วน":"Breaking","Live Feed · ข่าวด่วน":"Live Feed · Breaking news","สำนักข่าวชั้นนำไทยและต่างประเทศ · 12 ชม. ล่าสุด · อัปเดตทุก 5 นาที":"Leading Thai and international outlets · last 12h · updated every 5 minutes",
+ "ด่วน":"Breaking","สำนักข่าว":"outlets","ไม่มีข่าวด่วนด้านความเสี่ยงใน 12 ชม. ล่าสุด":"No risk-related breaking news in the last 12 hours",
+ "แหล่งข้อมูล Cyber Threat":"Cyber Threat sources","แหล่งตามรายการอ้างอิงของทีม BCM":"sources from the BCM team reference list","ประกาศเตือนภัยทางการ":"Official advisories",
+ "ฐานข้อมูลและกรอบวิเคราะห์":"Databases & frameworks","งานวิจัยและรายงาน":"Research & reports","อ้างอิง":"Reference","รายละเอียดการใช้งาน":"How to use",
+ "ข้อมูลสำคัญ":"Key information","การนำไปใช้":"Use","ข้อควรพิจารณา":"Caveats","ดึงข้อมูลไม่ได้ชั่วคราว":"temporarily unavailable","เปิดเว็บไซต์แหล่งข้อมูล":"Open source website",
+ "EPSS: โอกาสถูกใช้โจมตีใน 30 วัน (FIRST)":"EPSS: probability of exploitation in the next 30 days (FIRST)",
 
  // navigation & shell
  "หน้าหลัก":"Home","ข่าวสารและแจ้งเตือน":"News & Alerts","แอปพลิเคชันทั้งหมด":"All applications","แอปพลิเคชันอื่น ๆ":"Other applications","ข้อมูล BCM":"BCM information",
@@ -2877,6 +2913,7 @@ const TR_KIND = {
   conflict:{t:"สงคราม & ความขัดแย้ง", en:"War & conflict", icon:"swords", c:"#C2410C"},
   cyber:{t:"Cyber Threat", en:"Cyber threat", icon:"shieldAlert", c:"#7C3AED"},
   disaster:{t:"ข่าวภัยพิบัติจากสื่อ", en:"Disaster news", icon:"radar", c:"#0369A1"},
+  breaking:{t:"ข่าวด่วน", en:"Breaking news", icon:"live", c:"#DC2626"},
 };
 const LVL = {high:["สูง","var(--sev-em)"], elevated:["เฝ้าระวัง","var(--sev-wa)"], info:["ทั่วไป","var(--sev-ad)"]};
 
@@ -3019,7 +3056,7 @@ function trCard(kind){
   const head=`<div class="card-head"><div class="tr-h"><span class="tr-ic" style="--c:${K.c}">${svg(K.icon,18)}</span><div><h3>${K.t}</h3><div class="card-sub">Trending 24 ชม.${d?` · ${d.stories||d.items.length} เรื่อง จาก ${d.sources} แหล่งข่าว`:""}</div></div></div>${trStatusLine()}</div>`;
   if(!d) return `<div class="card tr-card">${head}${TR.status==="error"?`<div class="muted" style="font-size:13px">เชื่อมต่อแหล่งข่าวไม่ได้ในขณะนี้ ระบบจะลองใหม่อัตโนมัติ</div>`:`<div class="live-list">${"<div class='skeleton'></div>".repeat(4)}</div>`}</div>`;
   const items=[...d.items].sort((a,b)=>(b.sea-a.sea)||(b.score-a.score)).slice(0,5);
-  const kev = kind==="cyber" && d.kev && d.kev.length ? `<div class="tr-kev"><div class="tr-sub-h">${svg("alert",13)}ช่องโหว่ที่ถูกโจมตีจริงล่าสุด (CISA KEV)</div>${d.kev.slice(0,3).map(v=>`<a href="${esc(v.url)}" target="_blank" rel="noopener" class="tr-kev-row"><b>${esc(v.cve)}</b><span data-notr>${esc(v.vendor)} ${esc(v.product)}</span><small>${esc(v.added)}${v.ransomware?' · <em>Ransomware</em>':''}</small></a>`).join("")}</div>`:"";
+  const kev = kind==="cyber" && d.kev && d.kev.length ? `<div class="tr-kev"><div class="tr-sub-h">${svg("alert",13)}ช่องโหว่ที่ถูกโจมตีจริงล่าสุด (CISA KEV)</div>${d.kev.slice(0,3).map(v=>`<a href="${esc(v.url)}" target="_blank" rel="noopener" class="tr-kev-row"><b>${esc(v.cve)}</b><span data-notr>${esc(v.vendor)} ${esc(v.product)}</span><small>${esc(v.added)}${v.epss!=null?` · <span class="epss" ${tipAttr("EPSS: โอกาสถูกใช้โจมตีใน 30 วัน (FIRST)")}>EPSS ${(v.epss*100).toFixed(v.epss<0.1?1:0)}%</span>`:""}${v.ransomware?' · <em>Ransomware</em>':''}</small></a>`).join("")}</div>`:"";
   return `<div class="card tr-card" style="--kc:${K.c}">${head}
     <div class="tr-trend">${sparkBars(d.hist,K.c)}<div class="tr-chips">${trTermChips(kind,d.terms)}</div></div>
     <div class="tr-list">${items.map(x=>trItem(x,kind)).join("")}</div>${trSrcChips(kind)}${kev}
@@ -3032,7 +3069,7 @@ function trendSectionHTML(){
 }
 
 /* ---------- story detail ---------- */
-function trFind(id){ if(!TR.data) return null; for(const k of ["conflict","cyber","disaster"]){ const x=(TR.data[k]?.items||[]).find(i=>i.id===id); if(x) return [x,k]; } return null; }
+function trFind(id){ if(!TR.data) return null; for(const k of ["breaking","conflict","cyber","disaster"]){ const x=(TR.data[k]?.items||[]).find(i=>i.id===id); if(x) return [x,k]; } return null; }
 function trModal(id){
   const f=trFind(id); if(!f) return "";
   const [x,kind]=f, K=TR_KIND[kind], l=LVL[x.level]||LVL.info;
@@ -3053,7 +3090,7 @@ function openTrModal(id){ closeTrModal(); const h=trModal(id); if(!h) return; co
 function closeTrModal(){ document.querySelectorAll(".tr-modal").forEach(m=>m.remove()); document.body.classList.remove("ics-open"); if(TR.pending) softRender(); }
 
 /* ---------- news page: tabs for live streams ---------- */
-const NTABS=[["hazard","ภัยธรรมชาติ","radar"],["conflict","สงคราม & ความขัดแย้ง","swords"],["cyber","Cyber Threat","shieldAlert"],["disaster","ข่าวภัยพิบัติจากสื่อ","globe"]];
+const NTABS=[["hazard","ภัยธรรมชาติ","radar"],["breaking","ข่าวด่วน","live"],["conflict","สงคราม & ความขัดแย้ง","swords"],["cyber","Cyber Threat","shieldAlert"],["disaster","ข่าวภัยพิบัติจากสื่อ","globe"]];
 /* ---------- sources by topic ---------- */
 function srcMatch(x,src){
   if(!src) return true;
@@ -3068,8 +3105,28 @@ function srcRow(o,kind,active){
     ${o.home?`<a class="src-home" href="${esc(o.home)}" target="_blank" rel="noopener" aria-label="เว็บไซต์หน่วยงาน" ${tipAttr("เว็บไซต์หน่วยงาน")}>${svg("ext",13)}</a>`:""}
   </div>`;
 }
+const REG_CAT=[["official","ประกาศเตือนภัยทางการ","shield"],["database","ฐานข้อมูลและกรอบวิเคราะห์","doc"],["research","งานวิจัยและรายงาน","book"],["news","สำนักข่าว","globe"]];
+function regRow(r,d,act){
+  const key="o:"+r.name, kev=r.no===5&&d.kev&&d.kev.length?d.kev:null;
+  const n=kev?kev.length:r.count, l=kev?{title:`${kev[0].cve} · ${kev[0].vendor} ${kev[0].product}`,link:kev[0].url,date:kev[0].added}:r.latest;
+  const can=r.feed&&r.count>0;
+  return `<div class="src-row reg${act===key?" on":""}">
+    ${can?`<button class="src-name" data-tr-src="${esc(key)}" data-tr-kind="cyber"><span data-notr>${esc(r.name)}</span><b>${n}</b></button>`:`<span class="src-name static"><span data-notr>${esc(r.name)}</span>${r.feed||kev?`<b>${n}</b>`:`<i class="ref-tag">อ้างอิง</i>`}</span>`}
+    <a class="src-home" href="${esc(r.url)}" target="_blank" rel="noopener" ${tipAttr("เปิดเว็บไซต์แหล่งข้อมูล")}>${svg("ext",13)}</a>
+    <small class="reg-pub"><span data-notr>${esc(r.publisher)}</span> · ${r.lang==="ไทย"?"TH":"EN"}${r.feed&&r.ok===false?` · <em>ดึงข้อมูลไม่ได้ชั่วคราว</em>`:""}</small>
+    ${l?`<a class="src-latest" href="${esc(l.link)}" target="_blank" rel="noopener"><span data-notr>${esc(l.title)}</span><small>${l.date?`<span data-ago="${esc(l.date)}">${agoShort(l.date)}</span>`:""}</small></a>`:`<span class="src-latest" data-notr>${esc(r.info)}</span>`}
+    <details class="reg-more"><summary>รายละเอียดการใช้งาน</summary><dl><dt>ข้อมูลสำคัญ</dt><dd data-notr>${esc(r.info)}</dd><dt>การนำไปใช้</dt><dd data-notr>${esc(r.use)}</dd><dt>ข้อควรพิจารณา</dt><dd data-notr>${esc(r.caveat)}</dd></dl></details>
+  </div>`;
+}
+function cyberRegistryHTML(d){
+  const act=S.trSrc||null;
+  return `<div class="card src-card"><div class="card-head"><div><h3>แหล่งข้อมูล Cyber Threat</h3><div class="card-sub">${d.registry.length} แหล่งตามรายการอ้างอิงของทีม BCM · คลิกชื่อแหล่งเพื่อกรองข่าว</div></div></div>
+    ${REG_CAT.map(([c,l,i])=>{const rows=d.registry.filter(r=>r.cat===c); return rows.length?`<div class="src-group"><div class="tr-sub-h">${svg(i,13)}${l}</div>${rows.map(r=>regRow(r,d,act)).join("")}</div>`:"";}).join("")}
+  </div>`;
+}
 function trSourcesHTML(kind,extra){
   const d=TR.data&&TR.data[kind]; if(!d||!d.outlets) return "";
+  if(kind==="cyber" && d.registry) return cyberRegistryHTML(d);
   const off=d.outlets.filter(o=>o.official), med=d.outlets.filter(o=>!o.official), act=S.trSrc||null;
   return `<div class="card src-card"><div class="card-head"><div><h3>แหล่งข่าวตามหัวข้อ</h3><div class="card-sub">${TR_KIND[kind].t} · คลิกชื่อแหล่งเพื่อกรองข่าว</div></div></div>
     ${extra||""}
@@ -3079,6 +3136,8 @@ function trSourcesHTML(kind,extra){
 }
 function trSrcChips(kind){
   const d=TR.data&&TR.data[kind]; if(!d||!d.outlets) return "";
+  if(kind==="cyber" && d.registry){ const list=d.registry.filter(r=>r.feed&&r.count>0).sort((a,b)=>a.no-b.no).slice(0,6);
+    return list.length?`<div class="src-chips"><span class="muted">แหล่งข่าว</span>${list.map(r=>`<button class="src-chip${r.cat==="official"?" off":""}" data-tr-src="${esc("o:"+r.name)}" data-tr-kind="cyber">${r.cat==="official"?svg("shield",11):""}<span data-notr>${esc(r.name)}</span><b>${r.count}</b></button>`).join("")}</div>`:""; }
   const list=[...d.outlets.filter(o=>o.official&&o.count), ...d.outlets.filter(o=>!o.official).slice(0,3)].slice(0,6);
   if(!list.length) return "";
   return `<div class="src-chips"><span class="muted">แหล่งข่าว</span>${list.map(o=>`<button class="src-chip${o.official?" off":""}" data-tr-src="${esc((o.official?"o:":"s:")+o.name)}" data-tr-kind="${kind}">${o.official?svg("shield",11):""}<span ${o.official?"":"data-notr"}>${esc(o.name)}</span><b>${o.count}</b></button>`).join("")}</div>`;
@@ -3097,7 +3156,7 @@ function trStreamPage(kind){
   let items=d.items.filter(x=>(!term||x.topics.includes(term)||x.places.includes(term))&&(!sea||x.sea)&&srcMatch(x,src)&&(!q||(x.title+" "+x.source).toLowerCase().includes(q)));
   const sort=S.trSort||"score"; items=[...items].sort(sort==="time"?(a,b)=>String(b.date).localeCompare(String(a.date)):(a,b)=>b.score-a.score);
   const kev = kind==="cyber" && d.kev && d.kev.length ? `<div class="card"><div class="card-head"><div><h3>ช่องโหว่ที่ถูกโจมตีจริงล่าสุด</h3><div class="card-sub">CISA Known Exploited Vulnerabilities · ตรวจว่า SCG ใช้ผลิตภัณฑ์เหล่านี้หรือไม่</div></div></div>
-    <div class="kev-table">${d.kev.map(v=>`<a href="${esc(v.url)}" target="_blank" rel="noopener"><b>${esc(v.cve)}</b><span data-notr>${esc(v.vendor)} · ${esc(v.product)}</span><span class="kev-name" data-notr>${esc(v.name)}</span><small>เพิ่ม ${esc(v.added)} · ครบกำหนดแก้ ${esc(v.due)}${v.ransomware?' · <em>ใช้ใน Ransomware</em>':''}</small></a>`).join("")}</div></div>`:"";
+    <div class="kev-table">${d.kev.map(v=>`<a href="${esc(v.url)}" target="_blank" rel="noopener"><b>${esc(v.cve)}</b><span data-notr>${esc(v.vendor)} · ${esc(v.product)}</span><span class="kev-name" data-notr>${esc(v.name)}</span><small>เพิ่ม ${esc(v.added)} · ครบกำหนดแก้ ${esc(v.due)}${v.epss!=null?` · <span class="epss" ${tipAttr("EPSS: โอกาสถูกใช้โจมตีใน 30 วัน (FIRST)")}>EPSS ${(v.epss*100).toFixed(v.epss<0.1?1:0)}%</span>`:""}${v.ransomware?' · <em>ใช้ใน Ransomware</em>':''}</small></a>`).join("")}</div></div>`:"";
   return `<div class="tr-page" style="--kc:${K.c}"><div class="tr-cols"><div class="tr-main">
     <div class="card"><div class="card-head"><div class="tr-h"><span class="tr-ic" style="--c:${K.c}">${svg(K.icon,18)}</span><div><h3>${K.t}</h3><div class="card-sub">${d.count} ข่าว · ${d.stories||d.items.length} เรื่อง · ${d.sources} แหล่งข่าว · 24 ชม. ล่าสุด</div></div></div>${trStatusLine()}</div>
       <div class="tr-trend big">${sparkBars(d.hist,K.c)}<div class="tr-chips">${src?`<button class="tr-chip on" data-tr-src="" data-tr-kind="${kind}">✕ <span data-notr>${esc(src.slice(2))}</span></button>`:""}${term?`<button class="tr-chip on" data-tr-term="" data-tr-kind="${kind}">✕ ${esc(term)}</button>`:""}${trTermChips(kind,d.terms,10,term)}</div></div>
@@ -3135,6 +3194,7 @@ routeFromHash = function(){
 const _go8 = go;
 go = function(r,opts={}){
   if(r==="news" && !("ntab" in opts)) opts.ntab=S.ntab||"hazard";
+  if(r==="news" && opts.ntab!==S.ntab){ S.trSrc=null; S.trTerm=null; }
   _go8(r,opts);
   if(r==="news"){ const hh=S.ntab&&S.ntab!=="hazard"?"news-"+S.ntab:"news"; if(location.hash.slice(1)!==hh){ try{ history.replaceState(null,"","#"+hh); }catch(e){} } }
   if(TR.pending && ["home","news"].includes(r)) TR.pending=false;
@@ -3166,6 +3226,32 @@ setTimeout(refreshAll, 50);
 /* Supabase / embedded hazards reload -> merge with live events again */
 const _loadRemote3 = loadRemote;
 loadRemote = async function(){ await _loadRemote3(); rebuildEvents(); softRender(); };
+
+
+/* ---------- Live Feed: breaking news from leading Thai and international outlets ---------- */
+const _liveHTML3 = liveHTML;
+function breakingRow(x){
+  const urgent = x.level==="high" || (x.date && Date.now()-new Date(x.date)<60*6e4);
+  return `<button class="bk-item${urgent?" urgent":""}" data-tr-open="${x.id}">
+    <span class="bk-time">${x.date?hhmm(x.date):""}</span>
+    <span class="bk-body"><b data-notr>${esc(x.title)}</b>
+      <span class="tr-meta">${urgent?`<span class="bk-flag">ด่วน</span>`:""}<span class="bk-lang">${x.lang==="th"?"TH":"EN"}</span><span data-notr>${esc(x.source||"")}</span>${x.date?`<span data-ago="${esc(x.date)}">${agoShort(x.date)}</span>`:""}${x.topics.slice(0,1).map(t=>`<span class="tr-tag">${esc(t)}</span>`).join("")}${x.size>1?`<span class="tr-more">+${x.size-1}</span>`:""}</span></span>
+  </button>`;
+}
+liveHTML = function(){
+  const tab=S.lfTab||"breaking", d=TR.data&&TR.data.breaking;
+  const tabs=`<div class="tr-seg lf-tabs"><button class="${tab==="breaking"?"on":""}" data-lf-tab="breaking">ข่าวด่วน${d?` <b>${d.items.length}</b>`:""}</button><button class="${tab==="gdacs"?"on":""}" data-lf-tab="gdacs">GDACS / USGS</button></div>`;
+  if(tab==="gdacs") return tabs+_liveHTML3();
+  if(!d) return tabs+(TR.status==="error"?`<div class="muted" style="font-size:13px">เชื่อมต่อแหล่งข่าวไม่ได้ในขณะนี้ ระบบจะลองใหม่อัตโนมัติ</div>`:`<div class="live-list">${"<div class='skeleton'></div>".repeat(5)}</div>`);
+  const src=[...new Set(d.items.map(x=>x.source).filter(Boolean))];
+  return tabs+`<div class="bk-list">${d.items.slice(0,10).map(breakingRow).join("")||`<div class="muted" style="font-size:13px;padding:8px 0">ไม่มีข่าวด่วนด้านความเสี่ยงใน 12 ชม. ล่าสุด</div>`}</div>
+    <div class="bk-foot"><span class="muted">${trStatusLine()} · ${src.length} สำนักข่าว</span><button class="link" data-tr-tab="breaking">ดูทั้งหมด →</button></div>`;
+};
+document.addEventListener("click",ev=>{ const b=ev.target.closest("[data-lf-tab]"); if(b){ ev.preventDefault(); S.lfTab=b.dataset.lfTab; const el=$("#liveFeed"); if(el) el.innerHTML=liveHTML(); } },true);
+const _renderHome9 = renderHome;
+renderHome = function(){
+  return _renderHome9().replace("<h3>Live Feed · GDACS / USGS</h3>","<h3>Live Feed · ข่าวด่วน</h3>").replace("เหตุการณ์ใหม่ในเอเชียตะวันออกเฉียงใต้ 21 วันล่าสุด","สำนักข่าวชั้นนำไทยและต่างประเทศ · 12 ชม. ล่าสุด · อัปเดตทุก 5 นาที");
+};
 
 /* ================= LOGIN ================= */
 $("#logout").addEventListener("click",async()=>{ await signOut(); $("#app").hidden=true; $("#login").hidden=false; resetSSO(); document.querySelectorAll("#login form").forEach(f=>f.reset()); authView("signin"); });

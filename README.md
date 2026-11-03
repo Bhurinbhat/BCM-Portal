@@ -39,6 +39,10 @@ The page refreshes its data every 5 minutes while it is open (and again when the
 - Disaster stories in ASEAN media (Thai and English) also become hazard cards when they carry a warning/evacuation signal or are reported by 3+ outlets in the last 48 hours. These cards have no map zone or site list; they link to every outlet that reported the story.
 - Curated hazard news from Supabase (`portal_hazards`) is shown for 7 days after `published_at`, then gives way to the live events. If no live event qualifies, the latest curated items stay on screen.
 
+**Live Feed (home page)** shows breaking, risk-related news from the last 12 hours from leading outlets: BBC News, Al Jazeera, CNA, Reuters, AP, Bangkok Post (English) and Thai PBS, Thairath, Matichon, Prachachat, Khaosod (Thai). Only stories that match a risk topic (conflict/security, disaster/weather, cyber, fire/industrial accident, unrest/strike, outage/transport) are kept; stories under an hour old or with urgent wording are flagged. The GDACS/USGS list is on the second tab of the same card. All breaking stories are on the news page tab `#news-breaking`.
+
+**Cyber Threat** uses the BCM team's reference list in `data/cyber_threat_reference_sources.csv` (14 sources in four groups: official advisories, databases and frameworks, research and reports, news). Sources with a feed (ThaiCERT, CISA advisories, CISA ICS, CSA Singapore, Microsoft Threat Intelligence, Google Threat Intelligence/Mandiant, ENISA, BleepingComputer, The Record) supply the Cyber Threat stories; the others (KEV, NVD, EPSS, MITRE ATT&CK, Verizon DBIR) are shown as references with their key information, use and caveats from the CSV. KEV entries carry an EPSS score from FIRST. To change the list, edit the CSV and the matching `CYBER_REF` and `FEEDS.cyber` entries in `api/trending.js`.
+
 Each topic also has a **source directory** (news-page side panel and source chips on the home cards):
 
 | Topic | Official agencies tracked | Plus |
