@@ -58,14 +58,14 @@ const TOPICS = {
   ],
   disaster: [
     ["Flood", /flood|น้ำท่วม|อุทกภัย/i], ["Storm / Typhoon", /typhoon|storm|cyclone|พายุ|ไต้ฝุ่น/i], ["Earthquake", /earthquake|quake|แผ่นดินไหว/i],
-    ["Landslide", /landslide|ดินถล่ม|โคลน/i], ["Heavy rain", /heavy rain|rainfall|ฝนตกหนัก/i], ["Haze / PM2.5", /haze|pm ?2\.5|smog|หมอกควัน|ฝุ่น/i],
+    ["Landslide", /landslide|ดินถล่ม|โคลน/i], ["Heavy rain", /heavy rain|rainfall|ฝนตกหนัก|ฝนหนัก|ฝนถล่ม|ลูกเห็บ|ลมกระโชก/i], ["Haze / PM2.5", /haze|pm ?2\.5|smog|หมอกควัน|ฝุ่น/i],
     ["Wildfire", /wildfire|forest fire|ไฟป่า/i], ["Volcano", /volcano|eruption|ภูเขาไฟ/i],
   ],
 };
 const HIGH = {
   conflict: /killed|dead|airstrike|air strike|missile|invasion|offensive|war\b|clash|martial law|เสียชีวิต|ปะทะ|สงคราม|ขีปนาวุธ/i,
   cyber: /ransomware|zero-?day|actively exploited|critical|breach|outage|nation-state|แรนซัมแวร์|ข้อมูลรั่ว|ช่องโหว่ร้ายแรง/i,
-  disaster: /killed|dead|evacuat|emergency|warning|เสียชีวิต|อพยพ|เตือนภัย|ฉุกเฉิน/i,
+  disaster: /killed|dead|evacuat|emergency|warning|alert|warns|เสียชีวิต|อพยพ|เตือน|ฉุกเฉิน|ประกาศฉบับ/i,
 };
 
 const ENT = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " " };
@@ -83,7 +83,7 @@ async function getText(url) {
 
 function parseRSS(xml, feed) {
   return (xml.match(/<item[\s>][\s\S]*?<\/item>/gi) || []).map((it) => {
-    let title = strip(tag(it, "title"));
+    let title = strip(tag(it, "title")).replace(/^news\s*[-:]\s*/i, "");
     let source = strip(tag(it, "source")) || feed.src || "";
     if (source && title.endsWith(" - " + source)) title = title.slice(0, -(source.length + 3));
     else if (!feed.src) { const k = title.lastIndexOf(" - "); if (k > 20) { source = source || title.slice(k + 3); title = title.slice(0, k); } }
@@ -123,8 +123,8 @@ const toks = (t) => new Set((t.toLowerCase().match(/[a-z0-9][a-z0-9-]{3,}/g) || 
 const grams = (t) => { const s = t.toLowerCase().replace(/[^\p{L}\p{N}]/gu, ""), g = new Set(); for (let i = 0; i < s.length - 2; i++) g.add(s.slice(i, i + 3)); return g; };
 function similar(a, b) {
   let n = 0, ng = 0; for (const w of a.tk) if (b.tk.has(w)) { n++; if (!GENERIC.has(w)) ng++; }
-  if ((n >= 3 && ng >= 1) || ng >= 2) return true;
-  if (a.lang === "th" || b.lang === "th") { let i = 0; for (const g of a.gr) if (b.gr.has(g)) i++; return i / (a.gr.size + b.gr.size - i || 1) >= 0.3; }
+  if ((n >= 3 && ng >= 2) || ng >= 3) return true;
+  if (a.lang === "th" || b.lang === "th") { let i = 0; for (const g of a.gr) if (b.gr.has(g)) i++; return i / (a.gr.size + b.gr.size - i || 1) >= 0.35; }
   return false;
 }
 function cluster(items) {

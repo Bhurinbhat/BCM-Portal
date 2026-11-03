@@ -1789,7 +1789,7 @@ function renderHomeBase(){
       <button class="btn ghost-dk zoom-reset" id="zoomAll" type="button">${svg("globe",15)}ทั้งภูมิภาค</button>
     </div>
     <div class="c-side">
-      <header><h3>ภัยที่กำลังเกิดขึ้น</h3><span class="src-badge" style="color:var(--console-dim)"><i style="--c:var(--ok)"></i>${EVENTS.some(x=>x.live)?"LIVE · GDACS / USGS":DS.hazards==="supabase"?"Supabase":"ข้อมูลคัดสรร"}</span></header>
+      <header><h3>ภัยที่กำลังเกิดขึ้น</h3><span class="src-badge" style="color:var(--console-dim)"><i style="--c:var(--ok)"></i>${EVENTS.some(x=>x.live)?"LIVE · อัปเดตอัตโนมัติ":DS.hazards==="supabase"?"Supabase":"ข้อมูลคัดสรร"}</span></header>
       <div class="ev-list">${EVENTS.map(x=>`<button class="ev${x.id===S.ev?' on':''}" data-ev-pick="${x.id}" data-pop="${x.id}" style="--hz:${SEVC[x.sev]}"><span class="sb"></span><span class="ev-ico">${svg(HZ[x.type]?.icon||ICON.alert,20)}</span><span style="min-width:0"><b>${esc(x.title)}</b><small><span class="sev ${x.sev}">${x.sevT}</span>${x.country} · ${x.sites&&x.sites.length?x.sites.length+" Sites":"ไม่มี Site ในพื้นที่"} · ${ago(x.date)}</small></span></button>`).join("")}</div>
       <div class="c-summary"><div><b style="color:var(--sev-em)">${EVENTS.filter(x=>x.sev==="em").length}</b><span>Emergency</span></div><div><b style="color:var(--sev-wa)">${EVENTS.filter(x=>x.sev==="wa"||x.sev==="wt").length}</b><span>Warning / Watch</span></div><div><b>${atRisk}</b><span>Site ในพื้นที่เสี่ยง</span></div></div>
     </div>
@@ -2860,7 +2860,7 @@ async function loadTrending(){
   try{
     const r = await fetch(TREND_API+(TREND_API.includes("?")?"&":"?")+"t="+Math.floor(Date.now()/REFRESH_MS));
     if(!r.ok) throw new Error(r.status);
-    TR.data = await r.json(); TR.at = Date.now(); TR.status="ok";
+    TR.data = await r.json(); TR.at = Date.now(); TR.status="ok"; rebuildEvents();
   }catch(e){ console.warn("trending unavailable",e); TR.status = TR.data ? "ok" : "error"; }
   softRender();
 }
@@ -2914,6 +2914,31 @@ function liveToEvent(x){
   return {id:x.id, live:true, type, sev, sevT, date:when, ...th, country:x.country||"", zone:[x.lat,x.lon,km], erp:type==="flood"?12:type==="quake"?14:17, sites,
     sources:[{name:x.source, url:x.url||"#", date:thaiDate(when)}]};
 }
+/* disaster stories from the media (Thai + SEA) become hazard cards too, so the home page always shows what is happening now */
+const NEWS_TYPE = [["Storm / Typhoon","storm"],["Flood","flood"],["Landslide","flood"],["Heavy rain","rain"],["Earthquake","quake"],["Haze / PM2.5","haze"],["Wildfire","haze"],["Volcano","volcano"]];
+const SEA_TH = {Thailand:"ไทย",Cambodia:"กัมพูชา",Myanmar:"เมียนมา",Vietnam:"เวียดนาม",Laos:"ลาว",Indonesia:"อินโดนีเซีย",Philippines:"ฟิลิปปินส์",Malaysia:"มาเลเซีย",Singapore:"สิงคโปร์","South China Sea":"ทะเลจีนใต้"};
+function newsToEvent(x){
+  const tp = NEWS_TYPE.find(([k])=>x.topics.includes(k)); if(!tp) return null;
+  const type=tp[1], sea=x.places.filter(p=>SEA_TH[p]), country=sea[0]||"";
+  const sev = x.level==="high" ? "wt" : "ad", sevT = sev==="wt"?"Watch":"Advisory";
+  const others = (x.related||[]).slice(0,4);
+  const typeEN={flood:"Flood",rain:"Heavy rain",storm:"Storm",quake:"Earthquake",haze:"Haze / PM2.5",volcano:"Volcano"}[type];
+  HAZ_EN["news-"+x.id] = { title:/[\u0E00-\u0E7F]/.test(x.title)?`${typeEN} – ${country||"ASEAN"} (Thai media: ${x.source})`:x.title, summary:`Reported by ${x.source}${x.size>1?` and ${x.size-1} other outlets`:""}. Open the sources for the full story.`,
+    area: sea.join(" · "), upd: new Date(x.date).toLocaleString("en-GB",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}),
+    facts:[["Source",x.source,""],["Outlets",x.size+"",""],["Country",country||"-",""]] };
+  return {id:"news-"+x.id, live:true, news:true, type, sev, sevT, date:x.date, title:x.title,
+    summary:`รายงานโดย ${x.source}${x.size>1?` และสื่ออื่นอีก ${x.size-1} แหล่ง`:""} · เปิดแหล่งข่าวเพื่ออ่านรายละเอียดฉบับเต็ม`,
+    area: sea.map(p=>SEA_TH[p]).join(" · "), upd: new Date(x.date).toLocaleString("th-TH",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"}),
+    country, zone:null, erp:(type==="flood"||type==="rain")?12:type==="quake"?14:17, sites:[],
+    facts:[["แหล่งข่าว",x.source,""],["สื่อที่รายงาน",x.size+" แหล่ง",""],["ประเทศ",SEA_TH[country]||"-",""]],
+    sources:[{name:x.source,url:x.link,date:""},...others.map(r=>({name:r.source,url:r.link,date:""}))]};
+}
+function newsEvents(){
+  const d=TR.data&&TR.data.disaster; if(!d) return [];
+  const now=Date.now();
+  return d.items.filter(x=>x.sea && x.date && now-new Date(x.date)<48*36e5 && x.topics.length && (x.level==="high"||x.size>=3) && !/facebook|tiktok|youtube|instagram|twitter|x\.com/i.test(x.source))
+    .slice(0,4).map(newsToEvent).filter(Boolean);
+}
 let CURATED = null;
 function rebuildEvents(){
   if(CURATED===null || EVENTS.some(e=>!e.live && !CURATED.includes(e))) CURATED = EVENTS.filter(e=>!e.live);
@@ -2921,7 +2946,7 @@ function rebuildEvents(){
   const fresh = CURATED.filter(e=>now-new Date(e.date) <= CURATED_DAYS*864e5);
   const live = (LIVE&&LIVE.events||[]).map(liveToEvent).filter(Boolean).slice(0,8);
   const ids=new Set(fresh.map(e=>e.id));
-  let list=[...fresh, ...live.filter(e=>!ids.has(e.id))];
+  let list=[...fresh, ...live.filter(e=>!ids.has(e.id)), ...newsEvents()];
   if(!list.length) list = CURATED.length ? CURATED.map(e=>Object.assign(e,{stale:true})) : [];
   if(!list.length) return;
   list.sort((a,b)=>SEV_RANK[a.sev]-SEV_RANK[b.sev]||String(b.date).localeCompare(String(a.date)));
