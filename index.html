@@ -1043,6 +1043,13 @@ a.src-latest:hover > span{text-decoration:underline}
 .reg-more dt{font-weight:600;color:var(--ink-2)}
 .reg-more dd{margin:0;color:var(--ink-2)}
 .epss{font-weight:600;color:var(--ink-2)}
+.lang-float{position:fixed!important}
+.tr-offline{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 14px;border:1px solid color-mix(in srgb,var(--sev-wa) 45%,var(--line));background:color-mix(in srgb,var(--sev-wa) 8%,var(--surface));border-radius:12px;font-size:13px;color:var(--ink-2)}
+.tr-offline svg{color:var(--sev-wa);flex:none}
+.tr-offline span{flex:1 1 240px}
+.tr-offline .ui-btn{height:34px;padding:0 12px;display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-size:12.5px}
+.tr-title-link{color:inherit;text-decoration:none}
+.tr-title-link:hover{text-decoration:underline}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
@@ -1211,6 +1218,8 @@ const I18N = {
  "ฐานข้อมูลและกรอบวิเคราะห์":"Databases & frameworks","งานวิจัยและรายงาน":"Research & reports","อ้างอิง":"Reference","รายละเอียดการใช้งาน":"How to use",
  "ข้อมูลสำคัญ":"Key information","การนำไปใช้":"Use","ข้อควรพิจารณา":"Caveats","ดึงข้อมูลไม่ได้ชั่วคราว":"temporarily unavailable","เปิดเว็บไซต์แหล่งข้อมูล":"Open source website",
  "EPSS: โอกาสถูกใช้โจมตีใน 30 วัน (FIRST)":"EPSS: probability of exploitation in the next 30 days (FIRST)",
+ "หน้านี้ดึงข้อมูลสดไม่ได้ (เช่น เปิดเป็นหน้าตัวอย่างใน Claude) ข่าวและข้อมูลล่าสุดอยู่ที่เว็บไซต์จริง":"This page cannot load live data (for example, when opened as a preview in Claude). The latest news and data are on the live website","เปิดเว็บไซต์ข้อมูลสด":"Open live website",
+ "ดูข้อมูลสดได้ที่":"Live data:",
 
  // navigation & shell
  "หน้าหลัก":"Home","ข่าวสารและแจ้งเตือน":"News & Alerts","แอปพลิเคชันทั้งหมด":"All applications","แอปพลิเคชันอื่น ๆ":"Other applications","ข้อมูล BCM":"BCM information",
@@ -2908,6 +2917,8 @@ const API_BASE = (location.hostname.endsWith("vercel.app") || location.hostname=
 const TREND_API = CFG.trendApi || API_BASE + "/api/trending";
 const HAZ_API = CFG.liveApi ? CFG.liveApi : API_BASE + "/api/hazards";
 const REFRESH_MS = 5*60*1000;
+const LIVE_SITE = "https://bcm-portal-seven.vercel.app";
+const offlineNote = () => `<div class="tr-offline">${svg("alert",15)}<span>หน้านี้ดึงข้อมูลสดไม่ได้ (เช่น เปิดเป็นหน้าตัวอย่างใน Claude) ข่าวและข้อมูลล่าสุดอยู่ที่เว็บไซต์จริง</span><a class="ui-btn dark" href="${LIVE_SITE}" target="_blank" rel="noopener">เปิดเว็บไซต์ข้อมูลสด ${svg("ext",13)}</a></div>`;
 const TR = {data:null, status:"idle", at:0, pending:false};
 const TR_KIND = {
   conflict:{t:"สงคราม & ความขัดแย้ง", en:"War & conflict", icon:"swords", c:"#C2410C"},
@@ -3054,7 +3065,7 @@ function trStatusLine(){
 function trCard(kind){
   const K=TR_KIND[kind], d=TR.data&&TR.data[kind];
   const head=`<div class="card-head"><div class="tr-h"><span class="tr-ic" style="--c:${K.c}">${svg(K.icon,18)}</span><div><h3>${K.t}</h3><div class="card-sub">Trending 24 ชม.${d?` · ${d.stories||d.items.length} เรื่อง จาก ${d.sources} แหล่งข่าว`:""}</div></div></div>${trStatusLine()}</div>`;
-  if(!d) return `<div class="card tr-card">${head}${TR.status==="error"?`<div class="muted" style="font-size:13px">เชื่อมต่อแหล่งข่าวไม่ได้ในขณะนี้ ระบบจะลองใหม่อัตโนมัติ</div>`:`<div class="live-list">${"<div class='skeleton'></div>".repeat(4)}</div>`}</div>`;
+  if(!d) return `<div class="card tr-card">${head}${TR.status==="error"?(API_BASE?`<div class="muted" style="font-size:13px">ดูข้อมูลสดได้ที่ <a href="${LIVE_SITE}" target="_blank" rel="noopener">bcm-portal-seven.vercel.app</a></div>`:`<div class="muted" style="font-size:13px">เชื่อมต่อแหล่งข่าวไม่ได้ในขณะนี้ ระบบจะลองใหม่อัตโนมัติ</div>`):`<div class="live-list">${"<div class='skeleton'></div>".repeat(4)}</div>`}</div>`;
   const items=[...d.items].sort((a,b)=>(b.sea-a.sea)||(b.score-a.score)).slice(0,5);
   const kev = kind==="cyber" && d.kev && d.kev.length ? `<div class="tr-kev"><div class="tr-sub-h">${svg("alert",13)}ช่องโหว่ที่ถูกโจมตีจริงล่าสุด (CISA KEV)</div>${d.kev.slice(0,3).map(v=>`<a href="${esc(v.url)}" target="_blank" rel="noopener" class="tr-kev-row"><b>${esc(v.cve)}</b><span data-notr>${esc(v.vendor)} ${esc(v.product)}</span><small>${esc(v.added)}${v.epss!=null?` · <span class="epss" ${tipAttr("EPSS: โอกาสถูกใช้โจมตีใน 30 วัน (FIRST)")}>EPSS ${(v.epss*100).toFixed(v.epss<0.1?1:0)}%</span>`:""}${v.ransomware?' · <em>Ransomware</em>':''}</small></a>`).join("")}</div>`:"";
   return `<div class="card tr-card" style="--kc:${K.c}">${head}
@@ -3065,7 +3076,7 @@ function trCard(kind){
 function trendSectionHTML(){
   return `<section class="tr-wrap"><div class="tr-wrap-h"><div><h2>Trending ความเสี่ยงที่ต้องจับตา</h2><p class="muted">รวบรวมจากสื่อทั่วโลกและในประเทศอัตโนมัติ · อัปเดตทุก 5 นาที</p></div>
     <button class="ui-btn outline tr-refresh" data-tr-refresh>${svg("refresh",15)}รีเฟรช</button></div>
-    <div class="tr-grid">${trCard("conflict")}${trCard("cyber")}</div></section>`;
+    ${TR.status==="error"&&API_BASE?offlineNote():""}<div class="tr-grid">${trCard("conflict")}${trCard("cyber")}</div></section>`;
 }
 
 /* ---------- story detail ---------- */
@@ -3076,7 +3087,7 @@ function trModal(id){
   const sameTopic=(TR.data[kind].items||[]).filter(i=>i.id!==x.id && i.topics.some(t=>x.topics.includes(t))).slice(0,4);
   return `<div class="tr-modal" data-tr-close><div class="tr-dialog" role="dialog" aria-modal="true">
     <div class="tr-dh"><span class="tr-ic" style="--c:${K.c}">${svg(K.icon,18)}</span><span class="eyebrow">${K.t}</span><button class="x" data-tr-close aria-label="ปิด">✕</button></div>
-    <h3 data-notr>${esc(x.title)}</h3>
+    <h3><a class="tr-title-link" href="${esc(x.link)}" target="_blank" rel="noopener" data-notr>${esc(x.title)}</a></h3>
     <div class="tr-dmeta"><span class="tr-pill" style="--c:${l[1]}">ระดับ ${l[0]}</span><span data-notr>${esc(x.source||"")}</span>${x.date?`<span>${new Date(x.date).toLocaleString(LANG==="en"?"en-GB":"th-TH",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})} · <span data-ago="${esc(x.date)}">${agoShort(x.date)}</span></span>`:""}</div>
     <div class="tr-tags">${[...x.topics,...x.places].map(t=>`<span class="tr-tag">${esc(t)}</span>`).join("")}${x.sea?`<span class="tr-sea">อาเซียน · ใกล้พื้นที่ปฏิบัติการ SCG</span>`:""}</div>
     ${x.summary?`<p class="tr-sum" data-notr>${esc(x.summary)}</p>`:`<p class="tr-sum muted">เปิดอ่านเนื้อหาฉบับเต็มจากแหล่งข่าวต้นทาง</p>`}
@@ -3151,7 +3162,7 @@ function liveSourceRows(){
 
 function trStreamPage(kind){
   const d=TR.data&&TR.data[kind], K=TR_KIND[kind];
-  if(!d) return `<div class="card">${TR.status==="error"?`<div class="muted">เชื่อมต่อแหล่งข่าวไม่ได้ในขณะนี้ ระบบจะลองใหม่อัตโนมัติ</div>`:`<div class="live-list">${"<div class='skeleton'></div>".repeat(6)}</div>`}</div>`;
+  if(!d) return `<div class="card">${TR.status==="error"?(API_BASE?offlineNote():`<div class="muted">เชื่อมต่อแหล่งข่าวไม่ได้ในขณะนี้ ระบบจะลองใหม่อัตโนมัติ</div>`):`<div class="live-list">${"<div class='skeleton'></div>".repeat(6)}</div>`}</div>`;
   const term=S.trTerm||null, sea=!!S.trSea, q=(S.trQ||"").toLowerCase(), src=S.trSrc||null;
   let items=d.items.filter(x=>(!term||x.topics.includes(term)||x.places.includes(term))&&(!sea||x.sea)&&srcMatch(x,src)&&(!q||(x.title+" "+x.source).toLowerCase().includes(q)));
   const sort=S.trSort||"score"; items=[...items].sort(sort==="time"?(a,b)=>String(b.date).localeCompare(String(a.date)):(a,b)=>b.score-a.score);
@@ -3242,7 +3253,7 @@ liveHTML = function(){
   const tab=S.lfTab||"breaking", d=TR.data&&TR.data.breaking;
   const tabs=`<div class="tr-seg lf-tabs"><button class="${tab==="breaking"?"on":""}" data-lf-tab="breaking">ข่าวด่วน${d?` <b>${d.items.length}</b>`:""}</button><button class="${tab==="gdacs"?"on":""}" data-lf-tab="gdacs">GDACS / USGS</button></div>`;
   if(tab==="gdacs") return tabs+_liveHTML3();
-  if(!d) return tabs+(TR.status==="error"?`<div class="muted" style="font-size:13px">เชื่อมต่อแหล่งข่าวไม่ได้ในขณะนี้ ระบบจะลองใหม่อัตโนมัติ</div>`:`<div class="live-list">${"<div class='skeleton'></div>".repeat(5)}</div>`);
+  if(!d) return tabs+(TR.status==="error"?(API_BASE?offlineNote():`<div class="muted" style="font-size:13px">เชื่อมต่อแหล่งข่าวไม่ได้ในขณะนี้ ระบบจะลองใหม่อัตโนมัติ</div>`):`<div class="live-list">${"<div class='skeleton'></div>".repeat(5)}</div>`);
   const src=[...new Set(d.items.map(x=>x.source).filter(Boolean))];
   return tabs+`<div class="bk-list">${d.items.slice(0,10).map(breakingRow).join("")||`<div class="muted" style="font-size:13px;padding:8px 0">ไม่มีข่าวด่วนด้านความเสี่ยงใน 12 ชม. ล่าสุด</div>`}</div>
     <div class="bk-foot"><span class="muted">${trStatusLine()} · ${src.length} สำนักข่าว</span><button class="link" data-tr-tab="breaking">ดูทั้งหมด →</button></div>`;
