@@ -8,7 +8,7 @@ Portal for SCG's Corporate BCM Office. It shows current disaster news across Sou
 |---|---|
 | `index.html` | The whole front end: sign in / sign up, home page (short hero with 4 key numbers, situation map, hazard news with hover details and detail pages, live feed), Readiness Dashboard split into sections, ICS key-contacts chart, news pages, Thai/English language menu |
 | `config.js` | Public runtime config: Supabase URL, publishable key, live-feed endpoint |
-| `api/trending.js` | Vercel function. Trending war/conflict, cyber-threat and disaster news from Google News search (English and Thai), The Hacker News, BleepingComputer and the CISA Known Exploited Vulnerabilities catalog. Groups the same story from many outlets, tags ASEAN relevance and topics, counts trending terms. Cached 5 minutes |
+| `api/trending.js` + `lib/trending.mjs` | Vercel function (thin loader; the logic in `lib/trending.mjs` is served with the site and loaded at runtime, so a GitHub push + build updates it). Trending war/conflict, cyber-threat and disaster news from Google News search (English and Thai), The Hacker News, BleepingComputer and the CISA Known Exploited Vulnerabilities catalog. Groups the same story from many outlets, tags ASEAN relevance and topics, counts trending terms. Cached 5 minutes |
 | `api/hazards.js` | Vercel function. Pulls GDACS alerts and USGS M4.5+ earthquakes from the last 21 days, filtered to Southeast Asia, cached 15 minutes |
 | `assets/scg-logo.png` | SCG logo (transparent PNG, 120 px high) used on the login pages, side menu, top bar and as the favicon |
 | `data/` | Source data: `companies.json` (from BCM_Dashboard_2026.xlsx, as of 23 Sep 2026) and `hazards.json` (curated news, 21 Oct 2026) |
@@ -41,7 +41,7 @@ The page refreshes its data every 5 minutes while it is open (and again when the
 
 **Live Feed (home page)** shows breaking, risk-related news from the last 12 hours from leading outlets: BBC News, Al Jazeera, CNA, Reuters, AP, Bangkok Post (English) and Thai PBS, Thairath, Matichon, Prachachat, Khaosod (Thai). Only stories that match a risk topic (conflict/security, disaster/weather, cyber, fire/industrial accident, unrest/strike, outage/transport) are kept; stories under an hour old or with urgent wording are flagged. The GDACS/USGS list is on the second tab of the same card. All breaking stories are on the news page tab `#news-breaking`.
 
-**Cyber Threat** uses the BCM team's reference list in `data/cyber_threat_reference_sources.csv` (14 sources in four groups: official advisories, databases and frameworks, research and reports, news). Sources with a feed (ThaiCERT, CISA advisories, CISA ICS, CSA Singapore, Microsoft Threat Intelligence, Google Threat Intelligence/Mandiant, ENISA, BleepingComputer, The Record) supply the Cyber Threat stories; the others (KEV, NVD, EPSS, MITRE ATT&CK, Verizon DBIR) are shown as references with their key information, use and caveats from the CSV. KEV entries carry an EPSS score from FIRST. To change the list, edit the CSV and the matching `CYBER_REF` and `FEEDS.cyber` entries in `api/trending.js`.
+**Cyber Threat** uses the BCM team's reference list in `data/cyber_threat_reference_sources.csv` (14 sources in four groups: official advisories, databases and frameworks, research and reports, news). Sources with a feed (ThaiCERT, CISA advisories, CISA ICS, CSA Singapore, Microsoft Threat Intelligence, Google Threat Intelligence/Mandiant, ENISA, BleepingComputer, The Record) supply the Cyber Threat stories; the others (KEV, NVD, EPSS, MITRE ATT&CK, Verizon DBIR) are shown as references with their key information, use and caveats from the CSV. KEV entries carry an EPSS score from FIRST. To change the list, edit the CSV and the matching `CYBER_REF` and `FEEDS.cyber` entries in `lib/trending.mjs`.
 
 Each topic also has a **source directory** (news-page side panel and source chips on the home cards):
 
@@ -51,7 +51,7 @@ Each topic also has a **source directory** (news-page side panel and source chip
 | Cyber threat | NCSA / ThaiCERT, CISA advisories (direct feed), CSA Singapore / ASEAN CERTs | The Hacker News, BleepingComputer, top outlets |
 | Disasters | DDPM, Thai Meteorological Department, ONWR / Royal Irrigation Dept., AHA Centre | GDACS and USGS automated alerts |
 
-For agencies the portal tracks news *from or citing* the agency (Google News search on the agency name), except CISA which is read from its own RSS feed. Each row shows the number of stories, the latest headline with a link, and a link to the agency website; clicking a source filters the news list. Feeds are configured in `FEEDS` in `api/trending.js` (`official` and `home` mark an agency).
+For agencies the portal tracks news *from or citing* the agency (Google News search on the agency name), except CISA which is read from its own RSS feed. Each row shows the number of stories, the latest headline with a link, and a link to the agency website; clicking a source filters the news list. Feeds are configured in `FEEDS` in `lib/trending.mjs` (`official` and `home` mark an agency).
 
 Headlines are shown in the language of the source; the TH/EN switch does not translate them.
 
