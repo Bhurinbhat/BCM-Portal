@@ -118,13 +118,13 @@ function enrich(items, kind, now) {
 }
 // Group near-duplicate stories (same event reported by many outlets) so one story = one card.
 const STOP = new Set("news says said after with from that this over amid into their about more have been will what when could latest update report reports warns warning amid also than were while where which says".split(" "));
-const GENERIC = new Set("data breach attack attacks cyber cyberattack ransomware hackers hacker hacked security vulnerability vulnerabilities exploit exploited flaw flaws critical patch threat actors malware military border clash clashes killed troops fighting flood floods storm typhoon earthquake heavy rain warns".split(" "));
+const GENERIC = new Set("data breach attack attacks cyber cyberattack ransomware hackers hacker hacked security vulnerability vulnerabilities exploit exploited flaw flaws critical patch threat actors malware lawsuit investigation class action exposes exposed customer customers military border clash clashes killed troops fighting flood floods storm typhoon earthquake heavy rain warns".split(" "));
 const toks = (t) => new Set((t.toLowerCase().match(/[a-z0-9][a-z0-9-]{3,}/g) || []).filter((w) => !STOP.has(w)));
 const grams = (t) => { const s = t.toLowerCase().replace(/[^\p{L}\p{N}]/gu, ""), g = new Set(); for (let i = 0; i < s.length - 2; i++) g.add(s.slice(i, i + 3)); return g; };
 function similar(a, b) {
   let n = 0, ng = 0; for (const w of a.tk) if (b.tk.has(w)) { n++; if (!GENERIC.has(w)) ng++; }
   if ((n >= 3 && ng >= 2) || ng >= 3) return true;
-  if (a.lang === "th" || b.lang === "th") { let i = 0; for (const g of a.gr) if (b.gr.has(g)) i++; return i / (a.gr.size + b.gr.size - i || 1) >= 0.35; }
+  if (a.lang === "th" || b.lang === "th") { let i = 0; for (const g of a.gr) if (b.gr.has(g)) i++; return i / (a.gr.size + b.gr.size - i || 1) >= 0.3; }
   return false;
 }
 function cluster(items) {

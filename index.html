@@ -2937,7 +2937,9 @@ function newsEvents(){
   const d=TR.data&&TR.data.disaster; if(!d) return [];
   const now=Date.now();
   return d.items.filter(x=>x.sea && x.date && now-new Date(x.date)<48*36e5 && x.topics.length && (x.level==="high"||x.size>=3) && !/facebook|tiktok|youtube|instagram|twitter|x\.com/i.test(x.source))
-    .slice(0,4).map(newsToEvent).filter(Boolean);
+    .map(newsToEvent).filter(Boolean)
+    .filter((e,i,a)=>a.findIndex(o=>o.type===e.type&&o.country===e.country)===i)   // one card per hazard type and country
+    .slice(0,4);
 }
 let CURATED = null;
 function rebuildEvents(){
