@@ -4,6 +4,8 @@ window.BCM_CONFIG = {
   supabaseUrl: "https://hhdwvmpquojqkmjsjevk.supabase.co",
   supabaseKey: "sb_publishable_8UMB0GMUtddsozlADZk05A_OTWZ8Xaa",
   liveApi: "/api/hazards",
+  // Trending war/conflict, cyber-threat and disaster news (refreshed every 5 minutes)
+  trendApi: "/api/trending",
   // Set to true after the Azure (Microsoft Entra ID) provider is enabled in Supabase Auth.
   // While false, "Sign in with Microsoft" runs in demo mode.
   msLogin: false,

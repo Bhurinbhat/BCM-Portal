@@ -8,6 +8,7 @@ Portal for SCG's Corporate BCM Office. It shows current disaster news across Sou
 |---|---|
 | `index.html` | The whole front end: sign in / sign up, home page (short hero with 4 key numbers, situation map, hazard news with hover details and detail pages, live feed), Readiness Dashboard split into sections, ICS key-contacts chart, news pages, Thai/English language menu |
 | `config.js` | Public runtime config: Supabase URL, publishable key, live-feed endpoint |
+| `api/trending.js` | Vercel function. Trending war/conflict, cyber-threat and disaster news from Google News search (English and Thai), The Hacker News, BleepingComputer and the CISA Known Exploited Vulnerabilities catalog. Groups the same story from many outlets, tags ASEAN relevance and topics, counts trending terms. Cached 5 minutes |
 | `api/hazards.js` | Vercel function. Pulls GDACS alerts and USGS M4.5+ earthquakes from the last 21 days, filtered to Southeast Asia, cached 15 minutes |
 | `assets/scg-logo.png` | SCG logo (transparent PNG, 120 px high) used on the login pages, side menu, top bar and as the favicon |
 | `data/` | Source data: `companies.json` (from BCM_Dashboard_2026.xlsx, as of 23 Sep 2026) and `hazards.json` (curated news, 21 Oct 2026) |
@@ -28,6 +29,16 @@ The dashboard opens on a grid of section cards. Each card opens one section, and
 | Companies | `#rd-list` |
 
 Bar charts, pie charts, heatmaps and the map highlight the item under the mouse, dim the rest and show its numbers.
+
+## Real-time updates
+
+The page refreshes its data every 5 minutes while it is open (and again when the tab comes back into view), without reloading the page:
+
+- `/api/trending` feeds the **Trending** section on the home page (War & conflict, Cyber Threat) and the news page tabs `#news-conflict`, `#news-cyber`, `#news-disaster`. Each story opens a detail panel with tags, other outlets reporting it, related stories and a link to the original article. Trending terms come with a 24-hour volume chart; clicking a term filters the list.
+- `/api/hazards` (GDACS, USGS) is turned into hazard cards automatically. An event becomes a card when it is Orange/Red, an earthquake of M6+, or has SCG sites within its radius (earthquake 90–350 km by magnitude, cyclone 300 km, flood 160 km, other 100 km). Sites in that radius are listed with their ERP readiness.
+- Curated hazard news from Supabase (`portal_hazards`) is shown for 7 days after `published_at`, then gives way to the live events. If no live event qualifies, the latest curated items stay on screen.
+
+Headlines are shown in the language of the source; the TH/EN switch does not translate them.
 
 ## ICS key contacts (ผัง ICS ผู้รับผิดชอบ)
 

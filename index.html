@@ -892,6 +892,96 @@ body.ics-open{overflow:hidden}
   .ics-site{break-inside:avoid}
   .ics-sites:has(.ics-site:hover) .ics-site{opacity:1!important}
 }
+
+/* ===== v9: trending conflict / cyber + live status ===== */
+.tr-wrap{display:flex;flex-direction:column;gap:14px}
+.tr-wrap-h{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.tr-wrap-h h2{margin:0;font-size:22px;font-weight:600}
+.tr-wrap-h p{margin:4px 0 0;font-size:13px}
+.tr-refresh{height:36px;padding:0 14px;display:inline-flex;align-items:center;gap:7px}
+.tr-refresh.spin svg{animation:trspin .9s linear infinite}
+@keyframes trspin{to{transform:rotate(360deg)}}
+.tr-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.tr-card{display:flex;flex-direction:column;gap:12px;border-top:3px solid var(--kc,var(--line))}
+.tr-h{display:flex;align-items:center;gap:10px;min-width:0}
+.tr-ic{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;flex:none;color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--surface))}
+.tr-live{display:inline-flex;align-items:center;gap:6px;font:500 11px var(--f-mono);color:var(--muted);white-space:nowrap}
+.tr-live i{width:7px;height:7px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 color-mix(in srgb,var(--ok) 60%,transparent);animation:trpulse 2s infinite}
+@keyframes trpulse{70%{box-shadow:0 0 0 7px transparent}100%{box-shadow:0 0 0 0 transparent}}
+.tr-trend{display:grid;grid-template-columns:150px minmax(0,1fr);gap:14px;align-items:center;padding:10px 12px;border-radius:12px;background:var(--surface-2)}
+.tr-trend.big{grid-template-columns:220px minmax(0,1fr)}
+.tr-spark{width:100%;height:34px;display:block}
+.tr-chips{display:flex;flex-wrap:wrap;gap:6px}
+.tr-chip{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:4px 10px;font-size:12px;color:var(--ink-2);transition:background .15s,opacity .15s}
+.tr-chip b{font:500 10.5px var(--f-mono);color:var(--muted)}
+.tr-chip.hot{border-color:color-mix(in srgb,var(--kc,var(--brand)) 45%,var(--line));color:var(--ink)}
+.tr-chip.hot svg{color:var(--kc,var(--brand))}
+.tr-chip:hover{background:var(--surface-2)}
+.tr-chip.on{background:var(--ink);color:var(--surface);border-color:var(--ink)}.tr-chip.on b{color:inherit}
+.tr-chips:has(.tr-chip:hover) .tr-chip:not(:hover){opacity:.55}
+.tr-list{display:flex;flex-direction:column}
+.tr-item{display:grid;grid-template-columns:4px minmax(0,1fr);gap:12px;text-align:left;border:0;background:none;padding:10px 8px;border-radius:10px;color:var(--ink);transition:background .15s,opacity .15s}
+.tr-item+.tr-item{border-top:1px solid var(--line)}
+.tr-item:hover{background:var(--surface-2)}
+.tr-list:has(.tr-item:hover) .tr-item:not(:hover){opacity:.6}
+.tr-lv{width:4px;border-radius:4px;background:var(--c)}
+.tr-body{display:flex;flex-direction:column;gap:5px;min-width:0}
+.tr-body > b{font-size:13.5px;font-weight:500;line-height:1.45;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.tr-meta{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;font-size:11.5px;color:var(--muted)}
+.tr-more{font-weight:600;color:var(--ink-2)}
+.tr-sea{font-size:10.5px;font-weight:600;padding:1px 7px;border-radius:999px;background:color-mix(in srgb,var(--brand) 12%,var(--surface));color:var(--brand)}
+.tr-tag{font-size:10.5px;padding:1px 7px;border-radius:999px;background:var(--surface-2);color:var(--ink-2)}
+.tr-all{align-self:flex-start}
+.tr-sub-h{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--ink-2);margin:2px 0 6px}
+.tr-kev{border-top:1px solid var(--line);padding-top:10px}
+.tr-kev-row{display:grid;grid-template-columns:130px minmax(0,1fr) auto;gap:10px;align-items:center;padding:6px 8px;border-radius:8px;font-size:12px;color:var(--ink);text-decoration:none}
+.tr-kev-row:hover{background:var(--surface-2)}
+.tr-kev-row b{font:500 11.5px var(--f-mono)}
+.tr-kev-row span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tr-kev-row small,.kev-table small{color:var(--muted)}
+.tr-kev-row em,.kev-table em{font-style:normal;color:var(--sev-em);font-weight:600}
+/* news tabs + stream pages */
+.tr-tabs{margin-bottom:2px}
+.tr-page{display:flex;flex-direction:column;gap:16px}
+.tr-page .card{display:flex;flex-direction:column;gap:12px}
+.tr-filters{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.tr-filters .ui-input{flex:1 1 220px;max-width:360px}
+.tr-toggle{display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--ink-2)}
+.tr-seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;padding:2px;background:var(--surface)}
+.tr-seg button{border:0;background:none;padding:6px 12px;border-radius:8px;font-size:12.5px;color:var(--muted)}
+.tr-seg button.on{background:var(--ink);color:var(--surface)}
+.tr-list.full .tr-item{padding:12px 10px}
+.kev-table{display:flex;flex-direction:column}
+.kev-table a{display:grid;grid-template-columns:150px 200px minmax(0,1fr);gap:4px 14px;padding:10px;border-radius:10px;text-decoration:none;color:var(--ink);font-size:12.5px}
+.kev-table a+a{border-top:1px solid var(--line)}
+.kev-table a:hover{background:var(--surface-2)}
+.kev-table b{font:500 12px var(--f-mono)}
+.kev-table small{grid-column:3}
+/* story modal */
+.tr-modal{position:fixed;inset:0;z-index:60;background:rgba(8,12,20,.55);backdrop-filter:blur(3px);display:grid;place-items:center;padding:20px}
+.tr-dialog{width:min(680px,100%);max-height:calc(100dvh - 40px);overflow:auto;background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:0 30px 70px -20px rgba(0,0,0,.5);padding:22px;display:flex;flex-direction:column;gap:12px}
+.tr-dh{display:flex;align-items:center;gap:10px}
+.tr-dh .x{margin-left:auto;border:0;background:var(--surface-2);width:34px;height:34px;border-radius:10px;color:var(--ink)}
+.tr-dialog h3{margin:0;font-size:20px;line-height:1.4}
+.tr-dmeta{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font-size:12.5px;color:var(--muted)}
+.tr-pill{font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;color:var(--c);background:color-mix(in srgb,var(--c) 12%,var(--surface))}
+.tr-tags{display:flex;flex-wrap:wrap;gap:6px}
+.tr-sum{margin:2px 0;font-size:14px;line-height:1.7;color:var(--ink-2)}
+.tr-rel{display:flex;flex-direction:column;gap:2px}
+.tr-rel a{display:flex;flex-direction:column;gap:2px;padding:8px 10px;border-radius:10px;text-decoration:none;color:var(--ink)}
+.tr-rel a:hover{background:var(--surface-2)}
+.tr-rel b{font-size:13px;font-weight:500}.tr-rel small{font-size:11.5px;color:var(--muted)}
+.tr-dfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:12px;font-size:12px}
+.tr-dfoot .ui-btn{height:38px;padding:0 14px;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+@media (max-width:1180px){ .tr-grid{grid-template-columns:minmax(0,1fr)} }
+@media (max-width:860px){
+  .tr-trend,.tr-trend.big{grid-template-columns:minmax(0,1fr)}
+  .tr-kev-row{grid-template-columns:minmax(0,1fr) auto}.tr-kev-row span{display:none}
+  .kev-table a{grid-template-columns:minmax(0,1fr)}.kev-table small{grid-column:1}
+  .tr-modal{padding:0;place-items:end stretch}
+  .tr-dialog{border-radius:20px 20px 0 0;max-height:90dvh;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px))}
+  .tr-card .card-head{flex-wrap:wrap}
+}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
@@ -1035,6 +1125,20 @@ const I18N = {
  "พิมพ์ / PDF":"Print / PDF","Site / โรงงาน":"Sites / plants","Site ในพื้นที่ภัยแสดงก่อน · คลิกเพื่อดูผัง ICS ของ Site":"Sites in hazard areas first · click a site to see its ICS chart",
  "ค้นหา Site หรือชื่อผู้รับผิดชอบ":"Search site or person","ผัง ICS ของ Site ในพื้นที่":"ICS chart of affected sites","ประเทศ":"countries",
  "เลือก BU หรือค้นหาเพื่อดู Site อื่น":"Pick a BU or search to see other sites","Site ในพื้นที่ภัย":"Sites in hazard areas",
+ // v9 trending
+ "สงคราม & ความขัดแย้ง":"War & conflict","ข่าวภัยพิบัติจากสื่อ":"Disaster news","ภัยธรรมชาติ":"Natural hazards","Trending ความเสี่ยงที่ต้องจับตา":"Trending risks to watch",
+ "รวบรวมจากสื่อทั่วโลกและในประเทศอัตโนมัติ · อัปเดตทุก 5 นาที":"Collected automatically from global and Thai media · updated every 5 minutes",
+ "รีเฟรช":"Refresh","Trending 24 ชม.":"Trending 24h","เรื่อง จาก":"stories from","แหล่งข่าว":"sources","เรื่อง":"stories","ข่าว":"articles",
+ "เชื่อมต่อแหล่งข่าวไม่ได้ในขณะนี้ ระบบจะลองใหม่อัตโนมัติ":"Cannot reach news sources right now; retrying automatically",
+ "ช่องโหว่ที่ถูกโจมตีจริงล่าสุด (CISA KEV)":"Latest actively exploited vulnerabilities (CISA KEV)","ช่องโหว่ที่ถูกโจมตีจริงล่าสุด":"Latest actively exploited vulnerabilities",
+ "CISA Known Exploited Vulnerabilities · ตรวจว่า SCG ใช้ผลิตภัณฑ์เหล่านี้หรือไม่":"CISA Known Exploited Vulnerabilities · check whether SCG uses these products",
+ "ดูทั้งหมด":"View all","อาเซียน · ใกล้พื้นที่ปฏิบัติการ SCG":"ASEAN · near SCG operations","อาเซียน":"ASEAN","ระดับ":"Level","สูง":"High","เฝ้าระวัง":"Elevated","ทั่วไป":"Info",
+ "เปิดอ่านเนื้อหาฉบับเต็มจากแหล่งข่าวต้นทาง":"Open the original source for the full story","สื่ออื่นที่รายงานเรื่องนี้":"Other outlets reporting this","ข่าวในประเด็นเดียวกัน":"Related stories",
+ "ข้อมูล ณ":"Data as of","อัปเดตอัตโนมัติทุก 5 นาที":"auto-updates every 5 minutes","อ่านข่าวต้นฉบับ":"Read original",
+ "24 ชม. ล่าสุด":"last 24h","ค้นหาข่าว":"Search news","เฉพาะอาเซียน":"ASEAN only","สำคัญสุด":"Top","ล่าสุด":"Latest","ไม่พบข่าวตามเงื่อนไข":"No news matches",
+ "เพิ่ม":"Added","ครบกำหนดแก้":"due","ใช้ใน Ransomware":"Used in ransomware","ข่าวใน 6 ชม.":"in the last 6h","นาทีที่แล้ว":"min ago",
+ "ข้อมูลอัตโนมัติจาก":"Automatic update from","ระดับการแจ้งเตือน":"alert level","ขนาด":"magnitude","Site ของ SCG อยู่ในรัศมี":"SCG sites within","ไม่มี Site ของ SCG ในรัศมี":"No SCG sites within","กม.":"km","Site ในรัศมี":"Sites in radius","ประเภท":"Type",
+ "ภูเขาไฟ":"Volcano","ภัยแล้ง":"Drought","ข้อมูลคัดสรร":"Curated",
 
  // navigation & shell
  "หน้าหลัก":"Home","ข่าวสารและแจ้งเตือน":"News & Alerts","แอปพลิเคชันทั้งหมด":"All applications","แอปพลิเคชันอื่น ๆ":"Other applications","ข้อมูล BCM":"BCM information",
@@ -1152,10 +1256,10 @@ function trText(s){
 const TR_ATTRS=["placeholder","aria-label","data-tip","title"];
 function trTree(root){
   if(LANG!=="en" || !root) return;
-  if(root.nodeType===3){ const v=trText(root.nodeValue); if(v!==root.nodeValue){ if(root.__th===undefined) root.__th=root.nodeValue; root.nodeValue=v; } return; }
-  if(root.nodeType!==1 || root.closest && root.closest("script,style")) return;
+  if(root.nodeType===3){ if(root.parentElement && root.parentElement.closest("[data-notr]")) return; const v=trText(root.nodeValue); if(v!==root.nodeValue){ if(root.__th===undefined) root.__th=root.nodeValue; root.nodeValue=v; } return; }
+  if(root.nodeType!==1 || root.closest && root.closest("script,style,[data-notr]")) return;
   const w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT); const list=[]; let n; while((n=w.nextNode())) list.push(n);
-  list.forEach(t=>{ if(t.parentNode && /^(SCRIPT|STYLE)$/.test(t.parentNode.nodeName)) return; const v=trText(t.nodeValue); if(v!==t.nodeValue){ if(t.__th===undefined) t.__th=t.nodeValue; t.nodeValue=v; } });
+  list.forEach(t=>{ if(t.parentNode && /^(SCRIPT|STYLE)$/.test(t.parentNode.nodeName)) return; if(t.parentElement && t.parentElement.closest("[data-notr]")) return; const v=trText(t.nodeValue); if(v!==t.nodeValue){ if(t.__th===undefined) t.__th=t.nodeValue; t.nodeValue=v; } });
   const els=[root,...root.querySelectorAll("["+TR_ATTRS.join("],[")+"]")];
   els.forEach(el=>{ if(!el.getAttribute) return; TR_ATTRS.forEach(a=>{ const v=el.getAttribute(a); if(v && THAI.test(v)){ if(!el.hasAttribute("data-th-"+a)) el.setAttribute("data-th-"+a,v); el.setAttribute(a,trText(v)); } }); });
 }
@@ -1685,7 +1789,7 @@ function renderHomeBase(){
       <button class="btn ghost-dk zoom-reset" id="zoomAll" type="button">${svg("globe",15)}ทั้งภูมิภาค</button>
     </div>
     <div class="c-side">
-      <header><h3>ภัยที่กำลังเกิดขึ้น</h3><span class="src-badge" style="color:var(--console-dim)"><i style="--c:var(--ok)"></i>${DS.hazards==="supabase"?"Supabase":"อัปเดต 21 ต.ค. 2026"}</span></header>
+      <header><h3>ภัยที่กำลังเกิดขึ้น</h3><span class="src-badge" style="color:var(--console-dim)"><i style="--c:var(--ok)"></i>${EVENTS.some(x=>x.live)?"LIVE · GDACS / USGS":DS.hazards==="supabase"?"Supabase":"ข้อมูลคัดสรร"}</span></header>
       <div class="ev-list">${EVENTS.map(x=>`<button class="ev${x.id===S.ev?' on':''}" data-ev-pick="${x.id}" data-pop="${x.id}" style="--hz:${SEVC[x.sev]}"><span class="sb"></span><span class="ev-ico">${svg(HZ[x.type]?.icon||ICON.alert,20)}</span><span style="min-width:0"><b>${esc(x.title)}</b><small><span class="sev ${x.sev}">${x.sevT}</span>${x.country} · ${x.sites&&x.sites.length?x.sites.length+" Sites":"ไม่มี Site ในพื้นที่"} · ${ago(x.date)}</small></span></button>`).join("")}</div>
       <div class="c-summary"><div><b style="color:var(--sev-em)">${EVENTS.filter(x=>x.sev==="em").length}</b><span>Emergency</span></div><div><b style="color:var(--sev-wa)">${EVENTS.filter(x=>x.sev==="wa"||x.sev==="wt").length}</b><span>Warning / Watch</span></div><div><b>${atRisk}</b><span>Site ในพื้นที่เสี่ยง</span></div></div>
     </div>
@@ -2026,7 +2130,7 @@ function bcmArticle(n){
 }
 function renderNewsPage(){
   return `<div class="page">
-    <div class="page-head"><div><div class="crumb">P2 · NEWS</div><h1>ข่าวสารและแจ้งเตือน</h1><div class="muted">ข่าวภัยพิบัติที่กระทบพื้นที่ปฏิบัติการของ SCG และประกาศจาก Corporate BCM Office</div></div><span class="src-badge"><i style="--c:var(--ok)"></i>${DS.hazards==="supabase"?"ข่าวภัยจาก Supabase":"ข่าวภัยคัดจากสื่อ ณ 21 ต.ค. 2026"}</span></div>
+    <div class="page-head"><div><div class="crumb">P2 · NEWS</div><h1>ข่าวสารและแจ้งเตือน</h1><div class="muted">ข่าวภัยพิบัติที่กระทบพื้นที่ปฏิบัติการของ SCG และประกาศจาก Corporate BCM Office</div></div><span class="src-badge"><i style="--c:var(--ok)"></i>LIVE · อัปเดตอัตโนมัติทุก 5 นาที</span></div>
     <div class="card"><div class="card-head"><div><h3>อัปเดตและแจ้งเตือนความเสี่ยง</h3><div class="card-sub">คลิกที่ข่าวหรือปุ่ม "อ่านรายละเอียด" เพื่อเปิดหน้ารายละเอียด</div></div></div>
       <div class="news-grid">${EVENTS.map(e=>newsCard(e,"page")).join("")}</div></div>
     <div class="news">${Object.entries(NEWS).map(([k,v],i)=>`<div class="news-card" style="--ac:${v.ac}"><div class="tag"><i>${v.i}</i>${k}</div>${v.items.map((n,j)=>`<div class="news-item bn-row"><div style="min-width:0"><b>${n[0]}</b><small>${n[1]}</small></div><button class="read" data-article="bn-${i}-${j}">อ่านรายละเอียด ${svg("ext",12)}</button></div>`).join("")}</div>`).join("")}</div>
@@ -2715,6 +2819,253 @@ hazardArticle = function(e){
   return h;
 };
 document.addEventListener("click",ev=>{ const b=ev.target.closest("[data-ics-from]"); if(b){ ev.preventDefault(); S.icsEv=b.dataset.icsFrom; S.icsQ=""; go("ics",{icsBu:null}); } });
+
+/* ================= v9: real-time data + trending conflict / cyber news ================= */
+Object.assign(ICON,{
+  swords:'<path d="M14.5 17.5L3 6V3h3l11.5 11.5"/><path d="M13 19l6-6M16 16l4 4M19 21l2-2"/><path d="M14.5 6.5L18 3h3v3l-3.5 3.5"/><path d="M5 14l4 4M7 17l-3 3M3 19l2 2"/>',
+  shieldAlert:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M12 8v4M12 16h.01"/>',
+  flame2:'<path d="M12 22c4 0 7-3 7-7 0-4-3-6-4-9-1 2-2 3-4 3 0-2-1-4-3-6-1 4-3 6-3 10 0 5 3 9 7 9z"/>',
+  refresh:'<path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/>',
+});
+Object.assign(HZ,{
+  volcano:{l:"ภูเขาไฟ",icon:'<path d="M2 21h20L15 9h-6z"/><path d="M10 5l1-2M14 5l-1-2M12 6V2"/>'},
+  drought:{l:"ภัยแล้ง",icon:'<circle cx="12" cy="9" r="4"/><path d="M4 21h16M6 17h12"/>'},
+});
+
+const API_BASE = (location.hostname.endsWith("vercel.app") || location.hostname==="localhost") ? "" : "https://bcm-portal-seven.vercel.app";
+const TREND_API = CFG.trendApi || API_BASE + "/api/trending";
+const HAZ_API = CFG.liveApi ? CFG.liveApi : API_BASE + "/api/hazards";
+const REFRESH_MS = 5*60*1000;
+const TR = {data:null, status:"idle", at:0, pending:false};
+const TR_KIND = {
+  conflict:{t:"สงคราม & ความขัดแย้ง", en:"War & conflict", icon:"swords", c:"#C2410C"},
+  cyber:{t:"Cyber Threat", en:"Cyber threat", icon:"shieldAlert", c:"#7C3AED"},
+  disaster:{t:"ข่าวภัยพิบัติจากสื่อ", en:"Disaster news", icon:"radar", c:"#0369A1"},
+};
+const LVL = {high:["สูง","var(--sev-em)"], elevated:["เฝ้าระวัง","var(--sev-wa)"], info:["ทั่วไป","var(--sev-ad)"]};
+
+function agoShort(d){
+  if(!d) return "";
+  const m=Math.round((Date.now()-new Date(d))/6e4);
+  if(!isFinite(m)) return "";
+  if(LANG==="en") return m<1?"just now":m<60?m+" min ago":m<1440?Math.round(m/60)+" h ago":Math.round(m/1440)+" d ago";
+  return m<1?"เมื่อสักครู่":m<60?m+" นาทีที่แล้ว":m<1440?Math.round(m/60)+" ชม. ที่แล้ว":Math.round(m/1440)+" วันที่แล้ว";
+}
+const hhmm = d => { try{ return new Date(d).toLocaleTimeString(LANG==="en"?"en-GB":"th-TH",{hour:"2-digit",minute:"2-digit"}); }catch(e){ return ""; } };
+
+/* ---------- loading + auto refresh ---------- */
+async function loadTrending(){
+  if(TR.status==="loading") return;
+  TR.status = TR.data ? "refresh" : "loading";
+  try{
+    const r = await fetch(TREND_API+(TREND_API.includes("?")?"&":"?")+"t="+Math.floor(Date.now()/REFRESH_MS));
+    if(!r.ok) throw new Error(r.status);
+    TR.data = await r.json(); TR.at = Date.now(); TR.status="ok";
+  }catch(e){ console.warn("trending unavailable",e); TR.status = TR.data ? "ok" : "error"; }
+  softRender();
+}
+async function loadLiveHazards(){
+  try{ const r=await fetch(HAZ_API+(HAZ_API.includes("?")?"&":"?")+"t="+Math.floor(Date.now()/REFRESH_MS)); if(!r.ok) throw 0; LIVE=await r.json(); DS.live="ok"; }
+  catch(e){ if(!LIVE) DS.live="error"; }
+  rebuildEvents(); softRender();
+}
+function busyUI(){
+  return !$("#pop").hidden || document.querySelector(".tr-modal,.ics-modal") || (document.activeElement && /INPUT|SELECT|TEXTAREA/.test(document.activeElement.tagName));
+}
+function softRender(){
+  if($("#app").hidden) return;
+  const live = ["home","news"].includes(S.route);
+  if(!live){ TR.pending=true; return; }
+  if(busyUI()){ TR.pending=true; return; }
+  const y=window.scrollY; renderNav(); render(); window.scrollTo(0,y); TR.pending=false;
+}
+function refreshAll(){ loadTrending(); loadLiveHazards(); }
+setInterval(()=>{ if(document.visibilityState==="visible") refreshAll(); }, REFRESH_MS);
+document.addEventListener("visibilitychange",()=>{ if(document.visibilityState==="visible" && Date.now()-TR.at>REFRESH_MS) refreshAll(); });
+setInterval(()=>{ document.querySelectorAll("[data-ago]").forEach(el=>{ el.textContent=agoShort(+el.dataset.ago||el.dataset.ago); }); }, 30000);
+
+/* ---------- natural hazards: live GDACS / USGS events become hazard cards ---------- */
+const LIVE_TYPE = {FL:"flood",TC:"storm",EQ:"quake",WF:"haze",VO:"volcano",DR:"drought"};
+const LIVE_EN = {flood:"Flood",storm:"Tropical cyclone",quake:"Earthquake",haze:"Wildfire",volcano:"Volcano",drought:"Drought"};
+const CURATED_DAYS = 7;
+function kmBetween(a,b,c,d){ const R=6371,t=Math.PI/180,x=(c-a)*t,y=(d-b)*t; const h=Math.sin(x/2)**2+Math.cos(a*t)*Math.cos(c*t)*Math.sin(y/2)**2; return 2*R*Math.asin(Math.sqrt(h)); }
+function liveToEvent(x){
+  const type=LIVE_TYPE[x.type]; if(!type || x.lat==null) return null;
+  const km = type==="quake" ? (x.mag>=7?350:x.mag>=6?220:x.mag>=5.5?140:90) : type==="storm"?300 : type==="flood"?160 : 100;
+  const sites = CO.filter(c=>kmBetween(x.lat,x.lon,c.lat,c.lon)<=km).map(c=>c.name);
+  const red=x.alert==="Red", orange=x.alert==="Orange";
+  if(!red && !orange && !sites.length && !(type==="quake" && x.mag>=6)) return null;
+  const sev = red?"em":orange?"wa":sites.length?"wt":"ad";
+  const sevT = {em:"Emergency",wa:"Warning",wt:"Watch",ad:"Advisory"}[sev];
+  const place = x.place || x.country || "";
+  const when = x.from || new Date().toISOString();
+  const th = {
+    title:`${HZ[type].l}: ${x.title}`,
+    summary:`ข้อมูลอัตโนมัติจาก ${x.source} ระดับการแจ้งเตือน ${x.alert||"-"}${x.mag?` · ขนาด ${x.mag}`:""} · ${sites.length?`มี ${sites.length} Site ของ SCG อยู่ในรัศมี ${km} กม.`:`ไม่มี Site ของ SCG ในรัศมี ${km} กม.`}`,
+    area: place, upd: thaiDate(when),
+    facts:[["ระดับ "+x.source, x.alert||"-", x.severity||""], x.mag?["ขนาด","M"+x.mag,"USGS"]:["ประเภท",HZ[type].l,""], ["Site ในรัศมี",sites.length+" Site",km+" กม."]],
+  };
+  HAZ_EN[x.id] = {
+    title:`${LIVE_EN[type]}: ${x.title}`,
+    summary:`Automatic update from ${x.source}. Alert level ${x.alert||"-"}${x.mag?` · magnitude ${x.mag}`:""} · ${sites.length?`${sites.length} SCG sites within ${km} km.`:`No SCG sites within ${km} km.`}`,
+    area: place, upd: new Date(when).toLocaleDateString("en-GB",{day:"numeric",month:"short",year:"numeric"}),
+    facts:[[x.source+" alert", x.alert||"-", x.severity||""], x.mag?["Magnitude","M"+x.mag,"USGS"]:["Type",LIVE_EN[type],""], ["Sites in radius",sites.length+" sites",km+" km"]],
+  };
+  return {id:x.id, live:true, type, sev, sevT, date:when, ...th, country:x.country||"", zone:[x.lat,x.lon,km], erp:type==="flood"?12:type==="quake"?14:17, sites,
+    sources:[{name:x.source, url:x.url||"#", date:thaiDate(when)}]};
+}
+let CURATED = null;
+function rebuildEvents(){
+  if(CURATED===null || EVENTS.some(e=>!e.live && !CURATED.includes(e))) CURATED = EVENTS.filter(e=>!e.live);
+  const now=Date.now();
+  const fresh = CURATED.filter(e=>now-new Date(e.date) <= CURATED_DAYS*864e5);
+  const live = (LIVE&&LIVE.events||[]).map(liveToEvent).filter(Boolean).slice(0,8);
+  const ids=new Set(fresh.map(e=>e.id));
+  let list=[...fresh, ...live.filter(e=>!ids.has(e.id))];
+  if(!list.length) list = CURATED.length ? CURATED.map(e=>Object.assign(e,{stale:true})) : [];
+  if(!list.length) return;
+  list.sort((a,b)=>SEV_RANK[a.sev]-SEV_RANK[b.sev]||String(b.date).localeCompare(String(a.date)));
+  list.forEach(e=>{ if(e._th && e.live) delete e._th; });
+  EVENTS = list; applyLangToEvents();
+  if(!evById(S.ev)) S.ev=EVENTS[0].id;
+}
+
+/* ---------- UI pieces ---------- */
+function sparkBars(hist,c){
+  const max=Math.max(1,...hist), w=6, gap=2, H=34;
+  return `<svg class="tr-spark" viewBox="0 0 ${hist.length*(w+gap)} ${H}" preserveAspectRatio="none" aria-hidden="true">${hist.map((v,i)=>{const h=Math.max(2,v/max*H);
+    const hr=new Date(Date.now()-(hist.length-1-i)*36e5); return `<rect class="bx" x="${i*(w+gap)}" y="${H-h}" width="${w}" height="${h}" rx="1.5" fill="${c}" ${tipAttr(`<b>${v}</b> ข่าว · ${hhmm(hr)}`)}/>`}).join("")}</svg>`;
+}
+function trTermChips(kind,terms,max=6,active){
+  return terms.slice(0,max).map(t=>`<button class="tr-chip${active===t.term?" on":""}${t.recent>=3?" hot":""}" data-tr-term="${esc(t.term)}" data-tr-kind="${kind}" ${tipAttr(`<b>${esc(t.term)}</b><br>${t.count} ข่าว · ${t.recent} ข่าวใน 6 ชม.${t.sea?` · อาเซียน ${t.sea}`:""}`)}>${t.recent>=3?svg("flame2",12):""}${esc(t.term)}<b>${t.count}</b></button>`).join("");
+}
+function trItem(x,kind){
+  const l=LVL[x.level]||LVL.info;
+  return `<button class="tr-item" data-tr-open="${x.id}" data-tr-kind="${kind}" style="--c:${l[1]}">
+    <i class="tr-lv"></i>
+    <span class="tr-body"><b data-notr>${esc(x.title)}</b>
+      <span class="tr-meta"><span data-notr>${esc(x.source||"")}</span>${x.date?`<span data-ago="${esc(x.date)}">${agoShort(x.date)}</span>`:""}${x.size>1?`<span class="tr-more">+${x.size-1} แหล่งข่าว</span>`:""}${x.sea?`<span class="tr-sea">อาเซียน</span>`:""}${x.places.filter(p=>p!=="USA"&&p!=="Europe").slice(0,2).map(p=>`<span class="tr-tag">${esc(p)}</span>`).join("")}</span></span>
+  </button>`;
+}
+function trStatusLine(){
+  if(!TR.data) return "";
+  return `<span class="tr-live"><i></i>LIVE · อัปเดต <span data-ago="${TR.at}">${agoShort(TR.at)}</span></span>`;
+}
+function trCard(kind){
+  const K=TR_KIND[kind], d=TR.data&&TR.data[kind];
+  const head=`<div class="card-head"><div class="tr-h"><span class="tr-ic" style="--c:${K.c}">${svg(K.icon,18)}</span><div><h3>${K.t}</h3><div class="card-sub">Trending 24 ชม.${d?` · ${d.stories||d.items.length} เรื่อง จาก ${d.sources} แหล่งข่าว`:""}</div></div></div>${trStatusLine()}</div>`;
+  if(!d) return `<div class="card tr-card">${head}${TR.status==="error"?`<div class="muted" style="font-size:13px">เชื่อมต่อแหล่งข่าวไม่ได้ในขณะนี้ ระบบจะลองใหม่อัตโนมัติ</div>`:`<div class="live-list">${"<div class='skeleton'></div>".repeat(4)}</div>`}</div>`;
+  const items=[...d.items].sort((a,b)=>(b.sea-a.sea)||(b.score-a.score)).slice(0,5);
+  const kev = kind==="cyber" && d.kev && d.kev.length ? `<div class="tr-kev"><div class="tr-sub-h">${svg("alert",13)}ช่องโหว่ที่ถูกโจมตีจริงล่าสุด (CISA KEV)</div>${d.kev.slice(0,3).map(v=>`<a href="${esc(v.url)}" target="_blank" rel="noopener" class="tr-kev-row"><b>${esc(v.cve)}</b><span data-notr>${esc(v.vendor)} ${esc(v.product)}</span><small>${esc(v.added)}${v.ransomware?' · <em>Ransomware</em>':''}</small></a>`).join("")}</div>`:"";
+  return `<div class="card tr-card" style="--kc:${K.c}">${head}
+    <div class="tr-trend">${sparkBars(d.hist,K.c)}<div class="tr-chips">${trTermChips(kind,d.terms)}</div></div>
+    <div class="tr-list">${items.map(x=>trItem(x,kind)).join("")}</div>${kev}
+    <button class="link tr-all" data-tr-tab="${kind}">ดูทั้งหมด ${d.stories||d.items.length} เรื่อง →</button></div>`;
+}
+function trendSectionHTML(){
+  return `<section class="tr-wrap"><div class="tr-wrap-h"><div><h2>Trending ความเสี่ยงที่ต้องจับตา</h2><p class="muted">รวบรวมจากสื่อทั่วโลกและในประเทศอัตโนมัติ · อัปเดตทุก 5 นาที</p></div>
+    <button class="ui-btn outline tr-refresh" data-tr-refresh>${svg("refresh",15)}รีเฟรช</button></div>
+    <div class="tr-grid">${trCard("conflict")}${trCard("cyber")}</div></section>`;
+}
+
+/* ---------- story detail ---------- */
+function trFind(id){ if(!TR.data) return null; for(const k of ["conflict","cyber","disaster"]){ const x=(TR.data[k]?.items||[]).find(i=>i.id===id); if(x) return [x,k]; } return null; }
+function trModal(id){
+  const f=trFind(id); if(!f) return "";
+  const [x,kind]=f, K=TR_KIND[kind], l=LVL[x.level]||LVL.info;
+  const sameTopic=(TR.data[kind].items||[]).filter(i=>i.id!==x.id && i.topics.some(t=>x.topics.includes(t))).slice(0,4);
+  return `<div class="tr-modal" data-tr-close><div class="tr-dialog" role="dialog" aria-modal="true">
+    <div class="tr-dh"><span class="tr-ic" style="--c:${K.c}">${svg(K.icon,18)}</span><span class="eyebrow">${K.t}</span><button class="x" data-tr-close aria-label="ปิด">✕</button></div>
+    <h3 data-notr>${esc(x.title)}</h3>
+    <div class="tr-dmeta"><span class="tr-pill" style="--c:${l[1]}">ระดับ ${l[0]}</span><span data-notr>${esc(x.source||"")}</span>${x.date?`<span>${new Date(x.date).toLocaleString(LANG==="en"?"en-GB":"th-TH",{day:"numeric",month:"short",hour:"2-digit",minute:"2-digit"})} · <span data-ago="${esc(x.date)}">${agoShort(x.date)}</span></span>`:""}</div>
+    <div class="tr-tags">${[...x.topics,...x.places].map(t=>`<span class="tr-tag">${esc(t)}</span>`).join("")}${x.sea?`<span class="tr-sea">อาเซียน · ใกล้พื้นที่ปฏิบัติการ SCG</span>`:""}</div>
+    ${x.summary?`<p class="tr-sum" data-notr>${esc(x.summary)}</p>`:`<p class="tr-sum muted">เปิดอ่านเนื้อหาฉบับเต็มจากแหล่งข่าวต้นทาง</p>`}
+    ${x.related&&x.related.length?`<div class="tr-sub-h">สื่ออื่นที่รายงานเรื่องนี้ (${x.size-1})</div><div class="tr-rel">${x.related.map(r=>`<a href="${esc(r.link)}" target="_blank" rel="noopener"><b data-notr>${esc(r.title)}</b><small><span data-notr>${esc(r.source||"")}</span>${r.date?` · ${agoShort(r.date)}`:""}</small></a>`).join("")}</div>`:""}
+    ${sameTopic.length?`<div class="tr-sub-h">ข่าวในประเด็นเดียวกัน</div><div class="tr-rel">${sameTopic.map(r=>`<a href="#" data-tr-open="${r.id}"><b data-notr>${esc(r.title)}</b><small><span data-notr>${esc(r.source||"")}</span>${r.date?` · ${agoShort(r.date)}`:""}</small></a>`).join("")}</div>`:""}
+    <div class="tr-dfoot"><span class="muted">ข้อมูล ณ ${hhmm(TR.at)} · อัปเดตอัตโนมัติทุก 5 นาที</span>
+      <span style="display:flex;gap:8px;flex-wrap:wrap">${x.sea?`<a class="ui-btn outline" href="${LINKS.crisis}" target="_blank" rel="noopener">${svg("siren",15)}Crisis Hub</a>`:""}<a class="ui-btn dark" href="${esc(x.link)}" target="_blank" rel="noopener">อ่านข่าวต้นฉบับ ${svg("ext",13)}</a></span></div>
+  </div></div>`;
+}
+function openTrModal(id){ closeTrModal(); const h=trModal(id); if(!h) return; const w=document.createElement("div"); w.innerHTML=h; document.body.appendChild(w.firstElementChild); document.body.classList.add("ics-open"); }
+function closeTrModal(){ document.querySelectorAll(".tr-modal").forEach(m=>m.remove()); document.body.classList.remove("ics-open"); if(TR.pending) softRender(); }
+
+/* ---------- news page: tabs for live streams ---------- */
+const NTABS=[["hazard","ภัยธรรมชาติ","radar"],["conflict","สงคราม & ความขัดแย้ง","swords"],["cyber","Cyber Threat","shieldAlert"],["disaster","ข่าวภัยพิบัติจากสื่อ","globe"]];
+function trStreamPage(kind){
+  const d=TR.data&&TR.data[kind], K=TR_KIND[kind];
+  if(!d) return `<div class="card">${TR.status==="error"?`<div class="muted">เชื่อมต่อแหล่งข่าวไม่ได้ในขณะนี้ ระบบจะลองใหม่อัตโนมัติ</div>`:`<div class="live-list">${"<div class='skeleton'></div>".repeat(6)}</div>`}</div>`;
+  const term=S.trTerm||null, sea=!!S.trSea, q=(S.trQ||"").toLowerCase();
+  let items=d.items.filter(x=>(!term||x.topics.includes(term)||x.places.includes(term))&&(!sea||x.sea)&&(!q||(x.title+" "+x.source).toLowerCase().includes(q)));
+  const sort=S.trSort||"score"; items=[...items].sort(sort==="time"?(a,b)=>String(b.date).localeCompare(String(a.date)):(a,b)=>b.score-a.score);
+  const kev = kind==="cyber" && d.kev && d.kev.length ? `<div class="card"><div class="card-head"><div><h3>ช่องโหว่ที่ถูกโจมตีจริงล่าสุด</h3><div class="card-sub">CISA Known Exploited Vulnerabilities · ตรวจว่า SCG ใช้ผลิตภัณฑ์เหล่านี้หรือไม่</div></div></div>
+    <div class="kev-table">${d.kev.map(v=>`<a href="${esc(v.url)}" target="_blank" rel="noopener"><b>${esc(v.cve)}</b><span data-notr>${esc(v.vendor)} · ${esc(v.product)}</span><span class="kev-name" data-notr>${esc(v.name)}</span><small>เพิ่ม ${esc(v.added)} · ครบกำหนดแก้ ${esc(v.due)}${v.ransomware?' · <em>ใช้ใน Ransomware</em>':''}</small></a>`).join("")}</div></div>`:"";
+  return `<div class="tr-page" style="--kc:${K.c}">
+    <div class="card"><div class="card-head"><div class="tr-h"><span class="tr-ic" style="--c:${K.c}">${svg(K.icon,18)}</span><div><h3>${K.t}</h3><div class="card-sub">${d.count} ข่าว · ${d.stories||d.items.length} เรื่อง · ${d.sources} แหล่งข่าว · 24 ชม. ล่าสุด</div></div></div>${trStatusLine()}</div>
+      <div class="tr-trend big">${sparkBars(d.hist,K.c)}<div class="tr-chips">${term?`<button class="tr-chip on" data-tr-term="" data-tr-kind="${kind}">✕ ${esc(term)}</button>`:""}${trTermChips(kind,d.terms,10,term)}</div></div>
+      <div class="tr-filters"><input class="ui-input" id="trQ" type="search" placeholder="ค้นหาข่าว" value="${esc(S.trQ||"")}">
+        <label class="tr-toggle"><input type="checkbox" id="trSea" ${sea?"checked":""}> เฉพาะอาเซียน</label>
+        <div class="tr-seg"><button class="${sort==="score"?"on":""}" data-tr-sort="score">สำคัญสุด</button><button class="${sort==="time"?"on":""}" data-tr-sort="time">ล่าสุด</button></div></div>
+      <div class="tr-list full">${items.length?items.map(x=>trItem(x,kind)).join(""):`<div class="muted" style="padding:14px">ไม่พบข่าวตามเงื่อนไข</div>`}</div>
+    </div>${kev}</div>`;
+}
+const _renderNewsPage8 = renderNewsPage;
+renderNewsPage = function(){
+  const tab=S.ntab||"hazard";
+  let h=_renderNewsPage8();
+  const tabs=`<div class="ds-tabs tr-tabs" role="tablist">${NTABS.map(([k,l,i])=>{const n=k==="hazard"?EVENTS.length:(TR.data&&TR.data[k]?(TR.data[k].stories||TR.data[k].items.length):"…");return `<button class="${tab===k?"on":""}" data-tr-tab="${k}">${svg(i,15)}${l} <span class="ics-n">${n}</span></button>`}).join("")}</div>`;
+  const a=h.indexOf('<div class="card">');
+  if(tab==="hazard") return h.slice(0,a)+tabs+h.slice(a);
+  return h.slice(0,a)+tabs+trStreamPage(tab)+`</div>`;
+};
+
+/* home: add the trending section */
+const _renderHome7 = renderHome;
+renderHome = function(){
+  const h=_renderHome7();
+  const i=h.indexOf('<div class="home-grid">');
+  return i>-1 ? h.slice(0,i)+trendSectionHTML()+"\n  "+h.slice(i) : h;
+};
+
+/* routing: #news-conflict etc. */
+const _routeFromHash8 = routeFromHash;
+routeFromHash = function(){
+  const h=location.hash.slice(1);
+  if(h.startsWith("news-") && NTABS.some(t=>t[0]===h.slice(5))) return ["news",null,{ntab:h.slice(5)}];
+  return _routeFromHash8();
+};
+const _go8 = go;
+go = function(r,opts={}){
+  if(r==="news" && !("ntab" in opts)) opts.ntab=S.ntab||"hazard";
+  _go8(r,opts);
+  if(r==="news"){ const hh=S.ntab&&S.ntab!=="hazard"?"news-"+S.ntab:"news"; if(location.hash.slice(1)!==hh){ try{ history.replaceState(null,"","#"+hh); }catch(e){} } }
+  if(TR.pending && ["home","news"].includes(r)) TR.pending=false;
+};
+const _render8 = render;
+render = function(){
+  _render8();
+  if(S.route==="news" && S.ntab && S.ntab!=="hazard"){
+    const q=$("#trQ"); if(q){ let t; q.addEventListener("input",()=>{ clearTimeout(t); t=setTimeout(()=>{ const p=q.selectionStart; S.trQ=q.value; render(); const n=$("#trQ"); n.focus(); n.setSelectionRange(p,p); },250); }); }
+    const s=$("#trSea"); if(s) s.addEventListener("change",()=>{ S.trSea=s.checked; render(); });
+  }
+};
+
+document.addEventListener("click",ev=>{
+  const o=ev.target.closest("[data-tr-open]"); if(o){ ev.preventDefault(); openTrModal(o.dataset.trOpen); return; }
+  const c=ev.target.closest("[data-tr-close]"); if(c && (ev.target===c || c.classList.contains("x"))){ closeTrModal(); return; }
+  const tb=ev.target.closest("[data-tr-tab]"); if(tb){ ev.preventDefault(); S.trTerm=null; S.trQ=""; go("news",{ntab:tb.dataset.trTab}); return; }
+  const tm=ev.target.closest("[data-tr-term]"); if(tm){ ev.preventDefault(); S.trTerm=tm.dataset.trTerm||null; if(S.route!=="news"||S.ntab!==tm.dataset.trKind) go("news",{ntab:tm.dataset.trKind}); else render(); return; }
+  const so=ev.target.closest("[data-tr-sort]"); if(so){ S.trSort=so.dataset.trSort; render(); return; }
+  if(ev.target.closest("[data-tr-refresh]")){ const b=ev.target.closest("[data-tr-refresh]"); b.classList.add("spin"); TR.at=0; refreshAll(); return; }
+},true);
+document.addEventListener("keydown",ev=>{ if(ev.key==="Escape" && document.querySelector(".tr-modal")) closeTrModal(); });
+
+/* start */
+rebuildEvents();
+setTimeout(refreshAll, 50);
+
+/* Supabase / embedded hazards reload -> merge with live events again */
+const _loadRemote3 = loadRemote;
+loadRemote = async function(){ await _loadRemote3(); rebuildEvents(); softRender(); };
 
 /* ================= LOGIN ================= */
 $("#logout").addEventListener("click",async()=>{ await signOut(); $("#app").hidden=true; $("#login").hidden=false; resetSSO(); document.querySelectorAll("#login form").forEach(f=>f.reset()); authView("signin"); });

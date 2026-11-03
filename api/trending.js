@@ -1,0 +1,180 @@
+// Trending news for the BCM Portal: war / armed conflict, cyber threats and disasters.
+// Pulls public RSS feeds (Google News search, The Hacker News, BleepingComputer),
+// the CISA Known Exploited Vulnerabilities catalog, then dedupes, tags region and
+// topic, scores, and counts trending terms. Cached at the edge for 5 minutes.
+
+const GN = (q, lang = "en") =>
+  lang === "th"
+    ? `https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=th&gl=TH&ceid=TH:th`
+    : `https://news.google.com/rss/search?q=${encodeURIComponent(q)}&hl=en-US&gl=US&ceid=US:en`;
+
+const FEEDS = {
+  conflict: [
+    { id: "gn-world", url: GN('(war OR "armed conflict" OR airstrike OR "missile strike" OR "border clash" OR insurgency OR ceasefire) when:1d') },
+    { id: "gn-sea", url: GN('(Thailand OR Cambodia OR Myanmar OR Vietnam OR Indonesia OR Philippines OR Malaysia OR Laos OR "South China Sea") (clash OR conflict OR military OR fighting OR troops OR unrest) when:3d') },
+    { id: "gn-th", lang: "th", url: GN('(ปะทะ OR สงคราม OR ความขัดแย้ง OR ชายแดน OR ทหาร OR หยุดยิง) when:2d', "th") },
+  ],
+  cyber: [
+    { id: "gn-cyber", url: GN('(ransomware OR cyberattack OR "data breach" OR "zero-day" OR DDoS OR "threat actor") when:1d') },
+    { id: "gn-cyber-sea", url: GN('(ransomware OR cyberattack OR "data breach" OR hacked OR "cyber attack") (Thailand OR ASEAN OR Vietnam OR Indonesia OR Philippines OR Malaysia OR Singapore OR Cambodia) when:7d') },
+    { id: "gn-cyber-th", lang: "th", url: GN('(แฮก OR แรนซัมแวร์ OR "ข้อมูลรั่ว" OR "โจมตีทางไซเบอร์" OR "ภัยไซเบอร์") when:3d', "th") },
+    { id: "thn", url: "https://feeds.feedburner.com/TheHackersNews", src: "The Hacker News" },
+    { id: "bleeping", url: "https://www.bleepingcomputer.com/feed/", src: "BleepingComputer" },
+  ],
+  disaster: [
+    { id: "gn-dis-sea", url: GN('(flood OR typhoon OR earthquake OR landslide OR "tropical storm" OR haze OR wildfire) (Thailand OR Vietnam OR Indonesia OR Philippines OR Malaysia OR Myanmar OR Cambodia OR Laos) when:2d') },
+    { id: "gn-dis-th", lang: "th", url: GN('(น้ำท่วม OR พายุ OR แผ่นดินไหว OR ดินถล่ม OR ฝนตกหนัก OR PM2.5 OR ไฟป่า) when:2d', "th") },
+  ],
+};
+const KEV_URL = "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json";
+
+const SEA = [
+  ["Thailand", /thailand|thai\b|bangkok|ไทย|กรุงเทพ/i], ["Cambodia", /cambodia|khmer|phnom penh|กัมพูชา|เขมร/i],
+  ["Myanmar", /myanmar|burma|yangon|naypyidaw|เมียนมา|พม่า/i], ["Vietnam", /vietnam|viet nam|hanoi|ho chi minh|เวียดนาม/i],
+  ["Laos", /\blaos\b|lao pdr|vientiane|ลาว/i], ["Indonesia", /indonesia|jakarta|java|sumatra|อินโดนีเซีย/i],
+  ["Philippines", /philippine|manila|luzon|mindanao|ฟิลิปปินส์/i], ["Malaysia", /malaysia|kuala lumpur|มาเลเซีย/i],
+  ["Singapore", /singapore|สิงคโปร์/i], ["South China Sea", /south china sea|ทะเลจีนใต้/i],
+];
+const WORLD = [
+  ["Ukraine", /ukrain|kyiv|ยูเครน/i], ["Russia", /russia|kremlin|moscow|รัสเซีย/i], ["Israel", /israel|อิสราเอล/i], ["Gaza", /gaza|กาซา/i],
+  ["Iran", /\biran|tehran|อิหร่าน/i], ["Lebanon", /lebanon|hezbollah|เลบานอน/i], ["Yemen", /yemen|houthi|เยเมน/i], ["Syria", /syria|ซีเรีย/i],
+  ["Sudan", /sudan|ซูดาน/i], ["China", /\bchina\b|beijing|chinese|จีน/i], ["Taiwan", /taiwan|ไต้หวัน/i], ["India", /\bindia\b|อินเดีย/i],
+  ["Pakistan", /pakistan|ปากีสถาน/i], ["Korea", /korea|เกาหลี/i], ["USA", /\bu\.?s\.?\b|united states|america|washington|สหรัฐ/i], ["Europe", /europe|\beu\b|nato|ยุโรป/i],
+];
+const TOPICS = {
+  conflict: [
+    ["Airstrike / Missile", /air ?strike|missile|drone strike|shelling|bomb|โจมตีทางอากาศ|ขีปนาวุธ|ระเบิด|โดรน/i],
+    ["Border clash", /border|ชายแดน|clash|ปะทะ/i], ["Ceasefire / Talks", /ceasefire|truce|peace talk|negotiat|หยุดยิง|เจรจา/i],
+    ["Casualties", /killed|dead|deaths|casualt|wounded|เสียชีวิต|บาดเจ็บ/i], ["Protest / Unrest", /protest|unrest|riot|ประท้วง|ชุมนุม/i],
+    ["Sanctions / Trade", /sanction|tariff|embargo|คว่ำบาตร|ภาษีนำเข้า/i], ["Coup / Junta", /coup|junta|รัฐประหาร|รัฐบาลทหาร/i],
+    ["Shipping / Supply chain", /shipping|strait|port|supply chain|red sea|เดินเรือ|ช่องแคบ|ห่วงโซ่อุปทาน/i],
+  ],
+  cyber: [
+    ["Ransomware", /ransomware|แรนซัมแวร์|เรียกค่าไถ่/i], ["Data breach", /breach|leak|exposed|stolen data|ข้อมูลรั่ว|ข้อมูลหลุด|รั่วไหล/i],
+    ["Zero-day / Exploit", /zero-?day|0-day|exploit|cve-\d|vulnerab|patch|ช่องโหว่/i], ["Phishing / Scam", /phish|scam|fraud|ฟิชชิ่ง|หลอกลวง|มิจฉาชีพ|แก๊งคอล/i],
+    ["DDoS", /ddos/i], ["APT / State actor", /\bapt\d*|state-sponsored|nation-state|espionage|lazarus|volt typhoon|salt typhoon|จารกรรม/i],
+    ["Malware", /malware|trojan|botnet|backdoor|infostealer|มัลแวร์/i], ["OT / ICS", /\bscada|\bics\b|\bot\b security|industrial control|operational technology/i],
+    ["Supply chain attack", /supply[- ]chain attack|npm|pypi|github action/i], ["AI-driven", /\bai\b|llm|deepfake|ดีปเฟค/i],
+  ],
+  disaster: [
+    ["Flood", /flood|น้ำท่วม|อุทกภัย/i], ["Storm / Typhoon", /typhoon|storm|cyclone|พายุ|ไต้ฝุ่น/i], ["Earthquake", /earthquake|quake|แผ่นดินไหว/i],
+    ["Landslide", /landslide|ดินถล่ม|โคลน/i], ["Heavy rain", /heavy rain|rainfall|ฝนตกหนัก/i], ["Haze / PM2.5", /haze|pm ?2\.5|smog|หมอกควัน|ฝุ่น/i],
+    ["Wildfire", /wildfire|forest fire|ไฟป่า/i], ["Volcano", /volcano|eruption|ภูเขาไฟ/i],
+  ],
+};
+const HIGH = {
+  conflict: /killed|dead|airstrike|air strike|missile|invasion|offensive|war\b|clash|martial law|เสียชีวิต|ปะทะ|สงคราม|ขีปนาวุธ/i,
+  cyber: /ransomware|zero-?day|actively exploited|critical|breach|outage|nation-state|แรนซัมแวร์|ข้อมูลรั่ว|ช่องโหว่ร้ายแรง/i,
+  disaster: /killed|dead|evacuat|emergency|warning|เสียชีวิต|อพยพ|เตือนภัย|ฉุกเฉิน/i,
+};
+
+const ENT = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " " };
+const decode = (s) => String(s || "")
+  .replace(/<!\[CDATA\[([\s\S]*?)\]\]>/g, "$1")
+  .replace(/&(#x?[0-9a-f]+|\w+);/gi, (m, e) => e[0] === "#" ? String.fromCodePoint(e[1].toLowerCase() === "x" ? parseInt(e.slice(2), 16) : +e.slice(1)) : (ENT[e] ?? m));
+const strip = (s) => decode(decode(s)).replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+const tag = (x, t) => { const m = x.match(new RegExp(`<${t}(?:\\s[^>]*)?>([\\s\\S]*?)</${t}>`, "i")); return m ? m[1] : ""; };
+
+async function getText(url) {
+  const r = await fetch(url, { headers: { "user-agent": "Mozilla/5.0 (compatible; SCG-BCM-Portal/1.0)", accept: "application/rss+xml,application/xml,text/xml,application/json;q=0.9,*/*;q=0.8" }, signal: AbortSignal.timeout(8000) });
+  if (!r.ok) throw new Error(`${r.status}`);
+  return r.text();
+}
+
+function parseRSS(xml, feed) {
+  return (xml.match(/<item[\s>][\s\S]*?<\/item>/gi) || []).map((it) => {
+    let title = strip(tag(it, "title"));
+    let source = strip(tag(it, "source")) || feed.src || "";
+    if (source && title.endsWith(" - " + source)) title = title.slice(0, -(source.length + 3));
+    else if (!feed.src) { const k = title.lastIndexOf(" - "); if (k > 20) { source = source || title.slice(k + 3); title = title.slice(0, k); } }
+    const link = strip(tag(it, "link")) || strip(tag(it, "guid"));
+    const d = new Date(strip(tag(it, "pubDate")) || strip(tag(it, "dc:date")));
+    let desc = strip(tag(it, "description"));
+    if (!feed.src) desc = ""; // Google News descriptions only repeat the headline
+    return { title, link, source, date: isNaN(d) ? null : d.toISOString(), summary: desc.slice(0, 400), lang: feed.lang || "en", feed: feed.id };
+  }).filter((x) => x.title && x.link);
+}
+
+const norm = (t) => t.toLowerCase().replace(/[^\p{L}\p{N} ]/gu, "").replace(/\s+/g, " ").trim().slice(0, 70);
+
+function enrich(items, kind, now) {
+  const seen = new Set(), out = [];
+  items.sort((a, b) => String(b.date).localeCompare(String(a.date)));
+  for (const x of items) {
+    const k = norm(x.title); if (!k || seen.has(k)) continue; seen.add(k);
+    if (x.date && now - new Date(x.date) > 8 * 864e5) continue;
+    const text = x.title + " " + x.summary;
+    const region = SEA.filter(([, re]) => re.test(text)).map(([n]) => n);
+    const places = [...region, ...WORLD.filter(([, re]) => re.test(text)).map(([n]) => n)];
+    const topics = TOPICS[kind].filter(([, re]) => re.test(text)).map(([n]) => n);
+    if (kind !== "cyber" && !topics.length && !places.length) continue;
+    const ageH = x.date ? (now - new Date(x.date)) / 36e5 : 48;
+    const high = HIGH[kind].test(text);
+    const social = /facebook|tiktok|youtube|x\.com|twitter|instagram/i.test(x.source);
+    const score = (social ? -2 : 0) + (high ? 3 : 0) + (region.length ? 3 : 0) + (region.includes("Thailand") ? 2 : 0) + topics.length * 0.5 + Math.max(0, 3 - ageH / 8);
+    out.push({ ...x, id: kind[0] + "-" + hash(k), places, topics, sea: region.length > 0, level: high ? (region.length ? "high" : "elevated") : region.length ? "elevated" : "info", score: +score.toFixed(2) });
+  }
+  return out;
+}
+// Group near-duplicate stories (same event reported by many outlets) so one story = one card.
+const STOP = new Set("news says said after with from that this over amid into their about more have been will what when could latest update report reports warns warning amid also than were while where which says".split(" "));
+const GENERIC = new Set("data breach attack attacks cyber cyberattack ransomware hackers hacker hacked security vulnerability vulnerabilities exploit exploited flaw flaws critical patch threat actors malware military border clash clashes killed troops fighting flood floods storm typhoon earthquake heavy rain warns".split(" "));
+const toks = (t) => new Set((t.toLowerCase().match(/[a-z0-9][a-z0-9-]{3,}/g) || []).filter((w) => !STOP.has(w)));
+const grams = (t) => { const s = t.toLowerCase().replace(/[^\p{L}\p{N}]/gu, ""), g = new Set(); for (let i = 0; i < s.length - 2; i++) g.add(s.slice(i, i + 3)); return g; };
+function similar(a, b) {
+  let n = 0, ng = 0; for (const w of a.tk) if (b.tk.has(w)) { n++; if (!GENERIC.has(w)) ng++; }
+  if ((n >= 3 && ng >= 1) || ng >= 2) return true;
+  if (a.lang === "th" || b.lang === "th") { let i = 0; for (const g of a.gr) if (b.gr.has(g)) i++; return i / (a.gr.size + b.gr.size - i || 1) >= 0.3; }
+  return false;
+}
+function cluster(items) {
+  const heads = [];
+  for (const x of items) {
+    x.tk = toks(x.title); x.gr = grams(x.title);
+    const h = heads.find((h) => similar(h, x));
+    if (h) { h.related.push({ title: x.title, link: x.link, source: x.source, date: x.date }); h.size++; h.places = [...new Set([...h.places, ...x.places])]; h.topics = [...new Set([...h.topics, ...x.topics])]; if (x.date && (!h.date || x.date < h.date)) h.first = x.date; }
+    else heads.push(Object.assign(x, { related: [], size: 1 }));
+  }
+  heads.forEach((h) => { delete h.tk; delete h.gr; h.related = h.related.slice(0, 6); h.score = +(h.score + Math.min(h.size - 1, 6) * 0.6).toFixed(2); });
+  return heads;
+}
+function hash(s) { let h = 2166136261; for (const c of s) { h ^= c.codePointAt(0); h = Math.imul(h, 16777619); } return (h >>> 0).toString(36); }
+
+function trends(items, kind, now) {
+  const cnt = new Map();
+  const add = (n, x) => { const c = cnt.get(n) || { term: n, count: 0, recent: 0, sea: 0 }; c.count++; if (x.date && now - new Date(x.date) < 6 * 36e5) c.recent++; if (x.sea) c.sea++; cnt.set(n, c); };
+  items.forEach((x) => { x.topics.forEach((t) => add(t, x)); x.places.forEach((p) => add(p, x)); });
+  const list = [...cnt.values()].map((c) => ({ ...c, kind: TOPICS[kind].some(([n]) => n === c.term) ? "topic" : "place" }));
+  list.sort((a, b) => b.count + b.recent * 0.5 - (a.count + a.recent * 0.5));
+  const hist = Array(24).fill(0);
+  items.forEach((x) => { if (!x.date) return; const h = Math.floor((now - new Date(x.date)) / 36e5); if (h >= 0 && h < 24) hist[23 - h]++; });
+  return { terms: list.slice(0, 10), hist };
+}
+
+async function stream(kind, now, errors) {
+  const res = await Promise.allSettled(FEEDS[kind].map((f) => getText(f.url).then((x) => parseRSS(x, f))));
+  const all = [];
+  res.forEach((r, i) => r.status === "fulfilled" ? all.push(...r.value) : errors.push(`${FEEDS[kind][i].id}: ${r.reason && r.reason.message}`));
+  const flat = enrich(all, kind, now).sort((a, b) => b.score - a.score);
+  const sources = [...new Set(flat.map((x) => x.source).filter(Boolean))].length;
+  const tr = trends(flat, kind, now);
+  const items = cluster(flat).sort((a, b) => b.score - a.score);
+  return { count: flat.length, stories: items.length, sources, ...tr, items: items.slice(0, 50) };
+}
+
+async function kev(errors) {
+  try {
+    const j = JSON.parse(await getText(KEV_URL));
+    return (j.vulnerabilities || []).sort((a, b) => String(b.dateAdded).localeCompare(String(a.dateAdded))).slice(0, 10)
+      .map((v) => ({ cve: v.cveID, vendor: v.vendorProject, product: v.product, name: v.vulnerabilityName, added: v.dateAdded, due: v.dueDate, ransomware: v.knownRansomwareCampaignUse === "Known", action: v.requiredAction, url: `https://nvd.nist.gov/vuln/detail/${v.cveID}` }));
+  } catch (e) { errors.push(`cisa-kev: ${e.message}`); return []; }
+}
+
+export default async function handler(req, res) {
+  const now = Date.now(), errors = [];
+  const [conflict, cyber, disaster, kevList] = await Promise.all([stream("conflict", now, errors), stream("cyber", now, errors), stream("disaster", now, errors), kev(errors)]);
+  cyber.kev = kevList;
+  res.setHeader("Cache-Control", "s-maxage=300, stale-while-revalidate=900");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.status(200).json({ updated: new Date(now).toISOString(), refresh_seconds: 300, conflict, cyber, disaster, errors });
+}
