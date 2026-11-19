@@ -1122,6 +1122,12 @@ a.src-latest:hover > span{text-decoration:underline}
 @media (prefers-reduced-motion: reduce){.mc::before,.mc-prog i,.mc-in,.mc-spark .bx{animation:none}.mc-slide{transition:none}}
 @media (max-width:1180px){.mc-grid{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:860px){.mc{padding:15px}.mc-feat{min-height:148px}.c-map svg.wm{inset:86px 0 56px 0;height:calc(100% - 142px)}.c-map .hud{flex-wrap:wrap}}
+
+/* ข่าวด่วน card stays still */
+.mc.mc-static::before{animation:none;background:var(--kc)}
+.mc.mc-static:hover{transform:none}
+.mc.mc-static .mc-row:hover{transform:none}
+.mc.mc-static .mc-spark .bx{animation:none}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
@@ -3449,6 +3455,7 @@ function motionCard(kind,i){
   let body;
   if(!items){ body = TR.status==="error" ? (API_BASE?`<div class="muted" style="font-size:13px">ดูข้อมูลสดได้ที่ <a href="${LIVE_SITE}" target="_blank" rel="noopener">bcm-portal-seven.vercel.app</a></div>`:`<div class="muted" style="font-size:13px">เชื่อมต่อแหล่งข่าวไม่ได้ในขณะนี้ ระบบจะลองใหม่อัตโนมัติ</div>`) : `<div class="live-list">${"<div class='skeleton'></div>".repeat(4)}</div>`; }
   else if(!items.length){ body=`<div class="muted" style="font-size:13px;padding:10px 0">ยังไม่มีข่าวในช่วงนี้</div>`; }
+  else if(kind==="breaking"){ body=`<div class="mc-list">${items.slice(0,8).map(mcRow).join("")}</div>`; }   // ข่าวด่วน: static list, no rotation
   else {
     const feat=items.slice(0,5), rest=items.slice(5,9);
     body=`<div class="mc-feat" data-mc-feat="${kind}" data-i="0">${feat.map(mcSlide).join("")}<span class="mc-prog"><i></i></span></div>
@@ -3456,7 +3463,7 @@ function motionCard(kind,i){
       ${rest.length?`<div class="mc-list">${rest.map(mcRow).join("")}</div>`:""}`;
   }
   const foot = `<footer class="mc-foot">${d&&d.hist?`<span class="mc-spark">${sparkBars(d.hist,K.c)}</span>`:`<span></span>`}<button class="link" data-tr-tab="${K.tab}">ดูทั้งหมด →</button></footer>`;
-  return `<article class="mc${window.__mcSeen?"":" mc-in"}" style="--kc:${K.c};--d:${i*90}ms" data-mc="${kind}">${head}${body}${foot}</article>`;
+  return `<article class="mc${kind==="breaking"?" mc-static":window.__mcSeen?"":" mc-in"}" style="--kc:${K.c};--d:${i*90}ms" data-mc="${kind}">${head}${body}${foot}</article>`;
 }
 function motionSectionHTML(){
   const html=`<section class="tr-wrap mc-wrap"><div class="tr-wrap-h"><div><h2>Trending ความเสี่ยงที่ต้องจับตา</h2><p class="muted">สงคราม · Cyber · ภัยพิบัติ · ข่าวด่วน — รวบรวมอัตโนมัติจากสื่อไทยและต่างประเทศ อัปเดตทุก 5 นาที</p></div>
