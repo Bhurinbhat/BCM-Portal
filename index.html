@@ -3437,7 +3437,7 @@ function mcItems(kind){
     return [...ev,...nw].sort((a,b)=>new Date(b.date)-new Date(a.date)); }
   const d=TR.data&&TR.data[kind]; if(!d) return null;
   // newest first; ข่าวด่วน keeps only stories in the card topics (conflict, disaster, cyber)
-  const it = d.items.filter(x=>!mcNoise(x) && (kind!=="breaking" || (x.topics||[]).some(tp=>BREAKING_KEEP.has(tp))))
+  const it = d.items.filter(x=>!mcNoise(x) && (kind!=="breaking" || (x.topics||[]).some(tp=>BREAKING_KEEP.has(tp))) && (kind!=="cyber" || CYBER_RX.test(x.title||"")))
     .sort((a,b)=>new Date(b.date)-new Date(a.date));
   return it.map(x=>({...x, tag:x.topics[0]||"", place:(x.places||[]).find(p=>p!=="USA"&&p!=="Europe")||""}));
 }
@@ -3456,10 +3456,17 @@ function mcRow(x){
   return `<button class="mc-row" ${mcAct(x)} style="--lc:${l[1]}"><i></i><span><b data-notr>${isNew?`<em class="mc-new">ใหม่</em>`:""}${esc(x.title)}</b><small><span data-notr>${esc(x.source||"")}</span>${x.date?` · <span data-ago="${esc(x.date)}">${agoShort(x.date)}</span>`:""}</small></span></button>`;
 }
 // Drop items that are not real hazards: social posts, minor quakes, sports/entertainment that only borrow a hazard word
-const MC_NOISE=/น้องพายุ|ฟุตบอล|แข่งรถ|คาร์ท|โกคาร์ท|kart|WSK|Final Cup|คอนเสิร์ต|concert|ละคร|ไอดอล|นักแสดง|ดารา|เกม|esports|ฟอร์มูล่า|MotoGP/i;
+const MC_NOISE=new RegExp([
+  // sports, entertainment, celebrity
+  "น้องพายุ|ฟุตบอล|แข่งรถ|คาร์ท|โกคาร์ท|\\bkart|WSK|Final Cup|คอนเสิร์ต|concert|ละคร|ซีรีส์|ภาพยนตร์|ไอดอล|นักแสดง|ดารา|เปิดใจ|คู่กรณี|รดน้ำมนต์|เกม|esports|ฟอร์มูล่า|MotoGP",
+  "episode|tv series|movie|\\bfilm\\b|sci-fi|walking dead|trailer|box office|bidding war|price war|\\bMets\\b|Blue Jays|\\bNBA\\b|\\bNFL\\b|\\bMLB\\b|Premier League|transfer window",
+  // crime and domestic politics that only borrow a keyword
+  "ยาบ้า|ยาเสพติด|ไอซ์|นิติสงคราม|พรรคการเมือง|เลือกตั้ง"].join("|"),"i");
+const CYBER_RX=/hack|breach|ransom|malware|vulnerab|exploit|CVE-|phish|scam|attack|compromis|espionage|leak|stolen|cyber|ddos|zero-day|backdoor|botnet|spyware|deepfake|แฮ็ก|แฮก|ข้อมูลรั่ว|ไซเบอร์|มัลแวร์|ฟิชชิ่ง|หลอกลวง|โจมตี|ช่องโหว่|ภัยคุกคาม/i;
 function mcNoise(x){
   if(/facebook|tiktok|youtube|instagram|twitter|x\.com/i.test(x.source||"")) return true;
   if(MC_NOISE.test(x.title||"")) return true;
+  if((x.title||"").length<30 && !/[\u0E00-\u0E7F]/.test(x.title||"") && (x.title||"").split(/\s+/).length<5) return true;   // section labels like "Military and defense"
   const m=(x.title||"").match(/(?:\bmag(?:nitude)?\.?\s*|\bM\s?)(\d(?:\.\d)?)|(\d\.\d)[-\s]?magnitude/i);
   if(/earthquake|แผ่นดินไหว/i.test(x.title||"") && m && parseFloat(m[1]||m[2])<4.5) return true;
   return false;
