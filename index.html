@@ -3433,7 +3433,7 @@ function mcItems(kind){
     const ev=EVENTS.map(e=>({id:e.id, art:true, title:e.title, source:(e.sources&&e.sources[0]&&e.sources[0].name)||"", date:e.date,
       level:MC_LVL[e.sev]||"info", lvT:e.sevT, tag:HZ[e.type]?.l||"", place:e.country||"", sites:(e.sites||[]).length}));
     const dd=TR.data&&TR.data.disaster, seen=new Set(EVENTS.map(e=>String(e.id).replace(/^news-/,"")));
-    const nw=dd?dd.items.filter(x=>x.sea && !seen.has(String(x.id))).map(x=>({...x, tag:x.topics[0]||"", place:(x.places||[]).find(p=>p!=="USA"&&p!=="Europe")||""})):[];
+    const nw=dd?dd.items.filter(x=>x.sea && !seen.has(String(x.id)) && !mcNoise(x)).map(x=>({...x, tag:x.topics[0]||"", place:(x.places||[]).find(p=>p!=="USA"&&p!=="Europe")||""})):[];
     return [...ev,...nw].sort((a,b)=>new Date(b.date)-new Date(a.date)); }
   const d=TR.data&&TR.data[kind]; if(!d) return null;
   const it = kind==="breaking" ? d.items : [...d.items].sort((a,b)=>(b.sea-a.sea)||(b.score-a.score));
@@ -3452,6 +3452,15 @@ function mcRow(x){
   const l=LVL[x.level]||LVL.info;
   const isNew = x.date && Date.now()-new Date(x.date) < 36e5;
   return `<button class="mc-row" ${mcAct(x)} style="--lc:${l[1]}"><i></i><span><b data-notr>${isNew?`<em class="mc-new">ใหม่</em>`:""}${esc(x.title)}</b><small><span data-notr>${esc(x.source||"")}</span>${x.date?` · <span data-ago="${esc(x.date)}">${agoShort(x.date)}</span>`:""}</small></span></button>`;
+}
+// Drop items that are not real hazards: social posts, minor quakes, sports/entertainment that only borrow a hazard word
+const MC_NOISE=/น้องพายุ|ฟุตบอล|แข่งรถ|คาร์ท|โกคาร์ท|kart|WSK|Final Cup|คอนเสิร์ต|concert|ละคร|ไอดอล|นักแสดง|ดารา|เกม|esports|ฟอร์มูล่า|MotoGP/i;
+function mcNoise(x){
+  if(/facebook|tiktok|youtube|instagram|twitter|x\.com/i.test(x.source||"")) return true;
+  if(MC_NOISE.test(x.title||"")) return true;
+  const m=(x.title||"").match(/(?:\bmag(?:nitude)?\.?\s*|\bM\s?)(\d(?:\.\d)?)|(\d\.\d)[-\s]?magnitude/i);
+  if(/earthquake|แผ่นดินไหว/i.test(x.title||"") && m && parseFloat(m[1]||m[2])<4.5) return true;
+  return false;
 }
 const MC_STATIC=new Set(["breaking","disaster"]);   // these cards stay still; newest items are listed first
 function motionCard(kind,i){
