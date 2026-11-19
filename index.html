@@ -3436,7 +3436,9 @@ function mcItems(kind){
     const nw=dd?dd.items.filter(x=>x.sea && !seen.has(String(x.id)) && !mcNoise(x)).map(x=>({...x, tag:x.topics[0]||"", place:(x.places||[]).find(p=>p!=="USA"&&p!=="Europe")||""})):[];
     return [...ev,...nw].sort((a,b)=>new Date(b.date)-new Date(a.date)); }
   const d=TR.data&&TR.data[kind]; if(!d) return null;
-  const it = kind==="breaking" ? d.items : [...d.items].sort((a,b)=>(b.sea-a.sea)||(b.score-a.score));
+  // newest first; ข่าวด่วน keeps only stories in the card topics (conflict, disaster, cyber)
+  const it = d.items.filter(x=>!mcNoise(x) && (kind!=="breaking" || (x.topics||[]).some(tp=>BREAKING_KEEP.has(tp))))
+    .sort((a,b)=>new Date(b.date)-new Date(a.date));
   return it.map(x=>({...x, tag:x.topics[0]||"", place:(x.places||[]).find(p=>p!=="USA"&&p!=="Europe")||""}));
 }
 function mcAct(x){ return x.art ? `data-article="${x.id}" data-pop="${x.id}"` : `data-tr-open="${x.id}"`; }
@@ -3462,23 +3464,25 @@ function mcNoise(x){
   if(/earthquake|แผ่นดินไหว/i.test(x.title||"") && m && parseFloat(m[1]||m[2])<4.5) return true;
   return false;
 }
-const MC_STATIC=new Set(["breaking","disaster"]);   // these cards stay still; newest items are listed first
+const MC_STATIC=new Set(["breaking","disaster","conflict","cyber"]);   // all cards stay still; newest items are listed first
+const BREAKING_KEEP=new Set(["Conflict / Security","Disaster / Weather","Cyber"]);
 function motionCard(kind,i){
   const K=MC[kind], items=mcItems(kind), d=TR.data&&TR.data[kind];
   const sub = kind==="disaster" ? `${EVENTS.length} เหตุการณ์ · ${EVENTS.filter(x=>x.live).length?"อัปเดตอัตโนมัติ":"ข้อมูลคัดสรร"}`
+    : kind==="breaking" && items ? `${items.length} เรื่อง · ${d.sources} แหล่งข่าว · 12 ชม.`
     : d ? `${d.stories||d.items.length} เรื่อง · ${d.sources} แหล่งข่าว · ${kind==="breaking"?"12":"24"} ชม.` : "";
   const head=`<header class="mc-head"><span class="tr-ic" style="--c:${K.c}">${svg(K.icon,18)}</span><div><h3>${K.t}</h3><div class="card-sub">${sub}</div></div>${kind!=="disaster"&&d?trStatusLine():`<span class="tr-live"><i></i>LIVE</span>`}</header>`;
   let body;
   if(!items){ body = TR.status==="error" ? (API_BASE?`<div class="muted" style="font-size:13px">ดูข้อมูลสดได้ที่ <a href="${LIVE_SITE}" target="_blank" rel="noopener">bcm-portal-seven.vercel.app</a></div>`:`<div class="muted" style="font-size:13px">เชื่อมต่อแหล่งข่าวไม่ได้ในขณะนี้ ระบบจะลองใหม่อัตโนมัติ</div>`) : `<div class="live-list">${"<div class='skeleton'></div>".repeat(4)}</div>`; }
   else if(!items.length){ body=`<div class="muted" style="font-size:13px;padding:10px 0">ยังไม่มีข่าวในช่วงนี้</div>`; }
-  else if(kind==="breaking"||kind==="disaster"){ body=`<div class="mc-list">${items.slice(0,8).map(mcRow).join("")}</div>`; }   // ข่าวด่วน: static list, no rotation
+  else if(MC_STATIC.has(kind)){ body=`<div class="mc-list">${items.slice(0,8).map(mcRow).join("")}</div>`; }   // ข่าวด่วน: static list, no rotation
   else {
     const feat=items.slice(0,5), rest=items.slice(5,9);
     body=`<div class="mc-feat" data-mc-feat="${kind}" data-i="0">${feat.map(mcSlide).join("")}<span class="mc-prog"><i></i></span></div>
       <div class="mc-dots">${feat.map((_,j)=>`<button class="${j?"":"on"}" data-mc-go="${j}" aria-label="ข่าวที่ ${j+1}"></button>`).join("")}</div>
       ${rest.length?`<div class="mc-list">${rest.map(mcRow).join("")}</div>`:""}`;
   }
-  const foot = `<footer class="mc-foot">${d&&d.hist?`<span class="mc-spark">${sparkBars(d.hist,K.c)}</span>`:`<span></span>`}<button class="link" data-tr-tab="${K.tab}">ดูทั้งหมด →</button></footer>`;
+  const foot = `<footer class="mc-foot"><span></span><button class="link" data-tr-tab="${K.tab}">ดูทั้งหมด →</button></footer>`;
   return `<article class="mc${MC_STATIC.has(kind)?" mc-static":window.__mcSeen?"":" mc-in"}" style="--kc:${K.c};--d:${i*90}ms" data-mc="${kind}">${head}${body}${foot}</article>`;
 }
 function motionSectionHTML(){
