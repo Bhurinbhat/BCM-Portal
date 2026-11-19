@@ -30,6 +30,17 @@ The dashboard opens on a grid of section cards. Each card opens one section, and
 
 Bar charts, pie charts, heatmaps and the map highlight the item under the mouse, dim the rest and show its numbers.
 
+## Home page (v11)
+
+- **Situation Overview** is a world map (Natural Earth projection, dot-matrix land). Pins mark the hazards that are active now, placed at the event location or the country centre for news-derived events. Amber diamonds mark places named in several conflict stories. The map has World and Asia views. SCG site dots are no longer drawn.
+- **ภัยที่กำลังเกิดขึ้น** keeps only active hazards: earthquakes for 3 days, storms 5 days, media-derived events 3 days, other hazards 7 days, or longer while GDACS still reports the event as ongoing.
+- **Trending ความเสี่ยงที่ต้องจับตา** has four static cards: ข่าวด่วน, ข่าวภัยพิบัติล่าสุดในภูมิภาค, สงคราม & ความขัดแย้ง and Cyber Threat. Each lists the 8 newest stories, with a "ใหม่" badge for stories under an hour old, and refreshes every 5 minutes.
+  - ข่าวด่วน shows only stories tagged Conflict / Security, Disaster / Weather or Cyber.
+  - The regional disaster card merges active hazard events with ASEAN disaster news.
+  - A client-side filter drops social-media posts, quakes below M4.5, sports, entertainment, drug-crime and domestic-politics stories; Cyber Threat items must name a cyber threat in the headline.
+- The readiness overview, drill plan and Applications & Services panels are hidden from the home page.
+- `api/trending.js` forwards the visitor's cookie when it loads `lib/trending.mjs`, so it also works on preview deployments behind Vercel Authentication.
+
 ## Real-time updates
 
 The page refreshes its data every 5 minutes while it is open (and again when the tab comes back into view), without reloading the page:
