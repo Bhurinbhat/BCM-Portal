@@ -3491,6 +3491,24 @@ renderHome = function(){
   return h;
 };
 
+/* ---- v11: "ภัยที่กำลังเกิดขึ้น" keeps only hazards that are still active ---- */
+const _liveToEvent11 = liveToEvent;
+liveToEvent = function(x){ const e=_liveToEvent11(x); if(e && x && x.to) e.until=x.to; return e; };
+const ACTIVE_DAYS = {quake:3, storm:5, news:3};
+function isActive(e, now){
+  const age = (now - new Date(e.date)) / 864e5;
+  if(e.until && (now - new Date(e.until)) / 864e5 <= 2) return true;   // GDACS says the event is still running
+  const lim = e.news ? ACTIVE_DAYS.news : (ACTIVE_DAYS[e.type] || 7);
+  return age <= lim;
+}
+const _rebuildEvents11 = rebuildEvents;
+rebuildEvents = function(){
+  _rebuildEvents11();
+  const now=Date.now(), act=EVENTS.filter(e=>isActive(e,now));
+  if(act.length){ EVENTS=act; if(!evById(S.ev)) S.ev=EVENTS[0].id; }
+};
+rebuildEvents();
+
 trObserver.observe(document.body,{childList:true,subtree:true}); setLang(LANG);
 checkSession().then(ok=>{ if(!ok && !CFG.msLogin && routeFromHash()) enterApp(); });
 loadRemote();
