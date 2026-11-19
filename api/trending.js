@@ -6,9 +6,12 @@ export default async function handler(req, res) {
   try {
     if (!core) {
       const host = req.headers["x-forwarded-host"] || req.headers.host;
-      const r = await fetch(`https://${host}/lib/trending.mjs`, { signal: AbortSignal.timeout(5000) });
+      // Forward the visitor's cookie so this also works on deployments behind Vercel Authentication (previews)
+      const headers = req.headers.cookie ? { cookie: req.headers.cookie } : {};
+      const r = await fetch(`https://${host}/lib/trending.mjs`, { headers, signal: AbortSignal.timeout(5000) });
       if (!r.ok) throw new Error(`core ${r.status}`);
       const code = await r.text();
+      if (/^\s*</.test(code)) throw new Error("core blocked (deployment protection)");
       core = await import("data:text/javascript;base64," + Buffer.from(code).toString("base64"));
     }
     return await core.default(req, res);
