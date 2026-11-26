@@ -30,6 +30,18 @@ The dashboard opens on a grid of section cards. Each card opens one section, and
 
 Bar charts, pie charts, heatmaps and the map highlight the item under the mouse, dim the rest and show its numbers.
 
+## Navigation and admin pages (v13)
+
+- **Sidebar** has four groups:
+  1. หน้าหลัก: Main Page, ข่าวสารและแจ้งเตือน (with BCM Watch, BCM In Focus, BCM Announcement), ผัง ICS ผู้รับผิดชอบ
+  2. ความพร้อมของการดำเนินงานด้าน BCM: ภาพรวม, SCGC, SCGP, CBM, D&R. Each BU opens the Readiness Dashboard filtered to that BU (`#readiness-SCGC` etc.)
+  3. User Management
+  4. ข้อมูล BCM: คู่มือ ERP, คู่มือ BCP
+- **BCM Watch / In Focus / Announcement** (`#bcmnews-watch|focus|announce`): signed-in users add posts (title, date, details, link, pin); authors edit or delete their own. Table `portal_bcm_posts`, migration `20261126000000_portal_bcm_posts.sql`.
+- **User Management** (`#users`): add, edit, delete users; filter by BU, role, status; export Excel/CSV or print; upload an Excel/CSV table (or paste from Excel) with a checked preview — matching emails update, new emails are added, rows with errors are skipped. Table `portal_users`, migration `20261126010000_portal_users.sql`; only active admins can write.
+- Both pages fall back to this browser's storage (shown as โหมดสาธิต) when there is no Supabase session or the tables are not reachable.
+- The home hero no longer shows the four summary tiles, and the event impact panel under the map is removed.
+
 ## Home page (v11)
 
 - **Situation Overview** is a world map (Natural Earth projection, dot-matrix land). Pins mark the hazards that are active now, placed at the event location or the country centre for news-derived events. Amber diamonds mark places named in several conflict stories. The map has World and Asia views. SCG site dots are no longer drawn.

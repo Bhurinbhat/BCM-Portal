@@ -1,6 +1,6 @@
 {
   "name": "bcm-portal",
-  "version": "11.0.0",
+  "version": "13.0.0",
   "private": true,
   "description": "SCG BCM Portal: hazard situation awareness and BCM readiness dashboard",
   "type": "module",
