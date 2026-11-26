@@ -10,6 +10,7 @@ create table if not exists public.portal_bcm_posts (
   post_date    date not null default current_date,
   pinned       boolean not null default false,
   attachments  jsonb not null default '[]'::jsonb check (jsonb_typeof(attachments)='array' and jsonb_array_length(attachments) <= 5),
+  notify       jsonb,                      -- last email / SMS send: {email, sms, n_email, n_sms, at}
   author_name  text,
   created_by   uuid default auth.uid() references auth.users(id) on delete set null,
   created_at   timestamptz not null default now(),
