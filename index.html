@@ -1129,6 +1129,11 @@ a.src-latest:hover > span{text-decoration:underline}
 .mc.mc-static .mc-row:hover{transform:none}
 .mc.mc-static .mc-spark .bx{animation:none}
 .mc-new{font-style:normal;font-size:10px;font-weight:700;color:#fff;background:var(--kc);border-radius:999px;padding:1px 7px;margin-right:6px;vertical-align:1px}
+
+/* ===== v13: sidebar sub-items ===== */
+.nav-item.nv-sub{padding-left:22px;font-size:13px}
+.nav-item.nv-sub svg{width:15px;height:15px}
+.nav-group + .nav-group{margin-top:4px}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
@@ -1258,6 +1263,8 @@ a.src-latest:hover > span{text-decoration:underline}
 
 /* ================= v7: Thai / English ================= */
 const I18N = {
+ "ความพร้อมของการดำเนินงานด้าน BCM":"BCM operational readiness","คู่มือ BCP":"BCP Manuals","ความพร้อม":"Readiness",
+
  "ใหม่":"New","โลก":"World","เอเชีย":"Asia","จุดความขัดแย้งจากข่าว":"Conflict hotspots (news)","SCG สำนักงานใหญ่":"SCG head office","ข่าวความขัดแย้ง":"Conflict news","บางซื่อ กรุงเทพฯ":"Bang Sue, Bangkok",
  "สงคราม · Cyber · ภัยพิบัติ · ข่าวด่วน — รวบรวมอัตโนมัติจากสื่อไทยและต่างประเทศ อัปเดตทุก 5 นาที":"War · Cyber · Disasters · Breaking — collected automatically from Thai and international media, updated every 5 minutes",
  "แผนที่โลกแสดงตำแหน่งภัยที่กำลังเกิดขึ้น":"World map of active hazards","ข่าวที่":"Story","เหตุการณ์":"events","Site ในพื้นที่":"sites in area",
@@ -3542,6 +3549,55 @@ rebuildEvents = function(){
   if(act.length){ EVENTS=act; if(!evById(S.ev)) S.ev=EVENTS[0].id; }
 };
 rebuildEvents();
+
+
+/* ===================== v13: sidebar regrouped ===================== */
+// 1 หน้าหลัก (Main Page, ข่าวสาร, ผัง ICS) · 2 ความพร้อมของการดำเนินงานด้าน BCM (ภาพรวม + BU) · 3 ข้อมูล BCM (ERP, BCP)
+const NAV_BU = ["SCGC","SCGP","CBM","D&R"];
+const buOn = b => S.route==="readiness" && (S.f.bu||"")===b;
+function navBu(b,label,icon){
+  return `<button class="nav-item${b?' nv-sub':''}${buOn(b)?' on':''}" data-nav-bu="${esc(b)}">${svg(icon)}<span>${label}</span>${b?`<span class="tag">${CO.filter(c=>c.bu===b).length}</span>`:""}</button>`;
+}
+renderNav = function(){
+  const on = r => S.route===r || (r==="news" && S.route==="article");
+  const item = (r,label,icon,extra="",sub=false) => `<button class="nav-item${sub?' nv-sub':''}${on(r)?' on':''}" data-go="${r}">${svg(icon)}<span>${label}</span>${extra}</button>`;
+  $("#navMain").innerHTML = `<div class="eyebrow">หน้าหลัก</div>`
+    + item("home","Main Page","home",`<span class="live">${EVENTS.length}</span>`)
+    + item("news","ข่าวสารและแจ้งเตือน","bell","",true)
+    + item("ics","ผัง ICS ผู้รับผิดชอบ","org","",true);
+  $("#navApps").innerHTML = `<div class="eyebrow">ความพร้อมของการดำเนินงานด้าน BCM</div>`
+    + navBu("","ภาพรวม","gauge") + NAV_BU.map(b=>navBu(b,b,"layers")).join("");
+  $("#navInfo").innerHTML = `<div class="eyebrow">ข้อมูล BCM</div>`
+    + item("erp","คู่มือ ERP","shield",`<span class="tag">${SITEMAP.erp.id}</span>`)
+    + item("bcp","คู่มือ BCP","doc",`<span class="tag">${SITEMAP.bcp.id}</span>`);
+  $("#bnav").innerHTML = [["home","หน้าหลัก","home"],["news","ข่าวสาร","bell"],["ics","ผัง ICS","org"],["readiness","ความพร้อม","gauge"]]
+    .map(([r,l,i])=>`<button class="${on(r)?'on':''}" data-go="${r}">${svg(i,21)}${l}</button>`).join("") + `<button id="bMenu">${svg("menu",21)}เมนู</button>`;
+  $("#bellCount").textContent = EVENTS.length;
+  syncUser();
+};
+Object.assign(ICON,{ layers:'<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/>' });
+
+/* BU shortcuts open the Readiness Dashboard already filtered; #readiness-SCGC links work too */
+document.addEventListener("click",ev=>{
+  const b=ev.target.closest("[data-nav-bu]"); if(!b) return;
+  ev.preventDefault(); ev.stopImmediatePropagation();
+  go("readiness",{f:{bu:b.dataset.navBu,country:"",cls:"",q:""},rows:20});
+},true);
+const _routeFromHash13 = routeFromHash;
+routeFromHash = function(){
+  const h=location.hash.slice(1);
+  if(h.startsWith("readiness-")){ let b=""; try{ b=decodeURIComponent(h.slice(10)); }catch(e){} if(NAV_BU.includes(b)) return ["readiness",null,{f:{bu:b,country:"",cls:"",q:""}}]; }
+  return _routeFromHash13();
+};
+const _go13 = go;
+go = function(r,opts={}){
+  if(r==="readiness" && !opts.f && S.route!=="readiness") opts.f={bu:"",country:"",cls:"",q:""};   // "ภาพรวม" and other entry points start unfiltered
+  _go13(r,opts);
+  if(r==="readiness"){ const hh=S.f.bu&&NAV_BU.includes(S.f.bu)?"readiness-"+encodeURIComponent(S.f.bu):"readiness"; if(location.hash.slice(1)!==hh){ try{ history.replaceState(null,"","#"+hh); }catch(e){} } }
+};
+/* keep the sidebar in step when the BU filter changes inside the dashboard */
+const _render13 = render;
+render = function(){ _render13(); if(S.route==="readiness") renderNav(); };
 
 trObserver.observe(document.body,{childList:true,subtree:true}); setLang(LANG);
 checkSession().then(ok=>{ if(!ok && !CFG.msLogin && routeFromHash()) enterApp(); });
