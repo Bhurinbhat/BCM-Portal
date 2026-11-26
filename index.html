@@ -1129,6 +1129,173 @@ a.src-latest:hover > span{text-decoration:underline}
 .mc.mc-static .mc-row:hover{transform:none}
 .mc.mc-static .mc-spark .bx{animation:none}
 .mc-new{font-style:normal;font-size:10px;font-weight:700;color:#fff;background:var(--kc);border-radius:999px;padding:1px 7px;margin-right:6px;vertical-align:1px}
+
+/* ===== v12: Normal Mode / Crisis Mode ===== */
+:root{--nm:#2563EB;--nm-bg:#EAF2FD;--cr:#C81E24;--cr-bg:#FDEDEE}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){--nm:#60A5FA;--nm-bg:#132238;--cr:#F0605F;--cr-bg:#2C1416}}
+:root[data-theme="dark"]{--nm:#60A5FA;--nm-bg:#132238;--cr:#F0605F;--cr-bg:#2C1416}
+@keyframes crBlink{0%,100%{opacity:1}50%{opacity:.2}}
+@keyframes crRing{0%{box-shadow:0 0 0 0 rgba(229,72,77,.65)}100%{box-shadow:0 0 0 16px rgba(229,72,77,0)}}
+.blink{animation:crBlink 1.1s ease-in-out infinite;display:inline-flex}
+
+/* sidebar */
+.nv-head{display:flex;align-items:center;gap:10px;margin:2px 0 4px;padding:9px 10px;border-radius:10px;font-family:var(--f-display);font-weight:600;font-size:13px;color:#DCE3EE;border:1px solid #1B2535}
+.nv-head small{display:block;font-family:var(--f-body);font-weight:400;font-size:10.5px;color:#7C8BA1}
+.nv-head > span:nth-child(2){flex:1;min-width:0;line-height:1.25}
+.nv-head em{font-style:normal;font-size:9.5px;font-weight:700;letter-spacing:.06em;padding:2px 7px;border-radius:99px;background:#1B2535;color:#9AA7BA}
+.nv-head.nm{color:#BFD7FF}.nv-head.nm svg{color:#60A5FA}
+.nv-head.nm.act{background:linear-gradient(90deg,rgba(37,99,235,.22),rgba(37,99,235,.04));border-color:rgba(96,165,250,.35)}
+.nv-head.nm.act em{background:#2563EB;color:#fff}
+.nv-head.cr svg{color:#FF6B6F}
+.nv-head.cr.act{background:linear-gradient(90deg,rgba(200,30,36,.35),rgba(200,30,36,.06));border-color:rgba(255,107,111,.5);color:#fff;animation:crRing 1.6s ease-out infinite}
+.nv-head.cr.act em{background:#E5484D;color:#fff}
+.nv2{align-items:flex-start;padding-block:7px}
+.nv2 svg{margin-top:2px}
+.nv-t{display:flex;flex-direction:column;min-width:0;line-height:1.3}
+.nv-t small{font-size:10.5px;color:#617089;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nav-item.on .nv-t small{color:#9AA7BA}
+.cr-item.on{background:linear-gradient(90deg,rgba(229,72,77,.28),rgba(229,72,77,.03))}
+body.crisis-on .cr-item svg{color:#FF8A8D;opacity:1}
+.mode-dot{margin-left:auto;width:8px;height:8px;border-radius:50%}
+.mode-dot.ok{background:#22C55E;box-shadow:0 0 0 3px rgba(34,197,94,.18)}
+.nav-item .live.blink{display:inline-flex;align-items:center;gap:3px}
+body.crisis-on .rail{box-shadow:inset -3px 0 0 #E5484D}
+
+/* app bar mode chip */
+.mode-menu{position:relative}
+.mode-chip{display:inline-flex;align-items:center;gap:7px;height:40px;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:var(--surface);font-size:12.5px;white-space:nowrap}
+.mode-chip b{font-weight:600}
+.mode-chip i{font-style:normal;font-size:9.5px;font-weight:700;padding:1px 6px;border-radius:99px;background:#fff;color:var(--cr)}
+.mode-chip.nm{color:var(--nm);border-color:color-mix(in srgb,var(--nm) 35%,var(--line));background:var(--nm-bg)}
+.mode-chip.cr{color:#fff;background:linear-gradient(135deg,#E3242B,#A3121A);border-color:transparent;animation:crRing 1.6s ease-out infinite}
+.mode-pop{position:absolute;right:0;top:46px;z-index:30;width:270px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:0 20px 40px -16px rgba(5,10,20,.4);padding:6px;display:grid;gap:2px}
+.mode-pop button{display:flex;flex-direction:column;align-items:flex-start;gap:1px;text-align:left;border:0;background:none;padding:8px 10px;border-radius:9px}
+.mode-pop button:hover{background:var(--surface-2)}
+.mode-pop button.on{background:var(--surface-2);box-shadow:inset 3px 0 0 var(--nm)}
+.mode-pop button b{font-size:13px;font-weight:600}.mode-pop small{font-size:11.5px;color:var(--muted)}
+
+/* home: modes */
+.modes{border:1px solid var(--line);border-radius:22px;background:var(--surface);box-shadow:var(--shadow);padding:18px;display:grid;gap:14px}
+.modes-top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:14px 18px;border-radius:14px;background:linear-gradient(135deg,#B3141B,#8E1016);color:#fff}
+.modes-top b{display:block;font-family:var(--f-display);font-size:17px;letter-spacing:.03em}
+.modes-top span{font-size:12px;opacity:.85}
+.mstate{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:600;padding:6px 12px;border-radius:99px;background:rgba(255,255,255,.14);color:#fff}
+.mstate i{width:8px;height:8px;border-radius:50%;background:#4ADE80;box-shadow:0 0 0 3px rgba(74,222,128,.25)}
+.mstate.cr i{background:#fff;animation:crBlink 1s infinite}
+.page-head .mstate.cr{background:var(--cr);}
+.modes-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.mcard{border-radius:16px;padding:16px;display:flex;flex-direction:column;gap:12px;border:1px solid transparent;transition:box-shadow .2s,opacity .2s}
+.mcard.nm{background:var(--nm-bg)}
+.mcard.cr{background:var(--cr-bg)}
+.mcard.nm.act{border-color:color-mix(in srgb,var(--nm) 40%,transparent);box-shadow:0 14px 30px -20px var(--nm)}
+.mcard.cr.act{border-color:var(--cr);box-shadow:0 0 0 1px var(--cr),0 18px 40px -18px var(--cr)}
+.mcard.cr:not(.act){opacity:.92}
+.mc-h{display:flex;align-items:center;gap:12px;padding-bottom:12px;border-bottom:1px solid color-mix(in srgb,var(--ink) 10%,transparent)}
+.mcard.nm .mc-h > svg{color:var(--nm)}.mcard.cr .mc-h svg{color:var(--cr)}
+.mc-h > div{flex:1}
+.mc-h h3{font-size:17px}.mc-h p{margin:0;font-size:12.5px;color:var(--muted)}
+.mc-h em{font-style:normal;font-size:10.5px;font-weight:700;letter-spacing:.06em;padding:3px 9px;border-radius:99px;background:var(--nm);color:#fff}
+.mcard.cr .mc-h em{background:var(--cr)}
+.mc-h em.sb{background:color-mix(in srgb,var(--ink) 10%,transparent);color:var(--muted)}
+.mlist{display:grid;gap:4px}
+.mrow{display:grid;grid-template-columns:22px minmax(0,1fr) 14px;gap:10px;align-items:center;text-align:left;border:0;background:transparent;padding:8px 10px;border-radius:10px;color:var(--ink);transition:background .15s,transform .15s}
+.mrow:hover{background:color-mix(in srgb,var(--surface) 75%,transparent);transform:translateX(2px)}
+.mrow.nm svg{color:var(--nm)}.mrow.cr svg{color:var(--cr)}
+.mrow b{display:block;font-size:13.5px;font-weight:600}.mrow small{display:block;font-size:11.5px;color:var(--muted)}
+.mrow i{font-style:normal;color:var(--muted)}
+.mnote{margin:0;font-size:11.5px;color:var(--muted);padding:8px 10px;border-radius:10px;border:1px dashed color-mix(in srgb,var(--cr) 35%,transparent)}
+.phases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ph{border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center;background:var(--surface)}
+.ph b{display:block;font-size:11.5px;letter-spacing:.06em}.ph span{font-size:12.5px}
+.ph.pre b{color:var(--nm)}.ph.inc b{color:var(--cr)}.ph.post b{color:var(--ok)}
+.ph.on{border-width:2px;padding:9px}
+.ph.pre.on{border-color:var(--nm);background:var(--nm-bg)}.ph.inc.on{border-color:var(--cr);background:var(--cr-bg)}.ph.post.on{border-color:var(--ok);background:var(--ok-bg)}
+
+.m-hello{margin:0 0 -6px;font-size:14px;color:var(--muted)}
+.mstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.mstats button{text-align:left;border:1px solid var(--line);border-top:3px solid var(--c);border-radius:14px;background:var(--surface);padding:12px 14px;display:flex;flex-direction:column;gap:2px;transition:transform .15s,box-shadow .15s}
+.mstats button:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.mstats b{font-family:var(--f-mono);font-weight:500;font-size:26px;line-height:1.1;color:var(--c)}
+.mstats span{font-size:12px;color:var(--muted)}
+@media (max-width:860px){ .mstats{grid-template-columns:repeat(2,minmax(0,1fr))} .mstats b{font-size:21px} }
+/* home: crisis */
+.cx-banner{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:20px;align-items:center;padding:22px 24px;border-radius:22px;color:#fff;background:radial-gradient(500px 200px at 0% 0%,rgba(255,255,255,.14),transparent 70%),linear-gradient(135deg,#D0161F,#7E0C12);box-shadow:0 24px 50px -24px rgba(200,30,36,.8)}
+.cx-big{width:68px;height:68px;border-radius:20px;background:rgba(255,255,255,.16);display:grid!important;place-items:center;animation:crBlink 1s ease-in-out infinite,crRing 1.4s ease-out infinite}
+.cx-eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.12em;opacity:.85}
+.cx-banner h2{font-size:clamp(20px,2.4vw,28px);color:#fff;margin:4px 0}
+.cx-banner p{margin:0;opacity:.85;font-size:13.5px}
+.cx-bacts{display:flex;gap:8px;flex-wrap:wrap}
+.cx-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:16px}
+.cx{position:relative;display:flex;flex-direction:column;gap:12px;padding:18px 18px 16px 22px;border-radius:18px;background:var(--surface);border:1px solid color-mix(in srgb,var(--c) 45%,var(--line));box-shadow:var(--shadow);overflow:hidden}
+.cx::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--c)}
+.cx header{display:flex;gap:14px;align-items:flex-start}
+.cx-ico{flex:none;width:48px;height:48px;border-radius:14px;display:grid!important;place-items:center;color:#fff;background:var(--c)}
+.cx-tags{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.cx h3{font-size:17px;line-height:1.4;margin-top:6px}
+.cx small{color:var(--muted);font-size:12px}
+.cx p{margin:0;font-size:13px;color:var(--ink-2);line-height:1.6}
+.cx-kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px}
+.cx-kpi div{padding:9px 11px;border-radius:11px;background:var(--surface-2)}
+.cx-kpi b{display:block;font-family:var(--f-mono);font-weight:500;font-size:17px}
+.cx-kpi span{font-size:11px;color:var(--muted)}
+.cx-sites{display:flex;flex-wrap:wrap;gap:6px}
+.cx-sites span{font-size:11.5px;padding:3px 9px;border-radius:99px;background:color-mix(in srgb,var(--c) 12%,transparent)}
+.cx-acts{display:flex;flex-wrap:wrap;gap:8px}
+.cx-acts .btn{font-size:12.5px;padding:8px 12px}
+.cx-mods{display:grid;gap:14px}
+.cx-flow{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
+.cx-step{position:relative;display:flex;flex-direction:column;gap:6px;text-align:left;padding:14px;border-radius:14px;border:1px solid color-mix(in srgb,var(--cr) 25%,var(--line));background:var(--cr-bg);color:var(--ink);transition:transform .15s,box-shadow .15s}
+.cx-step:hover{transform:translateY(-2px);box-shadow:0 12px 24px -14px var(--cr)}
+.cx-step i{font-style:normal;font:600 11px var(--f-mono);color:var(--cr)}
+.cx-step svg{color:var(--cr)}
+.cx-step b{font-size:13.5px}.cx-step small{font-size:11.5px;color:var(--muted)}
+.cx-toast{position:fixed;right:20px;top:calc(var(--appbar-h) + 14px);z-index:40;display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:#7E0C12;color:#fff;box-shadow:0 20px 40px -12px rgba(126,12,18,.7);max-width:min(440px,calc(100vw - 32px));animation:pp .2s ease-out}
+.cx-toast b{display:block}.cx-toast small{opacity:.85}
+.cx-toast .x{border-color:rgba(255,255,255,.3);color:#fff;width:30px;height:30px}
+
+/* pages */
+.mtag{font-size:10.5px;font-weight:700;letter-spacing:.08em;padding:2px 8px;border-radius:99px;color:#fff}
+.mtag.nm{background:var(--nm)}.mtag.cr{background:var(--cr)}
+.doc-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.dic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;background:var(--nm-bg);color:var(--nm)}
+.doc-list{display:grid;gap:2px}
+.doc-list.cols{grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:6px}
+.doc-list button{display:grid;grid-template-columns:18px minmax(0,1fr);gap:10px;text-align:left;border:0;background:none;padding:9px 8px;border-radius:10px;color:var(--ink)}
+.doc-list button:hover{background:var(--surface-2)}
+.doc-list svg{color:var(--muted);margin-top:2px}
+.doc-list b{display:block;font-size:13px;font-weight:600}.doc-list small{display:block;font-size:11.5px;color:var(--muted)}
+.trn{display:grid;grid-template-columns:30px minmax(0,1fr);gap:12px;align-items:center;padding:10px 12px;border-radius:12px;background:var(--surface-2)}
+.trn i{font-style:normal;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--nm);color:#fff;font:600 12px var(--f-mono)}
+.trn b{display:block;font-size:13.5px}.trn small{font-size:12px;color:var(--muted)}
+.lvl4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.lv4{padding:14px;border-radius:14px;border:1px solid color-mix(in srgb,var(--c) 35%,var(--line));background:color-mix(in srgb,var(--c) 8%,var(--surface));display:grid;gap:3px}
+.lv4 b{color:var(--c);font-family:var(--f-display);font-size:15px}.lv4 span{font-weight:600;font-size:13px}.lv4 small{font-size:12px;color:var(--muted)}
+.act-row{display:grid;grid-template-columns:4px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.act-row:last-child{border-bottom:0}
+.act-row i{align-self:stretch;border-radius:4px;background:var(--c)}
+.act-row b{display:block;font-weight:500;font-size:13.5px}.act-row small{display:flex;gap:6px;align-items:center;flex-wrap:wrap;color:var(--muted);font-size:12px;margin-top:3px}
+.ev-pick{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+.ev-pick button{flex:none;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:7px 14px;font-size:12.5px;max-width:340px}
+.ev-pick button span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ev-pick button i{width:8px;height:8px;border-radius:50%;background:var(--c);flex:none}
+.ev-pick button.on{border-color:var(--c);box-shadow:inset 0 0 0 1px var(--c);font-weight:600}
+.bnav .bn-cr{color:var(--cr)}
+
+@media (max-width:1180px){ .cx-flow{grid-template-columns:repeat(3,minmax(0,1fr))} .lvl4{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:860px){
+  .modes{padding:12px}
+  .modes-grid,.doc-grid{grid-template-columns:minmax(0,1fr)}
+  .cx-banner{grid-template-columns:auto minmax(0,1fr);padding:18px}
+  .cx-bacts{grid-column:1/-1}
+  .cx-big{width:54px;height:54px}
+  .cx-flow{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .mode-chip b{display:none}
+  .mode-chip{padding:0 10px}
+  .appbar .mode-chip.nm{background:transparent;border-color:#223047;color:#93C5FD}
+  .phases{gap:6px}.ph span{font-size:11px}.ph b{font-size:10px}
+  .cx-toast{right:12px;left:12px}
+}
+@media (prefers-reduced-motion:reduce){ .blink,.cx-big{animation:crBlink 2.4s ease-in-out infinite!important} }
 </style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
@@ -1258,6 +1425,8 @@ a.src-latest:hover > span{text-decoration:underline}
 
 /* ================= v7: Thai / English ================= */
 const I18N = {
+ "Clip Video, Publication ด้านความเสี่ยง ภัยพิบัติ และ BCM Framework":"Videos and publications on risk, disasters and the BCM framework","จำนวน Site ที่กำหนดซ้อมในแต่ละเดือน":"Sites scheduled to drill each month",
+
  "ใหม่":"New","โลก":"World","เอเชีย":"Asia","จุดความขัดแย้งจากข่าว":"Conflict hotspots (news)","SCG สำนักงานใหญ่":"SCG head office","ข่าวความขัดแย้ง":"Conflict news","บางซื่อ กรุงเทพฯ":"Bang Sue, Bangkok",
  "สงคราม · Cyber · ภัยพิบัติ · ข่าวด่วน — รวบรวมอัตโนมัติจากสื่อไทยและต่างประเทศ อัปเดตทุก 5 นาที":"War · Cyber · Disasters · Breaking — collected automatically from Thai and international media, updated every 5 minutes",
  "แผนที่โลกแสดงตำแหน่งภัยที่กำลังเกิดขึ้น":"World map of active hazards","ข่าวที่":"Story","เหตุการณ์":"events","Site ในพื้นที่":"sites in area",
@@ -3542,6 +3711,284 @@ rebuildEvents = function(){
   if(act.length){ EVENTS=act; if(!evById(S.ev)) S.ev=EVENTS[0].id; }
 };
 rebuildEvents();
+
+
+/* ===================== v12: Normal Mode / Crisis Mode ===================== */
+const L = (th,en) => LANG==="en" ? en : th;
+Object.assign(ICON,{
+  doc:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/>',
+  target:'<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r=".5"/>',
+  clipboard:'<rect x="6" y="4" width="12" height="17" rx="2"/><path d="M9 4h6v3H9zM9 12l2 2 4-4"/>',
+  activity:'<path d="M3 12h4l3-7 4 14 3-7h4"/>',
+  layers:'<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 13l9 5 9-5"/>',
+  zap:'<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>',
+  grid:'<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/>',
+  alarm:'<path d="M7 18v-6a5 5 0 0 1 10 0v6"/><path d="M5 18h14v3H5zM12 2v2M4.2 5.2l1.4 1.4M19.8 5.2l-1.4 1.4M2 11h2M20 11h2"/>',
+  mail2:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
+});
+
+/* ---- mode state ----
+   Crisis Mode turns on by itself when an active event is at Emergency level. The mode menu can also pin Normal or Crisis (for drills). */
+const MODE = { force:null, last:null };
+try{ const v=localStorage.getItem("bcm-mode"); if(v==="crisis"||v==="normal") MODE.force=v; }catch(e){}
+try{ const q=new URLSearchParams(location.search).get("mode"); if(q==="crisis"||q==="normal") MODE.force=q; else if(q==="auto") MODE.force=null; }catch(e){}
+function crisisEvents(){ return EVENTS.filter(e=>e.sev==="em"); }   // Emergency level (e.g. GDACS Red) switches the screen
+function isCrisis(){ return MODE.force ? MODE.force==="crisis" : crisisEvents().length>0; }
+function isDrill(){ return MODE.force==="crisis" && !crisisEvents().length; }
+function crisisList(){ const c=crisisEvents(); return c.length ? c : (isCrisis()&&EVENTS[0] ? [EVENTS[0]] : []); }
+function setMode(m){ MODE.force = m==="auto"?null:m; MODE.last=null; try{ m==="auto"?localStorage.removeItem("bcm-mode"):localStorage.setItem("bcm-mode",m); }catch(e){} renderNav(); render(); }
+
+const MODULES = {
+  normal:[
+    ["news","Risk Monitoring","ติดตามความเสี่ยงและข่าวภัย","radar"],
+    ["readiness","BCM Readiness","ความพร้อม BCM ราย Site","gauge"],
+    ["docs","Document Management","คู่มือ ERP / BCP และเอกสาร BCM","doc"],
+    ["training","Training & Exercise","แผนการซ้อมและการฝึกอบรม","target"],
+    ["compliance","Compliance & Assessment","การประเมินตามมาตรฐาน","clipboard"],
+  ],
+  crisis:[
+    ["situation","Situation Monitoring","ติดตามสถานการณ์ภัยที่กำลังเกิด","activity"],
+    ["activation","Incident Activation","ยกระดับและเปิดใช้แผน","zap"],
+    ["response","Emergency Response","ตอบโต้เหตุฉุกเฉินตาม ERP","shield"],
+    ["ics","Crisis Management","ผัง ICS และทีมบริหารวิกฤต","org"],
+    ["recovery","Business Recovery","ฟื้นฟูธุรกิจตาม BCP","refresh"],
+  ],
+};
+
+/* ---- sidebar: Portal · Normal Mode · Crisis Mode · Applications ---- */
+function navMod(r,label,sub,icon,cls=""){
+  const on = S.route===r || (r==="news" && S.route==="article");
+  return `<button class="nav-item nv2 ${cls}${on?' on':''}" data-go="${r}">${svg(icon)}<span class="nv-t">${label}${LANG==="en"?"":`<small>${sub}</small>`}</span></button>`;
+}
+renderNav = function(){
+  const cr=isCrisis(), n=crisisList().length;
+  $("#navMain").innerHTML = `<div class="eyebrow">Portal</div>`
+    + navBtn("home",L("หน้าหลัก","Home"),"home", cr?`<span class="live blink">${svg("siren",11)}${n}</span>`:`<span class="mode-dot ok" title="Normal"></span>`);
+  $("#navApps").innerHTML = `<div class="nv-head nm${cr?'':' act'}">${svg("grid",15)}<span>Normal Mode<small>${L("ภาวะปกติ","Business as usual")}</small></span>${cr?'':`<em>${L("ใช้งาน","Active")}</em>`}</div>`
+    + MODULES.normal.map(m=>navMod(m[0],m[1],m[2],m[3])).join("");
+  $("#navInfo").innerHTML = `<div class="nv-head cr${cr?' act':''}"><span class="${cr?'blink':''}">${svg("siren",15)}</span><span>Crisis Mode<small>${L("ภาวะวิกฤติ","Incident in progress")}</small></span>${cr?`<em class="blink">${isDrill()?"DRILL":"LIVE"}</em>`:`<em class="sb">Standby</em>`}</div>`
+    + MODULES.crisis.map(m=>navMod(m[0],m[1],m[2],m[3],"cr-item")).join("");
+  let more=$("#navMore"); if(!more){ more=document.createElement("nav"); more.className="nav-group"; more.id="navMore"; $("#navInfo").after(more); }
+  more.innerHTML = `<div class="eyebrow">Applications</div>`+navExt("ews","Early Warning (EWS)","radar")+navExt("crisis","Crisis Hub","siren")+navExt("imap","Intelligent Map","map")
+    + navBtn("apps",L("แอปพลิเคชันทั้งหมด","All applications"),"globe") + navBtn("contact",L("ติดต่อเรา","Contact us"),"mail2");
+  const on = r => S.route===r || (r==="news" && S.route==="article");
+  $("#bnav").innerHTML = [["home",L("หน้าหลัก","Home"),"home"],["news","Risk","radar"],["readiness","Readiness","gauge"],["situation",cr?"Crisis":"Situation",cr?"siren":"activity"]]
+    .map(([r,l,i])=>`<button class="${on(r)?'on':''}${r==="situation"&&cr?' bn-cr':''}" data-go="${r}"><span class="${r==="situation"&&cr?'blink':''}">${svg(i,21)}</span>${l}</button>`).join("")
+    + `<button id="bMenu">${svg("menu",21)}${L("เมนู","Menu")}</button>`;
+  $("#bellCount").textContent = EVENTS.length;
+  modeChip(); syncUser();
+};
+
+/* ---- app bar: mode chip + menu ---- */
+function modeChip(){
+  let w=$("#modeMenu");
+  if(!w){ w=document.createElement("div"); w.className="mode-menu"; w.id="modeMenu"; const r=$(".ab-right"); if(!r) return; r.insertBefore(w, r.firstChild); }
+  const cr=isCrisis(), f=MODE.force||"auto";
+  w.innerHTML = `<button type="button" class="mode-chip ${cr?'cr':'nm'}" id="modeBtn" aria-haspopup="menu" aria-expanded="false"><span class="${cr?'blink':''}">${svg(cr?"siren":"grid",15)}</span><b>${cr?"Crisis Mode":"Normal Mode"}</b>${isDrill()?'<i>DRILL</i>':''}</button>
+    <div class="mode-pop" role="menu" hidden>
+      <div class="eyebrow" style="padding:4px 10px">${L("โหมดหน้าจอ","Screen mode")}</div>
+      ${[["auto",L("อัตโนมัติ","Automatic"),L("สลับเป็น Crisis เมื่อมีเหตุฉุกเฉิน","Switches to Crisis on an emergency")],["normal","Normal Mode",L("บังคับแสดงภาวะปกติ","Always show normal")],["crisis","Crisis Mode",L("ทดสอบ / ซ้อมแผน (Drill)","Test or drill")]]
+        .map(([k,t,d])=>`<button type="button" role="menuitemradio" aria-checked="${f===k}" class="${f===k?'on':''}" data-mode="${k}"><b>${t}</b><small>${d}</small></button>`).join("")}
+    </div>`;
+}
+document.addEventListener("click",ev=>{
+  const m=ev.target.closest("[data-mode]"); if(m){ ev.preventDefault(); setMode(m.dataset.mode); return; }
+  const b=ev.target.closest("#modeBtn"); const p=$("#modeMenu .mode-pop");
+  if(b){ p.hidden=!p.hidden; b.setAttribute("aria-expanded",String(!p.hidden)); return; }
+  if(p && !p.hidden && !ev.target.closest("#modeMenu")) p.hidden=true;
+});
+
+/* ---- shared bits ---- */
+function phaseStrip(active){
+  const ph=[["pre","PRE-INCIDENT",L("ก่อนเกิดเหตุ","Before an incident")],["inc","INCIDENT",L("ระหว่างเกิดเหตุ","During an incident")],["post","POST-INCIDENT",L("หลังเกิดเหตุ","After an incident")]];
+  return `<div class="phases">${ph.map(([k,t,d])=>`<div class="ph ${k}${k===active?' on':''}"><b>${t}</b><span>${d}</span></div>`).join("")}</div>`;
+}
+function modTile(m,kind){ return `<button class="mrow ${kind}" data-go="${m[0]}">${svg(m[3],17)}<span><b>${m[1]}</b>${LANG==="en"?"":`<small>${m[2]}</small>`}</span><i>→</i></button>`; }
+function pgHead(kind,title,sub,extra=""){
+  return `<div class="page-head"><div><div class="crumb"><span class="mtag ${kind}">${kind==="cr"?"CRISIS MODE":"NORMAL MODE"}</span></div><h1>${title}</h1><div class="muted">${sub}</div></div>${extra}</div>`;
+}
+const crisisHubBtn = (lbl,cls="primary") => `<a class="btn ${cls}" href="${LINKS.crisis}" target="_blank" rel="noopener">${svg("siren",16)}${lbl}${svg("ext",12)}</a>`;
+
+/* ---- home: Normal Mode ---- */
+function statRow(){
+  const atRisk=new Set(EVENTS.flatMap(x=>x.sites||[])).size, A=avg(CO);
+  const t=[[EVENTS.filter(x=>x.sev==="em").length,"Emergency","var(--sev-em)","situation"],[EVENTS.filter(x=>x.sev==="wa"||x.sev==="wt").length,"Warning / Watch","var(--sev-wa)","situation"],[atRisk,L("Site ในพื้นที่เสี่ยง","Sites at risk"),"var(--ink)","situation"],[Math.round(A*100)+"%",L("ความพร้อมเฉลี่ย","Average readiness"),statusOf(A)[2],"readiness"]];
+  return `<div class="mstats">${t.map(x=>`<button data-go="${x[3]}" style="--c:${x[2]}"><b>${x[0]}</b><span>${x[1]}</span></button>`).join("")}</div>`;
+}
+function modesHTML(){
+  const cr=isCrisis();
+  return `<section class="modes">
+    <div class="modes-top"><div><b>SCG BCM PORTAL</b><span>Single Entry Point · SSO · RBAC</span></div>
+      <span class="mstate ${cr?'cr':'nm'}"><i></i>${cr?L("ตรวจพบเหตุฉุกเฉิน","Emergency detected"):L("สถานะปกติ · ระบบเฝ้าระวังอัตโนมัติ","All clear · monitoring automatically")}</span></div>
+    ${statRow()}
+    <div class="modes-grid">
+      <div class="mcard nm${cr?'':' act'}"><div class="mc-h">${svg("grid",22)}<div><h3>Normal Mode</h3><p>${L("ภาวะปกติ","Business as usual")}</p></div>${cr?'':`<em>${L("ใช้งานอยู่","Active")}</em>`}</div>
+        <div class="mlist">${MODULES.normal.map(m=>modTile(m,"nm")).join("")}</div></div>
+      <div class="mcard cr${cr?' act':''}"><div class="mc-h"><span class="${cr?'blink':''}">${svg("siren",22)}</span><div><h3>Crisis Mode</h3><p>${L("ภาวะวิกฤติ","Incident in progress")}</p></div><em class="${cr?'blink':'sb'}">${cr?(isDrill()?"DRILL":"LIVE"):"Standby"}</em></div>
+        <div class="mlist">${MODULES.crisis.map(m=>modTile(m,"cr")).join("")}</div>
+        ${cr?'':`<p class="mnote">${L("หน้าหลักจะสลับเป็น Crisis Mode อัตโนมัติเมื่อมีเหตุการณ์ระดับ Emergency","The home screen switches to Crisis Mode on its own when an Emergency-level event is reported")}</p>`}</div>
+    </div>
+    ${phaseStrip(cr?"inc":"pre")}
+  </section>`;
+}
+
+/* ---- home: Crisis Mode ---- */
+function crisisCard(e){
+  const {s:sites,ready,appl}=erpReady(e), has=(e.sites||[]).length;
+  return `<article class="cx" style="--c:${SEVC[e.sev]}">
+    <header><span class="cx-ico blink">${svg("siren",24)}</span>
+      <div style="min-width:0"><div class="cx-tags"><span class="sev ${e.sev}">${e.sevT}</span><span class="chip">${esc(HZ[e.type]?.l||e.type)}</span>${e.country?`<span class="chip" data-notr>${esc(e.country)}</span>`:""}</div>
+      <h3 data-notr>${esc(e.title)}</h3><small><span data-notr>${esc(e.area||"")}</span> · ${esc(e.upd||"")} · ${ago(e.date)}</small></div></header>
+    ${e.summary?`<p data-notr>${esc(e.summary)}</p>`:""}
+    <div class="cx-kpi">
+      <div><b>${has?sites.length:0}</b><span>${L("Site ในพื้นที่","Sites in zone")}</span></div>
+      <div><b>${has?`${ready}/${appl}`:"–"}</b><span>${L("ERP พร้อม","ERP ready")}</span></div>
+      ${(e.facts||[]).slice(0,2).map(f=>`<div><b data-notr>${esc(f[1])}</b><span data-notr>${esc(f[0])}</span></div>`).join("")}
+    </div>
+    ${has?`<div class="cx-sites">${sites.slice(0,8).map(c=>`<span data-notr>${esc(c.plant||c.name)}</span>`).join("")}${sites.length>8?`<span>+${sites.length-8}</span>`:""}</div>`:""}
+    <div class="cx-acts">${crisisHubBtn(L("เปิด Incident ใน Crisis Hub","Open incident in Crisis Hub"))}
+      <button class="btn" data-go="response" data-ev="${e.id}">${svg("shield",16)}Emergency Response</button>
+      <button class="btn" data-go="ics">${svg("org",16)}${L("ผัง ICS","ICS chart")}</button>
+      <button class="btn" data-go="situation" data-ev="${e.id}">${svg("pin",16)}${L("ดูบนแผนที่","View on map")}</button></div>
+  </article>`;
+}
+function crisisHomeTop(){
+  const list=crisisList(), drill=isDrill();
+  return `<section class="cx-banner">
+      <span class="cx-big blink">${svg("siren",34)}</span>
+      <div><div class="cx-eyebrow">CRISIS MODE · ${L("ภาวะวิกฤติ","Incident in progress")}${drill?" · DRILL":""}</div>
+        <h2>${drill?L("โหมดซ้อมแผน: แสดงหน้าจอ Crisis Mode ด้วยเหตุการณ์ล่าสุด","Drill: Crisis Mode shown with the latest event"):L(`ตรวจพบเหตุฉุกเฉิน ${list.length} เหตุการณ์`,`${list.length} emergency event${list.length>1?"s":""} detected`)}</h2>
+        <p>${L("ทีม BCM ประเมินผลกระทบ เปิดใช้ ERP และแจ้งผู้บริหารตามผัง ICS","Assess impact, activate the ERP and notify executives through the ICS chart")}</p></div>
+      <div class="cx-bacts">${crisisHubBtn("Crisis Hub","ghost-dk")}<button class="btn ghost-dk" data-go="ics">${svg("org",16)}${L("ผัง ICS","ICS chart")}</button></div>
+    </section>
+    <div class="cx-grid">${list.map(crisisCard).join("")}</div>
+    <section class="card cx-mods"><div class="card-head"><div><h3>Crisis Mode · ${L("เมนูจัดการเหตุการณ์","Incident menu")}</h3><div class="card-sub">${L("ลำดับการทำงานตั้งแต่เกิดเหตุจนฟื้นฟูธุรกิจ","From first alert to business recovery")}</div></div></div>
+      <div class="cx-flow">${MODULES.crisis.map((m,i)=>`<button class="cx-step" data-go="${m[0]}"><i>${i+1}</i>${svg(m[3],18)}<b>${m[1]}</b>${LANG==="en"?"":`<small>${m[2]}</small>`}</button>`).join("")}</div>
+      ${phaseStrip("inc")}</section>`;
+}
+
+const _renderHome12 = renderHome;
+renderHome = function(){
+  const h=_renderHome12();
+  const i=h.indexOf('<section class="hub hub2">'), j=i>-1?h.indexOf('</section>',i)+10:-1;
+  if(j<10) return h;
+  if(isCrisis()){
+    return h.slice(0,i)+crisisHomeTop()+h.slice(j);
+  }
+  return h.slice(0,i)+`<p class="m-hello">${L("สวัสดี","Hello")} ${esc((USER.name||"").split(" ")[0])}</p>`+modesHTML()+h.slice(j);
+};
+
+/* ---- pages ---- */
+function homeSlice(a,b){ const h=_renderHome12(), i=h.indexOf(a), j=b?h.indexOf(b,i):-1; return i<0?"":h.slice(i, j>i?j:undefined); }
+function row3Cards(){
+  const h=renderHomeBase(), i=h.indexOf('<div class="row3">'), f=h.indexOf('<div class="muted" style="font-size:12px;display:flex',i);
+  if(i<0||f<0) return [];
+  const inner=h.slice(i+'<div class="row3">'.length, f).replace(/\s*<\/div>\s*$/,"");
+  return inner.split(/\n\s*(?=<div class="card">)/).map(x=>x.trim()).filter(x=>x.startsWith('<div class="card">'));
+}
+function evPicker(cur,route){
+  const list=[...new Map([...crisisList(),...EVENTS].map(e=>[e.id,e])).values()];
+  return `<div class="ev-pick">${list.map(e=>`<button class="${e.id===cur.id?'on':''}" data-go="${route}" data-ev="${e.id}" style="--c:${SEVC[e.sev]}"><i></i><span data-notr>${esc(e.title.length>46?e.title.slice(0,44)+"…":e.title)}</span></button>`).join("")}</div>`;
+}
+const curEv = () => evById(S.ev) || crisisList()[0] || EVENTS[0];
+
+const V12 = {
+  docs(){
+    const g=[["about","book"],["ops","org"],["erp","shield"],["bcp","doc"]];
+    return `<div class="page">${pgHead("nm","Document Management",L("คู่มือ แนวปฏิบัติ และเอกสาร BCM ของ SCG","SCG BCM manuals, frameworks and documents"))}
+      <div class="doc-grid">${g.map(([k,ic])=>{const s=SITEMAP[k]; return `<section class="card doc-card"><div class="card-head"><div style="display:flex;gap:12px;align-items:center"><span class="dic">${svg(ic,19)}</span><div><h3>${L(s.th,s.en)}</h3><div class="card-sub">${s.id} · ${L(s.en,s.th)}</div></div></div><button class="link" data-go="${k}">${L("เปิดหมวด →","Open →")}</button></div>
+        <div class="doc-list">${s.kids.map(c=>`<button data-go="${k}">${svg("doc",15)}<span><b>${esc(c[0])}</b><small>${esc(c[1])}</small></span></button>`).join("")}</div></section>`;}).join("")}</div></div>`;
+  },
+  training(){
+    const c=row3Cards();
+    const plan=[["BCM Awareness","e-Learning · พนักงานทุกคน"],["ERP & ICS Training","ทีม ERT / IC ประจำ Site"],["Tabletop Exercise","ทีมบริหารวิกฤต BU"],["Full-scale Drill","ซ้อมเต็มรูปแบบตามแผนประจำปี"]];
+    return `<div class="page">${pgHead("nm","Training & Exercise",L("แผนการซ้อมและหลักสูตรอบรม BCM ประจำปี","Annual BCM drill plan and training"))}
+      <div class="grid2">${c[1]||""}
+        <section class="card"><div class="card-head"><div><h3>${L("หลักสูตรและรูปแบบการฝึก","Courses and exercise types")}</h3><div class="card-sub">${L("ตามกรอบ ISO 22301 ข้อ 8.5","Per ISO 22301 clause 8.5")}</div></div><span class="sample">${L("ตัวอย่าง","Sample")}</span></div>
+        <div class="steps-list" style="display:grid;gap:8px">${plan.map((p,i)=>`<div class="trn"><i>${i+1}</i><span><b>${p[0]}</b><small>${L(p[1],["All staff · e-learning","Site ERT / IC teams","BU crisis teams","Full-scale annual drill"][i])}</small></span></div>`).join("")}</div></section></div></div>`;
+  },
+  compliance(){
+    const A=avg(CO), cnt=k=>CO.filter(c=>statusOf(c.pct)[0]===k).length;
+    const bus=[...new Set(CO.map(c=>c.bu))].map(b=>{const a=CO.filter(c=>c.bu===b);return {b,n:a.length,v:avg(a),ok:a.filter(c=>c.pct>=.85).length,wa:a.filter(c=>c.pct>=.6&&c.pct<.85).length,cr:a.filter(c=>c.pct<.6).length};});
+    const k=[[Math.round(A*100)+"%",L("ความพร้อมเฉลี่ย","Average readiness"),statusOf(A)[2]],[cnt("ok"),"On Track (≥85%)","var(--ok)"],[cnt("wa"),"Behind (60–84%)","var(--pend)"],[cnt("cr"),"Critical (<60%)","var(--miss)"]];
+    return `<div class="page">${pgHead("nm","Compliance & Assessment",L(`ผลประเมินความพร้อม BCM ${CO.length} บริษัท/Site · ข้อมูล ณ ${AS_OF}`,`BCM readiness assessment, ${CO.length} companies/sites · as of ${AS_OF}`),`<button class="ui-btn outline" data-go="readiness">${L("เปิด Readiness Dashboard →","Open Readiness Dashboard →")}</button>`)}
+      <div class="kpis">${k.map(x=>`<div class="kpi"><div class="v" style="color:${x[2]}">${x[0]}</div><div class="l">${x[1]}</div></div>`).join("")}</div>
+      <section class="card"><div class="card-head"><div><h3>${L("ผลประเมินราย BU","Assessment by BU")}</h3><div class="card-sub">${L("เป้าหมาย On Track ≥ 85%","Target: On Track ≥ 85%")}</div></div></div>
+        <div class="tbl-wrap"><table><thead><tr><th>BU</th><th>${L("บริษัท/Site","Companies/sites")}</th><th>${L("ความพร้อมเฉลี่ย","Average")}</th><th>On Track</th><th>Behind</th><th>Critical</th></tr></thead>
+        <tbody>${bus.map(r=>{const s=statusOf(r.v);return `<tr><td><b>${esc(r.b)}</b></td><td class="num">${r.n}</td><td><div class="prog"><div class="bar"><span style="width:${r.v*100}%;background:${s[2]}"></span></div><span class="num">${Math.round(r.v*100)}%</span></div></td><td class="num" style="color:var(--ok)">${r.ok}</td><td class="num" style="color:var(--pend)">${r.wa}</td><td class="num" style="color:var(--miss)">${r.cr}</td></tr>`;}).join("")}</tbody></table></div></section></div>`;
+  },
+  situation(){
+    const cr=isCrisis();
+    return `<div class="page">${pgHead("cr","Situation Monitoring",L("ภัยที่กำลังเกิดขึ้น ตำแหน่ง และผลกระทบต่อ Site ของ SCG","Active hazards, locations and impact on SCG sites"),cr?`<span class="mstate cr"><i></i>${L("Crisis Mode ทำงานอยู่","Crisis Mode active")}</span>`:"")}
+      ${homeSlice('<section class="console">','<section class="tr-wrap mc-wrap">')}</div>`;
+  },
+  activation(){
+    const lv=[["ad","Advisory",L("ติดตามข่าวสาร","Monitor"),L("ทีม BCM ติดตามสถานการณ์","BCM team monitors")],["wt","Watch",L("เฝ้าระวัง","Watch"),L("แจ้ง BU BCM เตรียมทีม ERT","Notify BU BCM, prepare ERT")],["wa","Warning",L("เตรียมพร้อม","Stand by"),L("ERT Standby · ทบทวน ERP · แจ้งผู้บริหาร BU","ERT on standby, review ERP, brief BU executives")],["em","Emergency",L("เปิดใช้แผน","Activate"),L("เปิดใช้ ERP / ICS / CMT · บันทึก Incident ใน Crisis Hub","Activate ERP, ICS and CMT; log the incident in Crisis Hub")]];
+    const act=crisisList();
+    const steps=[[L("ยืนยันเหตุการณ์","Verify the event"),L("ตรวจสอบข้อมูลจาก EWS / GDACS / หน่วยงานรัฐ","Check EWS, GDACS and official sources")],[L("ประเมินผลกระทบ","Assess impact"),L("ระบุ Site พนักงาน และกระบวนการที่ได้รับผลกระทบ","Identify affected sites, people and processes")],[L("ประกาศระดับและเปิดใช้แผน","Declare level, activate plans"),L("Incident Commander ประกาศระดับ เปิดใช้ ERP / ICS","Incident Commander declares the level and activates ERP / ICS")],[L("แจ้งผู้บริหารและผู้เกี่ยวข้อง","Notify executives"),L("ตามผัง ICS และ Call Tree","Through the ICS chart and call tree")],[L("บันทึกและติดตามใน Crisis Hub","Log and track in Crisis Hub"),L("สร้าง Incident ติดตาม Action และรายงานสถานะ","Create the incident, track actions, report status")]];
+    return `<div class="page">${pgHead("cr","Incident Activation",L("เกณฑ์การยกระดับเหตุการณ์และขั้นตอนเปิดใช้แผน","Escalation criteria and plan activation steps"),crisisHubBtn(L("เปิด Incident ใน Crisis Hub","Open incident in Crisis Hub")))}
+      <section class="card"><div class="card-head"><h3>${L("เกณฑ์การยกระดับ","Escalation levels")}</h3></div>
+        <div class="lvl4">${lv.map(x=>`<div class="lv4 ${x[0]}" style="--c:${SEVC[x[0]]}"><b>${x[1]}</b><span>${x[2]}</span><small>${x[3]}</small></div>`).join("")}</div></section>
+      <div class="grid2">
+        <section class="card"><div class="card-head"><div><h3>${L("เหตุการณ์ที่ต้องพิจารณาเปิดใช้แผน","Events to consider for activation")}</h3><div class="card-sub">${act.length?L(`${act.length} เหตุการณ์เข้าเกณฑ์ Crisis Mode`,`${act.length} event(s) meet Crisis Mode criteria`):L("ยังไม่มีเหตุการณ์เข้าเกณฑ์","No event meets the criteria")}</div></div></div>
+          ${(act.length?act:EVENTS.slice(0,4)).map(e=>`<div class="act-row" style="--c:${SEVC[e.sev]}"><i></i><div style="min-width:0"><b data-notr>${esc(e.title)}</b><small><span class="sev ${e.sev}">${e.sevT}</span> · ${(e.sites||[]).length} Site · ${ago(e.date)}</small></div><button class="btn" data-go="response" data-ev="${e.id}">${L("ตอบโต้ →","Respond →")}</button></div>`).join("")}</section>
+        <section class="card"><div class="card-head"><h3>${L("ขั้นตอนการเปิดใช้แผน","Activation steps")}</h3></div>
+          ${steps.map((s,i)=>`<div class="step"><i>${i+1}</i><div><b>${s[0]}</b><span>${s[1]}</span></div></div>`).join("")}</section></div></div>`;
+  },
+  response(){
+    const e=curEv(), erp=SITEMAP.erp;
+    const chk=[L("ความปลอดภัยของชีวิตมาก่อน: อพยพ/รวมพลตามจุดที่กำหนด","Life safety first: evacuate and muster"),L("ตรวจนับพนักงานและผู้รับเหมา","Account for staff and contractors"),L("ควบคุมเหตุและป้องกันความเสียหายต่อทรัพย์สิน","Contain the hazard, protect assets"),L("รายงานสถานะให้ Incident Commander ทุก 1 ชม.","Report to the Incident Commander hourly"),L("ประสานหน่วยงานภายนอก (ดับเพลิง/โรงพยาบาล/ราชการ)","Coordinate with external agencies")];
+    return `<div class="page">${pgHead("cr","Emergency Response",L("การตอบโต้เหตุฉุกเฉินตามคู่มือ ERP และความพร้อมของ Site ในพื้นที่","Emergency response per the ERP and readiness of sites in the zone"),`<a class="btn" href="${LINKS.ews}" target="_blank" rel="noopener">${svg("radar",16)}Early Warning (EWS)${svg("ext",12)}</a>`)}
+      ${evPicker(e,"response")}
+      <div id="impact">${impactHTML(e)}</div>
+      <div class="grid2">
+        <section class="card"><div class="card-head"><h3>${L("Checklist การตอบโต้เบื้องต้น","Initial response checklist")}</h3></div>
+          <ul class="steps-list">${chk.map(c=>`<li>${svg("check",16)}<span>${c}</span></li>`).join("")}</ul></section>
+        <section class="card"><div class="card-head"><div><h3>${L("คู่มือ ERP","ERP manuals")}</h3><div class="card-sub">${erp.id} · ${erp.en}</div></div><button class="link" data-go="erp">${L("ทั้งหมด →","All →")}</button></div>
+          <div class="doc-list">${erp.kids.map(c=>`<button data-go="erp">${svg("shield",15)}<span><b>${esc(c[0])}</b><small>${esc(c[1])}</small></span></button>`).join("")}</div></section></div></div>`;
+  },
+  recovery(){
+    const bcp=SITEMAP.bcp, list=crisisList().length?crisisList():EVENTS.filter(e=>(e.sites||[]).length);
+    const sites=[...new Map(list.flatMap(e=>eventSites(e).map(c=>[c.id,{c,e}]))).values()].slice(0,10);
+    const ST=[["ok",L("กลับสู่ภาวะปกติ","Back to normal")],["wa",L("กำลังฟื้นฟู","Recovering")],["cr",L("หยุดดำเนินการ","Disrupted")]];
+    const post=[["Damage Assessment",L("ประเมินความเสียหายและผลกระทบต่อกระบวนการสำคัญ","Assess damage and impact on critical processes")],["Recovery per BCP",L("ฟื้นฟูกระบวนการสำคัญภายใน RTO ตามแผน BCP","Restore critical processes within RTO per the BCP")],["Return to Normal",L("ยืนยันความพร้อมและปิด Incident ใน Crisis Hub","Confirm readiness and close the incident in Crisis Hub")],["After Action Review",L("ถอดบทเรียนและปรับปรุงแผน ERP / BCP","Review lessons learned and update ERP / BCP")]];
+    return `<div class="page">${pgHead("cr","Business Recovery",L("ติดตามการฟื้นฟูธุรกิจตามแผน BCP จนกลับสู่ภาวะปกติ","Track business recovery per the BCP until back to normal"))}
+      ${phaseStrip("post")}
+      <div class="grid-r">
+        <section class="card"><div class="card-head"><div><h3>${L("สถานะการฟื้นฟูราย Site","Recovery status by site")}</h3><div class="card-sub">${L("Site ในพื้นที่ผลกระทบ","Sites in affected zones")}</div></div><span class="sample">${L("ตัวอย่าง","Sample")}</span></div>
+          ${sites.length?`<div class="tbl-wrap"><table><thead><tr><th>Site</th><th>${L("เหตุการณ์","Event")}</th><th>RTO</th><th>${L("สถานะ","Status")}</th></tr></thead><tbody>${sites.map(({c,e},i)=>{const s=ST[i%3];return `<tr><td><b data-notr>${esc(c.plant||c.name)}</b><div class="muted" style="font-size:11.5px">${c.bu} · ${c.country}</div></td><td data-notr style="font-size:12.5px">${esc(HZ[e.type]?.l||e.type)}</td><td class="num">${[24,48,72][i%3]} h</td><td><span class="pill ${s[0]}">${s[1]}</span></td></tr>`;}).join("")}</tbody></table></div>`:`<p class="muted">${L("ยังไม่มี Site ที่ต้องฟื้นฟู","No site needs recovery")}</p>`}</section>
+        <section class="card"><div class="card-head"><h3>${L("ขั้นตอนหลังเกิดเหตุ","Post-incident steps")}</h3></div>
+          ${post.map((s,i)=>`<div class="step"><i>${i+1}</i><div><b>${s[0]}</b><span>${s[1]}</span></div></div>`).join("")}</section></div>
+      <section class="card"><div class="card-head"><div><h3>${L("คู่มือ BCP","BCP manuals")}</h3><div class="card-sub">${bcp.id} · ${bcp.en}</div></div><button class="link" data-go="bcp">${L("ทั้งหมด →","All →")}</button></div>
+        <div class="doc-list cols">${bcp.kids.map(c=>`<button data-go="bcp">${svg("doc",15)}<span><b>${esc(c[0])}</b><small>${esc(c[1])}</small></span></button>`).join("")}</div></section></div>`;
+  },
+};
+const V12_ROUTES = Object.keys(V12);
+V12_ROUTES.forEach(r=>{ if(!ROUTES.includes(r)) ROUTES.push(r); });
+
+const _render12 = render;
+render = function(){
+  const cr=isCrisis();
+  document.body.classList.toggle("crisis-on",cr);
+  if(MODE.last===false && cr) crisisToast();
+  MODE.last=cr;
+  if(V12_ROUTES.includes(S.route)){
+    applyLangToEvents(); hideTip();
+    $("#main").innerHTML = V12[S.route]();
+    syncUser(); return;
+  }
+  _render12();
+};
+function crisisToast(){
+  document.querySelectorAll(".cx-toast").forEach(t=>t.remove());
+  const t=document.createElement("div"); t.className="cx-toast"; t.setAttribute("role","alert");
+  t.innerHTML=`<span class="blink">${svg("siren",20)}</span><div><b>${L("ตรวจพบเหตุฉุกเฉิน","Emergency detected")}</b><small>${L("หน้าหลักสลับเป็น Crisis Mode แล้ว","The home screen switched to Crisis Mode")}</small></div><button class="btn primary" data-go="home">${L("ดู","View")}</button><button class="x" aria-label="${L("ปิด","Close")}">✕</button>`;
+  t.addEventListener("click",ev=>{ if(ev.target.closest(".x,[data-go]")) t.remove(); });
+  document.body.appendChild(t); setTimeout(()=>t.remove(),20000);
+}
+/* refresh: nav and mode follow live data */
+const _rebuild12 = rebuildEvents;
+rebuildEvents = function(){ _rebuild12(); if(!$("#app").hidden) renderNav(); };
 
 trObserver.observe(document.body,{childList:true,subtree:true}); setLang(LANG);
 checkSession().then(ok=>{ if(!ok && !CFG.msLogin && routeFromHash()) enterApp(); });
