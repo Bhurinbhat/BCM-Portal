@@ -1172,6 +1172,42 @@ a.src-latest:hover > span{text-decoration:underline}
 .bn-chk{display:flex;gap:8px;align-items:center;font-size:13px}
 .bn-err{font-size:12.5px;color:var(--miss);background:var(--miss-bg);padding:8px 12px;border-radius:10px}
 @media (max-width:860px){ .bn-hd{grid-template-columns:minmax(0,1fr) 20px;gap:4px 10px} .bn-date{grid-column:1/-1;order:-1} .bn-hd .sample{display:none} .bn-body{padding:2px 14px 14px} .bn-2{grid-template-columns:minmax(0,1fr)} }
+
+/* ===== v13c ===== */
+.hub2.no-tiles{grid-template-columns:minmax(0,1fr)}
+.um-acts{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.um-exp{position:relative}
+.um-pop{position:absolute;right:0;top:46px;z-index:20;min-width:200px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 36px -16px rgba(5,10,20,.4);padding:6px;display:grid}
+.um-pop button{text-align:left;border:0;background:none;padding:9px 12px;border-radius:8px;font-size:13px}
+.um-pop button:hover{background:var(--surface-2)}
+.um-kpi{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+.um-kpi div{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow)}
+.um-kpi b{display:block;font:500 22px var(--f-mono)}.um-kpi span{font-size:12px;color:var(--muted)}
+.um-filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+.um-filters select{font:inherit;font-size:13px;padding:8px 11px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.um-q{max-width:320px;height:38px}
+.um-count{margin-left:auto;font-size:12.5px;color:var(--muted)}
+.um-tbl td{font-size:13px}
+.um-tbl td b{display:block;font-weight:600}.um-tbl td small{display:block;color:var(--muted);font-size:11.5px}
+.um-role{font-size:11.5px;font-weight:600;padding:2px 9px;border-radius:99px;background:var(--surface-2);white-space:nowrap}
+.um-role.admin{background:var(--miss-bg);color:var(--miss)}.um-role.corp_bcm{background:var(--ad-bg);color:var(--sev-ad)}.um-role.bu_bcm{background:var(--pend-bg);color:var(--pend)}.um-role.site_bcm{background:var(--ok-bg);color:var(--ok)}
+.um-row-acts{white-space:nowrap;text-align:right}
+.um-row-acts .btn{padding:6px 8px}
+.um-foot{margin-top:12px;font-size:12px}
+.um-imp{max-width:760px;display:grid;gap:14px}
+.um-drop{display:grid;justify-items:center;gap:6px;text-align:center;padding:22px;border:2px dashed var(--line);border-radius:14px;cursor:pointer;background:var(--surface-2);transition:border-color .15s,background .15s}
+.um-drop.on,.um-drop:hover{border-color:var(--sev-ad);background:var(--ad-bg)}
+.um-drop input{position:absolute;width:1px;height:1px;opacity:0}
+.um-drop span{color:var(--sev-ad)}.um-drop small{color:var(--muted);font-size:11.5px}
+.um-paste summary{cursor:pointer;font-size:13px;color:var(--sev-ad)}
+.um-paste textarea{width:100%;margin:8px 0;font:12px var(--f-mono);padding:8px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+.um-sum{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.um-sum small{color:var(--muted);margin-left:auto}
+.um-prev{max-height:300px;overflow:auto;border:1px solid var(--line);border-radius:12px}
+.um-prev td,.um-prev th{font-size:12px;padding:6px 8px}
+.um-prev tr.err td{background:var(--miss-bg)}
+.um-iss{color:var(--miss);font-weight:500}
+@media (max-width:1180px){ .um-kpi{grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media (max-width:860px){ .um-kpi{grid-template-columns:repeat(2,minmax(0,1fr))} .um-q{max-width:none;flex:1 1 100%} .um-count{margin-left:0} .um-acts{width:100%} .um-acts .ui-btn{flex:1 1 auto} }
 </style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
@@ -3806,6 +3842,272 @@ renderNav = function(){
   if(S.route==="bcmnews") news.classList.remove("on");
 };
 Object.assign(ICON,{ plus:'<path d="M12 5v14M5 12h14"/>' });
+
+/* ===================== v13c: home trims ===================== */
+// hero keeps the greeting and actions only (the four summary tiles are removed)
+heroHTML = (function(orig){ return function(){ return orig().replace(/<div class="hub-tiles">[\s\S]*?<\/div>\s*(?=<\/section>)/,"").replace('<section class="hub hub2">','<section class="hub hub2 no-tiles">'); }; })(heroHTML);
+// the event impact panel under the map is removed; an empty hidden holder stays for code that still writes to it
+const _renderHome13c = renderHome;
+renderHome = function(){
+  let h=_renderHome13c(); const a=h.indexOf('<div id="impact">');
+  if(a>-1){ const s=h.indexOf('</section>',a), b=s>-1?h.indexOf('</div>',s):-1; if(b>-1) h=h.slice(0,a)+'<div id="impact" hidden></div>'+h.slice(b+6); }
+  return h;
+};
+
+/* ===================== v13c: User Management ===================== */
+// Rows live in Supabase table portal_users (signed-in users read; admins add, edit, delete, import).
+// Without a Supabase session the list is kept in this browser (demo / preview).
+const LL = (th,en) => LANG==="en" ? en : th;
+const UM_ROLES = [["admin","ผู้ดูแลระบบ","Admin"],["corp_bcm","Corporate BCM","Corporate BCM"],["bu_bcm","BU BCM Coordinator","BU BCM Coordinator"],["site_bcm","Site BCM","Site BCM"],["exec","ผู้บริหาร","Executive"],["viewer","ผู้ใช้งานทั่วไป","Viewer"]];
+const UM_BUS = ["SCG","SCGC","SCGP","CBM","CGS","SCGD","SL","D&R"];
+const UM_COLS = [ // key, Thai header, English header, aliases accepted on import
+  ["name","ชื่อ-นามสกุล","Name",["ชื่อ","ชื่อ นามสกุล","full name","fullname"]],
+  ["email","อีเมล","Email",["e-mail","mail"]],
+  ["phone","เบอร์โทร","Phone",["โทรศัพท์","mobile","tel"]],
+  ["bu","BU","BU",["business unit","กลุ่มธุรกิจ"]],
+  ["site","Site / หน่วยงาน","Site / Unit",["site","หน่วยงาน","บริษัท","company","plant"]],
+  ["position","ตำแหน่ง","Position",["title","job title"]],
+  ["role","บทบาท","Role",["สิทธิ์","permission"]],
+  ["status","สถานะ","Status",["active"]],
+];
+const UM = {rows:[], src:"init", q:"", bu:"", role:"", status:"", show:50, err:null};
+const umRoleLbl = k => { const r=UM_ROLES.find(x=>x[0]===k); return r?LL(r[1],r[2]):(k||"–"); };
+const umKey = s => String(s||"").trim().toLowerCase();
+function umLocal(){ try{ return JSON.parse(localStorage.getItem("bcm-users")||"null"); }catch(e){ return null; } }
+function umSaveLocal(rows){ try{ localStorage.setItem("bcm-users",JSON.stringify(rows)); }catch(e){} UM.rows=rows; }
+async function umLoad(force){
+  if(UM.src==="loading" || (UM.src!=="init" && !force)) return;
+  UM.src="loading";
+  let c=null; try{ c=await sbAuth(); }catch(e){}
+  try{
+    if(c){ const {data:{session}}=await c.auth.getSession();
+      if(session){ const {data,error}=await c.from("portal_users").select("*").order("name"); if(error) throw error; UM.rows=data||[]; UM.src="supabase"; umRefresh(); return; } }
+  }catch(e){ console.warn("Users: Supabase unavailable, using this browser",e); UM.err=String(e.message||e); }
+  let rows=umLocal();
+  if(!rows){ rows=[{id:"u"+Date.now(),name:USER.name||"Bhurinbhat",email:USER.email||"",phone:"",bu:"SCG",site:"Corporate BCM Office",position:"Manager, BCM System Development",role:"admin",status:"active",updated_at:new Date().toISOString()}]; try{ localStorage.setItem("bcm-users",JSON.stringify(rows)); }catch(e){} }
+  UM.rows=rows; UM.src="local"; umRefresh();
+}
+function umRefresh(){ if(S.route==="users") render(); }
+function umFiltered(){
+  const q=umKey(UM.q);
+  return UM.rows.filter(u=>(!UM.bu||u.bu===UM.bu)&&(!UM.role||u.role===UM.role)&&(!UM.status||(u.status||"active")===UM.status)
+    &&(!q||[u.name,u.email,u.site,u.position,u.phone].some(v=>umKey(v).includes(q)))).sort((a,b)=>String(a.name).localeCompare(String(b.name),"th"));
+}
+function renderUsers(){
+  umLoad();
+  const all=UM.rows, list=umFiltered(), shown=list.slice(0,UM.show);
+  const cnt=k=>all.filter(u=>u.role===k).length;
+  const sel=(id,cur,opts,all)=>`<select id="${id}"><option value="">${all}</option>${opts.map(([v,l])=>`<option value="${esc(v)}" ${cur===v?"selected":""}>${esc(l)}</option>`).join("")}</select>`;
+  return `<div class="page">
+    <div class="page-head"><div><div class="crumb">USER MANAGEMENT</div><h1>User Management</h1><div class="muted">${LL("รายชื่อผู้ใช้งาน BCM Portal บทบาท และหน่วยงานที่รับผิดชอบ","BCM Portal users, roles and responsible units")}</div></div>
+      <div class="um-acts">
+        <button class="ui-btn outline" data-um-import>${svg("upload",16)}${LL("อัปโหลดตาราง","Upload table")}</button>
+        <div class="um-exp"><button class="ui-btn outline" data-um-expmenu aria-haspopup="menu" aria-expanded="false">${svg("download",16)}Export</button>
+          <div class="um-pop" role="menu" hidden><button role="menuitem" data-um-export="xlsx">Excel (.xlsx)</button><button role="menuitem" data-um-export="csv">CSV (.csv)</button><button role="menuitem" data-um-export="print">${LL("ดู / พิมพ์รายชื่อ","View / print list")}</button></div></div>
+        <button class="ui-btn primary" data-um-add>${svg("plus",16)}${LL("เพิ่มผู้ใช้งาน","Add user")}</button>
+      </div></div>
+    <div class="um-kpi"><div><b>${all.length}</b><span>${LL("ผู้ใช้งานทั้งหมด","All users")}</span></div><div><b>${all.filter(u=>(u.status||"active")==="active").length}</b><span>${LL("ใช้งานอยู่","Active")}</span></div>${UM_ROLES.slice(0,4).map(r=>`<div><b>${cnt(r[0])}</b><span>${LL(r[1],r[2])}</span></div>`).join("")}</div>
+    <section class="card">
+      <div class="um-filters">
+        <label class="search um-q"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg><input id="umQ" type="search" value="${esc(UM.q)}" placeholder="${LL("ค้นหาชื่อ อีเมล หน่วยงาน","Search name, email, unit")}"></label>
+        ${sel("umBu",UM.bu,UM_BUS.map(b=>[b,b]),LL("BU: ทั้งหมด","BU: all"))}
+        ${sel("umRole",UM.role,UM_ROLES.map(r=>[r[0],LL(r[1],r[2])]),LL("บทบาท: ทั้งหมด","Role: all"))}
+        ${sel("umSt",UM.status,[["active",LL("ใช้งานอยู่","Active")],["inactive",LL("ระงับ","Inactive")]],LL("สถานะ: ทั้งหมด","Status: all"))}
+        <span class="um-count">${LL(`แสดง ${shown.length} จาก ${list.length}`,`Showing ${shown.length} of ${list.length}`)}</span>
+      </div>
+      <div class="tbl-wrap"><table class="um-tbl"><thead><tr><th>${LL("ชื่อ-นามสกุล","Name")}</th><th>BU</th><th>${LL("Site / หน่วยงาน","Site / Unit")}</th><th>${LL("ตำแหน่ง","Position")}</th><th>${LL("บทบาท","Role")}</th><th>${LL("สถานะ","Status")}</th><th></th></tr></thead>
+      <tbody>${shown.map(u=>`<tr><td><b data-notr>${esc(u.name)}</b><small data-notr>${esc(u.email||"")}${u.phone?` · ${esc(u.phone)}`:""}</small></td><td>${esc(u.bu||"–")}</td><td data-notr>${esc(u.site||"–")}</td><td data-notr>${esc(u.position||"–")}</td><td><span class="um-role ${esc(u.role||"")}">${esc(umRoleLbl(u.role))}</span></td><td><span class="pill ${(u.status||"active")==="active"?"ok":"cr"}">${(u.status||"active")==="active"?LL("ใช้งานอยู่","Active"):LL("ระงับ","Inactive")}</span></td>
+        <td class="um-row-acts"><button class="btn" data-um-edit="${esc(String(u.id))}" aria-label="${LL("แก้ไข","Edit")}">${svg("edit",15)}</button><button class="btn" data-um-del="${esc(String(u.id))}" aria-label="${LL("ลบ","Delete")}">${svg("trash",15)}</button></td></tr>`).join("")
+        || `<tr><td colspan="7" class="muted" style="text-align:center;padding:28px">${UM.src==="loading"?LL("กำลังโหลด…","Loading…"):LL("ไม่พบรายชื่อ","No users found")}</td></tr>`}</tbody></table></div>
+      ${list.length>shown.length?`<div class="more"><button class="btn" data-um-more>${LL("แสดงเพิ่ม","Show more")}</button></div>`:""}
+      <div class="um-foot">${UM.src==="supabase"?`<span class="src-badge"><i style="--c:var(--ok)"></i>${LL("บันทึกในระบบ (Supabase)","Saved in the portal (Supabase)")}</span>`:`<span class="src-badge"><i style="--c:var(--sev-wt)"></i>${LL("โหมดสาธิต · รายชื่อบันทึกไว้ในเบราว์เซอร์นี้เท่านั้น","Demo mode · the list is kept in this browser only")}</span>`}</div>
+    </section></div>`;
+}
+
+/* add / edit */
+function umForm(u){
+  umClose();
+  const m=document.createElement("div"); m.className="tr-modal um-modal"; m.setAttribute("role","dialog"); m.setAttribute("aria-modal","true"); m.dataset.id=u?String(u.id):"";
+  const f=(k,l,type="text",req=false,ph="")=>`<div class="field"><label for="um_${k}">${l}${req?" *":""}</label><input id="um_${k}" type="${type}" ${req?"required":""} value="${u?esc(u[k]||""):""}" placeholder="${ph}"></div>`;
+  m.innerHTML=`<div class="tr-dialog"><form id="umForm" class="form">
+    <div class="card-head" style="margin:0"><div><h3>${u?LL("แก้ไขผู้ใช้งาน","Edit user"):LL("เพิ่มผู้ใช้งาน","Add user")}</h3></div><button type="button" class="x" data-um-close aria-label="${LL("ปิด","Close")}">✕</button></div>
+    ${f("name",LL("ชื่อ-นามสกุล","Name"),"text",true)}
+    <div class="bn-2">${f("email",LL("อีเมล","Email"),"email",true,"name@scg.com")}${f("phone",LL("เบอร์โทร","Phone"),"tel")}</div>
+    <div class="bn-2"><div class="field"><label for="um_bu">BU *</label><select id="um_bu" required>${UM_BUS.map(b=>`<option ${u&&u.bu===b?"selected":""}>${b}</option>`).join("")}</select></div>${f("site",LL("Site / หน่วยงาน","Site / Unit"))}</div>
+    ${f("position",LL("ตำแหน่ง","Position"))}
+    <div class="bn-2"><div class="field"><label for="um_role">${LL("บทบาท","Role")} *</label><select id="um_role">${UM_ROLES.map(r=>`<option value="${r[0]}" ${(u?u.role:"viewer")===r[0]?"selected":""}>${LL(r[1],r[2])}</option>`).join("")}</select></div>
+      <div class="field"><label for="um_status">${LL("สถานะ","Status")}</label><select id="um_status"><option value="active" ${!u||u.status!=="inactive"?"selected":""}>${LL("ใช้งานอยู่","Active")}</option><option value="inactive" ${u&&u.status==="inactive"?"selected":""}>${LL("ระงับ","Inactive")}</option></select></div></div>
+    <div class="bn-err" id="umErr" hidden></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" class="ui-btn outline" data-um-close>${LL("ยกเลิก","Cancel")}</button><button type="submit" class="ui-btn primary" id="umSave">${LL("บันทึก","Save")}</button></div>
+  </form></div>`;
+  document.body.appendChild(m); document.body.classList.add("ics-open"); setTimeout(()=>$("#um_name").focus(),30);
+  $("#umForm").addEventListener("submit",ev=>{ ev.preventDefault(); umSubmit(m); });
+}
+function umClose(){ document.querySelectorAll(".um-modal").forEach(x=>x.remove()); if(!document.querySelector(".tr-modal")) document.body.classList.remove("ics-open"); }
+const EMAIL_RX=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+async function umSubmit(m){
+  const v={}; ["name","email","phone","bu","site","position","role","status"].forEach(k=>v[k]=($("#um_"+k).value||"").trim());
+  v.email=v.email.toLowerCase();
+  const err=t=>{ const e=$("#umErr"); e.textContent=t; e.hidden=false; };
+  if(!v.name) return err(LL("กรุณาใส่ชื่อ","Please enter a name"));
+  if(!EMAIL_RX.test(v.email)) return err(LL("รูปแบบอีเมลไม่ถูกต้อง","Email format is not valid"));
+  const id=m.dataset.id;
+  if(UM.rows.some(u=>umKey(u.email)===v.email && String(u.id)!==id)) return err(LL("อีเมลนี้มีในรายชื่อแล้ว","This email is already in the list"));
+  $("#umSave").disabled=true;
+  try{ await umWrite(id?[{...v,id}]:[v]); umClose(); toast(id?LL("บันทึกการแก้ไขแล้ว","Changes saved"):LL("เพิ่มผู้ใช้งานแล้ว","User added")); }
+  catch(e){ $("#umSave").disabled=false; err(LL("บันทึกไม่สำเร็จ: ","Could not save: ")+(e.message||e)); }
+}
+/* write a batch: rows with id update that row; rows without id add or update by email */
+async function umWrite(rows){
+  const now=new Date().toISOString();
+  if(UM.src==="supabase"){
+    const c=await sbAuth();
+    const {error}=await c.from("portal_users").upsert(rows.map(r=>{ const x={...r,updated_at:now}; if(!x.id) delete x.id; return x; }),{onConflict:"email"});
+    if(error) throw error; UM.src="init"; await umLoad(true);
+  } else {
+    const list=[...UM.rows];
+    rows.forEach((r,i)=>{ const at=r.id?list.findIndex(u=>String(u.id)===String(r.id)):list.findIndex(u=>umKey(u.email)===umKey(r.email));
+      if(at>-1) list[at]={...list[at],...r,id:list[at].id,updated_at:now}; else list.push({...r,id:"u"+Date.now()+"-"+i,updated_at:now}); });
+    umSaveLocal(list); umRefresh();
+  }
+}
+async function umDelete(id){
+  const u=UM.rows.find(x=>String(x.id)===id); if(!u) return;
+  if(!confirm(LL(`ลบ ${u.name} ออกจากรายชื่อ? ลบแล้วกู้คืนไม่ได้`,`Remove ${u.name} from the list? This cannot be undone.`))) return;
+  try{
+    if(UM.src==="supabase"){ const c=await sbAuth(); const {error}=await c.from("portal_users").delete().eq("id",id); if(error) throw error; UM.src="init"; await umLoad(true); }
+    else { umSaveLocal(UM.rows.filter(x=>String(x.id)!==id)); umRefresh(); }
+    toast(LL("ลบผู้ใช้งานแล้ว","User removed"));
+  }catch(e){ toast(LL("ลบไม่สำเร็จ: ","Could not delete: ")+(e.message||e)); }
+}
+
+/* export */
+function umTable(rows){ return [UM_COLS.map(c=>c[1]), ...rows.map(u=>UM_COLS.map(([k])=>k==="role"?umRoleLbl(u.role):k==="status"?((u.status||"active")==="active"?"active":"inactive"):(u[k]||"")))]; }
+function umDownload(name,blob){ const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },500); }
+const csvCell = v => /[",\n\r]/.test(String(v)) ? `"${String(v).replace(/"/g,'""')}"` : String(v);
+let XLSX_P=null;
+function loadXLSX(){ if(window.XLSX) return Promise.resolve(window.XLSX); if(!XLSX_P) XLSX_P=new Promise((res,rej)=>{ const s=document.createElement("script"); s.src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"; s.onload=()=>res(window.XLSX); s.onerror=()=>{ XLSX_P=null; rej(new Error("xlsx")); }; document.head.appendChild(s); }); return XLSX_P; }
+async function umExport(kind,rows,fname){
+  rows = rows || umFiltered(); const stamp=new Date().toISOString().slice(0,10); fname = fname || `bcm-portal-users-${stamp}`;
+  const t=umTable(rows);
+  if(kind==="csv"){ umDownload(fname+".csv", new Blob(["﻿"+t.map(r=>r.map(csvCell).join(",")).join("\r\n")],{type:"text/csv;charset=utf-8"})); return; }
+  if(kind==="print"){ const w=window.open("","_blank"); if(!w){ toast(LL("เบราว์เซอร์บล็อกหน้าต่างใหม่","The browser blocked the new window")); return; }
+    w.document.write(`<!doctype html><meta charset="utf-8"><title>BCM Portal users ${stamp}</title><style>body{font:13px system-ui,sans-serif;margin:24px}table{border-collapse:collapse;width:100%}th,td{border:1px solid #ccc;padding:6px 8px;text-align:left}th{background:#f3f5f8}</style><h2>BCM Portal · ${LL("รายชื่อผู้ใช้งาน","Users")} (${rows.length})</h2><p>${stamp}</p><table><thead><tr>${t[0].map(h=>`<th>${esc(h)}</th>`).join("")}</tr></thead><tbody>${t.slice(1).map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join("")}</tr>`).join("")}</tbody></table>`); w.document.close(); return; }
+  try{ const X=await loadXLSX(); const ws=X.utils.aoa_to_sheet(t); ws["!cols"]=t[0].map((h,i)=>({wch:[22,28,14,8,24,24,20,10][i]||14})); const wb=X.utils.book_new(); X.utils.book_append_sheet(wb,ws,"Users"); X.writeFile(wb,fname+".xlsx"); }
+  catch(e){ toast(LL("โหลดตัวสร้างไฟล์ Excel ไม่ได้ จึงส่งออกเป็น CSV แทน","Could not load the Excel writer, exported CSV instead")); umExport("csv",rows,fname); }
+}
+
+/* import */
+function parseCSV(text){
+  const rows=[]; let row=[], cell="", q=false; const d = text.includes("\t") && !text.split("\n")[0].includes(",") ? "\t" : ",";
+  for(let i=0;i<text.length;i++){ const ch=text[i];
+    if(q){ if(ch==='"'){ if(text[i+1]==='"'){ cell+='"'; i++; } else q=false; } else cell+=ch; }
+    else if(ch==='"') q=true; else if(ch===d){ row.push(cell); cell=""; } else if(ch==="\n"||ch==="\r"){ if(ch==="\r"&&text[i+1]==="\n") i++; row.push(cell); rows.push(row); row=[]; cell=""; } else cell+=ch; }
+  if(cell!==""||row.length){ row.push(cell); rows.push(row); }
+  return rows.filter(r=>r.some(c=>String(c).trim()!==""));
+}
+function umColFor(h){ const n=umKey(h).replace(/\s+/g," ").replace(/\*/g,"").trim(); return (UM_COLS.find(([k,th,en,al])=>[k,th,en,...al].some(a=>umKey(a)===n||n.startsWith(umKey(a)+" ")||n.includes("("+umKey(k)+")")))||[])[0]; }
+function umRoleFrom(v){ const n=umKey(v); if(!n) return "viewer"; const r=UM_ROLES.find(x=>[x[0],x[1],x[2]].some(a=>umKey(a)===n)); return r?r[0]:null; }
+function umPrepare(table){
+  if(table.length<2) return {err:LL("ไม่พบข้อมูลในตาราง (ต้องมีหัวตารางและอย่างน้อย 1 แถว)","No data found (need a header row and at least one row)")};
+  const map=table[0].map(umColFor);
+  if(!map.includes("name")||!map.includes("email")) return {err:LL("ไม่พบคอลัมน์ ชื่อ-นามสกุล และ อีเมล ในหัวตาราง ลองดาวน์โหลดแบบฟอร์มตัวอย่าง","Name and Email columns were not found in the header. Try the template.")};
+  const seen=new Set();
+  const items=table.slice(1).map((r,i)=>{
+    const u={}; map.forEach((k,j)=>{ if(k) u[k]=String(r[j]??"").trim(); });
+    u.email=(u.email||"").toLowerCase(); const issues=[];
+    if(!u.name) issues.push(LL("ไม่มีชื่อ","no name"));
+    if(!EMAIL_RX.test(u.email)) issues.push(LL("อีเมลไม่ถูกต้อง","invalid email"));
+    const role=umRoleFrom(u.role); if(role===null) issues.push(LL(`บทบาท "${u.role}" ไม่รู้จัก`,`unknown role "${u.role}"`)); else u.role=role;
+    if(u.bu){ const b=UM_BUS.find(x=>umKey(x)===umKey(u.bu)); if(b) u.bu=b; else issues.push(LL(`BU "${u.bu}" ไม่รู้จัก`,`unknown BU "${u.bu}"`)); } else u.bu="SCG";
+    u.status = /^(inactive|ระงับ|no|false|0)$/i.test(u.status||"") ? "inactive" : "active";
+    if(seen.has(u.email)) issues.push(LL("อีเมลซ้ำในไฟล์","duplicate email in file")); seen.add(u.email);
+    const exists=UM.rows.some(x=>umKey(x.email)===u.email);
+    return {line:i+2,u,issues,kind:issues.length?"err":exists?"upd":"new"};
+  });
+  return {items};
+}
+function umImportModal(){
+  umClose();
+  const m=document.createElement("div"); m.className="tr-modal um-modal"; m.setAttribute("role","dialog"); m.setAttribute("aria-modal","true");
+  m.innerHTML=`<div class="tr-dialog um-imp"><div class="card-head" style="margin:0"><div><h3>${LL("อัปโหลดรายชื่อจากตาราง","Upload users from a table")}</h3><div class="card-sub">${LL("รองรับ Excel (.xlsx) และ CSV · ระบบจะเพิ่มรายชื่อใหม่ และอัปเดตรายชื่อที่อีเมลตรงกัน","Excel (.xlsx) or CSV · new emails are added, matching emails are updated")}</div></div><button type="button" class="x" data-um-close aria-label="${LL("ปิด","Close")}">✕</button></div>
+    <label class="um-drop" id="umDrop"><input type="file" id="umFile" accept=".xlsx,.xls,.csv,text/csv"><span>${svg("upload",22)}</span><b>${LL("เลือกไฟล์ หรือ ลากไฟล์มาวางที่นี่","Choose a file or drop it here")}</b><small>${LL("หัวตาราง: ชื่อ-นามสกุล, อีเมล, เบอร์โทร, BU, Site / หน่วยงาน, ตำแหน่ง, บทบาท, สถานะ","Header: Name, Email, Phone, BU, Site / Unit, Position, Role, Status")}</small></label>
+    <details class="um-paste"><summary>${LL("หรือวางข้อมูลที่คัดลอกจาก Excel","Or paste rows copied from Excel")}</summary><textarea id="umPaste" rows="5" placeholder="${LL("วางทั้งตารางรวมหัวตาราง","Paste the whole table including the header")}"></textarea><button type="button" class="btn" data-um-paste>${LL("ตรวจข้อมูล","Check data")}</button></details>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="link" data-um-template="xlsx">${svg("download",14)} ${LL("ดาวน์โหลดแบบฟอร์ม Excel","Download Excel template")}</button><button type="button" class="link" data-um-template="csv">${LL("แบบฟอร์ม CSV","CSV template")}</button></div>
+    <div id="umPrev"></div></div>`;
+  document.body.appendChild(m); document.body.classList.add("ics-open");
+  const f=$("#umFile"); f.addEventListener("change",()=>f.files[0]&&umReadFile(f.files[0]));
+  const d=$("#umDrop"); ["dragover","dragenter"].forEach(e=>d.addEventListener(e,ev=>{ev.preventDefault(); d.classList.add("on");})); ["dragleave","drop"].forEach(e=>d.addEventListener(e,()=>d.classList.remove("on")));
+  d.addEventListener("drop",ev=>{ ev.preventDefault(); const x=ev.dataTransfer.files[0]; if(x) umReadFile(x); });
+}
+async function umReadFile(file){
+  const pv=$("#umPrev"); pv.innerHTML=`<p class="muted">${LL("กำลังอ่านไฟล์…","Reading file…")}</p>`;
+  try{
+    let table;
+    if(/\.xlsx?$/i.test(file.name)){ const X=await loadXLSX(); const wb=X.read(await file.arrayBuffer(),{type:"array"}); table=X.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,raw:false,defval:""}); }
+    else table=parseCSV((await file.text()).replace(/^﻿/,""));
+    umShowPreview(table, file.name);
+  }catch(e){ pv.innerHTML=`<div class="bn-err">${LL("อ่านไฟล์ไม่สำเร็จ","Could not read the file")}: ${esc(e.message||String(e))}</div>`; }
+}
+let UM_PENDING=null;
+function umShowPreview(table,label){
+  const pv=$("#umPrev"), r=umPrepare(table);
+  if(r.err){ pv.innerHTML=`<div class="bn-err">${esc(r.err)}</div>`; UM_PENDING=null; return; }
+  const it=r.items, n=k=>it.filter(x=>x.kind===k).length, ok=it.filter(x=>x.kind!=="err");
+  UM_PENDING=ok.map(x=>x.u);
+  const KT={new:LL("เพิ่มใหม่","New"),upd:LL("อัปเดต","Update"),err:LL("ข้อผิดพลาด","Error")};
+  pv.innerHTML=`<div class="um-sum"><span class="pill ok">${KT.new} ${n("new")}</span><span class="pill wa">${KT.upd} ${n("upd")}</span><span class="pill cr">${KT.err} ${n("err")}</span><small data-notr>${esc(label||"")}</small></div>
+    <div class="tbl-wrap um-prev"><table><thead><tr><th>#</th><th>${LL("ชื่อ","Name")}</th><th>${LL("อีเมล","Email")}</th><th>BU</th><th>${LL("บทบาท","Role")}</th><th>${LL("ผลตรวจ","Check")}</th></tr></thead><tbody>
+    ${it.slice(0,200).map(x=>`<tr class="${x.kind}"><td class="num">${x.line}</td><td data-notr>${esc(x.u.name||"")}</td><td data-notr>${esc(x.u.email||"")}</td><td>${esc(x.u.bu||"")}</td><td>${esc(x.kind==="err"&&!UM_ROLES.some(q=>q[0]===x.u.role)?x.u.role||"":umRoleLbl(x.u.role))}</td><td>${x.kind==="err"?`<span class="um-iss">${esc(x.issues.join(", "))}</span>`:KT[x.kind]}</td></tr>`).join("")}</tbody></table></div>
+    ${it.length>200?`<p class="muted">${LL(`แสดง 200 แถวแรกจาก ${it.length}`,`First 200 of ${it.length} rows shown`)}</p>`:""}
+    <div style="display:flex;gap:8px;justify-content:flex-end;align-items:center;flex-wrap:wrap">${n("err")?`<small class="muted">${LL("แถวที่มีข้อผิดพลาดจะถูกข้าม","Rows with errors are skipped")}</small>`:""}<button class="ui-btn outline" data-um-close>${LL("ยกเลิก","Cancel")}</button><button class="ui-btn primary" data-um-commit ${ok.length?"":"disabled"}>${LL(`นำเข้า ${ok.length} รายการ`,`Import ${ok.length} rows`)}</button></div>`;
+}
+function umTemplate(kind){
+  const ex=[{name:"สมชาย ใจดี",email:"somchai.j@scg.com",phone:"081-234-5678",bu:"SCGC",site:"Map Ta Phut Olefins",position:"Site BCM Coordinator",role:"site_bcm",status:"active"}];
+  umExport(kind,ex,"bcm-portal-users-template");
+}
+document.addEventListener("click",async ev=>{
+  const t=ev.target;
+  if(t.closest("[data-um-add]")){ umForm(null); return; }
+  const e=t.closest("[data-um-edit]"); if(e){ const u=UM.rows.find(x=>String(x.id)===e.dataset.umEdit); if(u) umForm(u); return; }
+  const d=t.closest("[data-um-del]"); if(d){ umDelete(d.dataset.umDel); return; }
+  if(t.closest("[data-um-import]")){ umImportModal(); return; }
+  const tp=t.closest("[data-um-template]"); if(tp){ umTemplate(tp.dataset.umTemplate); return; }
+  if(t.closest("[data-um-paste]")){ const v=$("#umPaste").value; if(v.trim()) umShowPreview(parseCSV(v),LL("ข้อมูลที่วาง","Pasted data")); return; }
+  if(t.closest("[data-um-commit]")){ const b=t.closest("[data-um-commit]"); if(!UM_PENDING||!UM_PENDING.length) return; b.disabled=true;
+    try{ const n=UM_PENDING.length; await umWrite(UM_PENDING); UM_PENDING=null; umClose(); toast(LL(`นำเข้า ${n} รายการแล้ว`,`Imported ${n} rows`)); }catch(er){ b.disabled=false; toast(LL("นำเข้าไม่สำเร็จ: ","Import failed: ")+(er.message||er)); } return; }
+  const xm=t.closest("[data-um-expmenu]"); const pop=$(".um-exp .um-pop");
+  if(xm){ pop.hidden=!pop.hidden; xm.setAttribute("aria-expanded",String(!pop.hidden)); return; }
+  const x=t.closest("[data-um-export]"); if(x){ if(pop) pop.hidden=true; umExport(x.dataset.umExport); return; }
+  if(pop && !pop.hidden && !t.closest(".um-exp")) pop.hidden=true;
+  if(t.closest("[data-um-more]")){ UM.show+=50; render(); return; }
+  if(t.closest("[data-um-close]") || t.classList.contains("um-modal")){ umClose(); return; }
+});
+document.addEventListener("keydown",ev=>{ if(ev.key==="Escape" && document.querySelector(".um-modal")) umClose(); });
+function umBindFilters(){
+  const q=$("#umQ"); if(q){ let tm; q.addEventListener("input",()=>{ clearTimeout(tm); tm=setTimeout(()=>{ const p=q.selectionStart; UM.q=q.value; UM.show=50; render(); const n=$("#umQ"); n.focus(); n.setSelectionRange(p,p); },250); }); }
+  [["#umBu","bu"],["#umRole","role"],["#umSt","status"]].forEach(([s,k])=>{ const el=$(s); if(el) el.addEventListener("change",()=>{ UM[k]=el.value; UM.show=50; render(); }); });
+}
+
+if(!ROUTES.includes("users")) ROUTES.push("users");
+const _render13c = render;
+render = function(){
+  if(S.route==="users"){ applyLangToEvents(); hideTip(); $("#main").innerHTML=renderUsers(); umBindFilters(); renderNav(); syncUser(); return; }
+  _render13c();
+};
+/* sidebar: User Management becomes section 3, ข้อมูล BCM moves to 4 */
+const _renderNav13c = renderNav;
+renderNav = function(){
+  _renderNav13c();
+  let g=$("#navUsers"); if(!g){ g=document.createElement("nav"); g.className="nav-group"; g.id="navUsers"; $("#navInfo").before(g); }
+  g.innerHTML=`<div class="eyebrow">User Management</div><button class="nav-item${S.route==="users"?" on":""}" data-go="users">${svg("users")}<span>${LL("จัดการผู้ใช้งาน","Manage users")}</span></button>`;
+};
+Object.assign(ICON,{
+  upload:'<path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/>',
+  download:'<path d="M12 4v12M7 11l5 5 5-5"/><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"/>',
+  edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="M13.5 6.5l4 4"/>',
+  trash:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',
+});
 
 trObserver.observe(document.body,{childList:true,subtree:true}); setLang(LANG);
 checkSession().then(ok=>{ if(!ok && !CFG.msLogin && routeFromHash()) enterApp(); });
