@@ -37,7 +37,7 @@ Bar charts, pie charts, heatmaps and the map highlight the item under the mouse,
   2. ความพร้อมของการดำเนินงานด้าน BCM: ภาพรวม, SCGC, SCGP, CBM, D&R. Each BU opens the Readiness Dashboard filtered to that BU (`#readiness-SCGC` etc.)
   3. User Management
   4. ข้อมูล BCM: คู่มือ ERP, คู่มือ BCP
-- **BCM Watch / In Focus / Announcement** (`#bcmnews-watch|focus|announce`): signed-in users add posts (title, date, details, link, pin); authors edit or delete their own. Table `portal_bcm_posts`, migration `20261126000000_portal_bcm_posts.sql`.
+- **BCM Watch / In Focus / Announcement** (`#bcmnews-watch|focus|announce`): signed-in users add posts (title, date, details, link, pin, up to 5 attachments — PDF or pictures, 10 MB each); authors edit or delete their own. Attachments are stored in the private Storage bucket `bcm-attachments` (demo mode: this browser's IndexedDB) and open in an in-page viewer. Table `portal_bcm_posts`, migration `20261126000000_portal_bcm_posts.sql`.
 - **User Management** (`#users`): add, edit, delete users; filter by BU, role, status; export Excel/CSV or print; upload an Excel/CSV table (or paste from Excel) with a checked preview — matching emails update, new emails are added, rows with errors are skipped. Table `portal_users`, migration `20261126010000_portal_users.sql`; only active admins can write.
 - Both pages fall back to this browser's storage (shown as โหมดสาธิต) when there is no Supabase session or the tables are not reachable.
 - The home hero no longer shows the four summary tiles, and the event impact panel under the map is removed.

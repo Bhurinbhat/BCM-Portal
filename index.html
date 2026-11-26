@@ -1208,6 +1208,36 @@ a.src-latest:hover > span{text-decoration:underline}
 .um-iss{color:var(--miss);font-weight:500}
 @media (max-width:1180px){ .um-kpi{grid-template-columns:repeat(3,minmax(0,1fr))} }
 @media (max-width:860px){ .um-kpi{grid-template-columns:repeat(2,minmax(0,1fr))} .um-q{max-width:none;flex:1 1 100%} .um-count{margin-left:0} .um-acts{width:100%} .um-acts .ui-btn{flex:1 1 auto} }
+
+/* ===== v13d: post attachments ===== */
+.att-drop{display:flex;align-items:center;gap:12px;padding:12px 14px;border:2px dashed var(--line);border-radius:12px;background:var(--surface-2);cursor:pointer;color:var(--sev-ad);transition:border-color .15s,background .15s}
+.att-drop.on,.att-drop:hover{border-color:var(--sev-ad);background:var(--ad-bg)}
+.att-drop input{position:absolute;width:1px;height:1px;opacity:0}
+.att-drop b{display:block;font-size:13px;color:var(--ink)}.att-drop small{font-size:11.5px;color:var(--muted)}
+.att-list{display:grid;gap:6px;margin-top:6px}
+.att-item{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:10px;align-items:center;padding:6px 8px;border:1px solid var(--line);border-radius:10px;background:var(--surface)}
+.att-item img{width:40px;height:40px;object-fit:cover;border-radius:7px}
+.att-item b{display:block;font-size:12.5px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.att-item small{font-size:11px;color:var(--muted)}
+.att-item .x{width:28px;height:28px}
+.att-ic{width:40px;height:40px;border-radius:8px;display:grid;place-items:center;font:700 10px var(--f-mono);color:#fff;background:#D0161F;flex:none}
+.att-count{display:inline-flex;align-items:center;gap:3px;font:500 11.5px var(--f-mono);color:var(--muted)}
+.att-block{display:grid;gap:8px}
+.att-imgs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px}
+.att-thumb{aspect-ratio:4/3;border:1px solid var(--line);border-radius:10px;overflow:hidden;padding:0;background:var(--surface-2);cursor:zoom-in}
+.att-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s}
+.att-thumb:hover img{transform:scale(1.04)}
+.att-thumb .skeleton{display:block;height:100%}
+.att-doc{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:10px;align-items:center;text-align:left;padding:8px 10px;border:1px solid var(--line);border-radius:10px;background:var(--surface);max-width:520px;color:var(--ink)}
+.att-doc:hover{border-color:var(--sev-ad)}
+.att-doc b{display:block;font-size:13px;font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.att-doc small{font-size:11.5px;color:var(--muted)}
+.att-doc svg{color:var(--muted)}
+.att-lb{z-index:60}
+.att-lb-card{width:min(1000px,calc(100vw - 32px));height:min(86vh,900px);background:var(--surface);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 30px 60px -20px rgba(0,0,0,.6)}
+.att-lb-hd{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid var(--line)}
+.att-lb-hd b{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13.5px}.att-lb-hd span{font:12px var(--f-mono);color:var(--muted)}
+.att-lb-hd .btn{padding:6px 10px;font-size:12.5px}
+.att-lb-card img{flex:1;min-height:0;object-fit:contain;background:#0B0E14;width:100%}
+.att-lb-card iframe{flex:1;border:0;width:100%;background:#525659}
 </style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
@@ -1338,6 +1368,7 @@ a.src-latest:hover > span{text-decoration:underline}
 /* ================= v7: Thai / English ================= */
 const I18N = {
  "ความพร้อมของการดำเนินงานด้าน BCM":"BCM operational readiness","คู่มือ BCP":"BCP Manuals","ความพร้อม":"Readiness",
+ "ไฟล์แนบ (PDF, รูปภาพ)":"Attachments (PDF, pictures)","เลือกไฟล์ หรือ ลากมาวาง":"Choose files or drop them here","สูงสุด 5 ไฟล์ ไฟล์ละไม่เกิน 10 MB":"up to 5 files, 10 MB each","รองรับเฉพาะ PDF และรูปภาพ":"only PDF and pictures are supported","ใหญ่เกิน 10 MB":"larger than 10 MB","เกิน 5 ไฟล์":"more than 5 files","พื้นที่จัดเก็บในเบราว์เซอร์เต็ม":"browser storage is full","กำลังบันทึก…":"Saving…","เปิดในแท็บใหม่":"Open in new tab",
  "เพิ่มรายละเอียด":"Add details","แก้ไขรายละเอียด":"Edit details","หัวข้อ *":"Title *","หมวด":"Topic","วันที่":"Date","รายละเอียด":"Details","ลิงก์อ้างอิง / ไฟล์แนบ":"Reference link / attachment","ปักหมุดไว้บนสุด":"Pin to top","ยกเลิก":"Cancel","บันทึก":"Save","แก้ไข":"Edit","ลบ":"Delete","ตัวอย่าง":"Sample","ยังไม่มีรายการ":"No posts yet","กดที่หัวข้อเพื่ออ่านรายละเอียด":"Select a title to read the details","ติดตามสถานการณ์ความเสี่ยงและภัยที่ต้องเฝ้าระวัง":"Risk situations and hazards to watch","บทความเจาะลึก บทเรียน และแนวปฏิบัติด้าน BCM":"In-depth articles, lessons learned and BCM practices","ประกาศ กำหนดการ และข่าวจาก Corporate BCM":"Announcements, deadlines and news from Corporate BCM","บันทึกในระบบ · ผู้ที่เข้าสู่ระบบทุกคนเห็นโพสต์นี้":"Saved to the portal · visible to everyone signed in","โหมดสาธิต · โพสต์ที่เพิ่มบันทึกไว้ในเบราว์เซอร์นี้เท่านั้น":"Demo mode · posts you add are kept in this browser only","กำลังโหลด…":"Loading…","ยังไม่มีรายละเอียด":"No details yet","กดแก้ไขเพื่อเพิ่มรายละเอียด":"choose Edit to add details","โดย":"By","กดปุ่มเพิ่มรายละเอียดเพื่อเริ่มต้น":"Choose Add details to start","กรุณาใส่หัวข้อ":"Please enter a title","ลิงก์ต้องขึ้นต้นด้วย http:// หรือ https://":"Links must start with http:// or https://","บันทึกไม่สำเร็จ: ":"Could not save: ","บันทึกการแก้ไขแล้ว":"Changes saved","เพิ่มรายการแล้ว":"Post added","ลบรายการแล้ว":"Post deleted","ลบไม่สำเร็จ: ":"Could not delete: ","สรุปสถานการณ์ ผลกระทบ สิ่งที่ต้องดำเนินการ…":"Situation summary, impact, actions needed…",
 
  "ใหม่":"New","โลก":"World","เอเชีย":"Asia","จุดความขัดแย้งจากข่าว":"Conflict hotspots (news)","SCG สำนักงานใหญ่":"SCG head office","ข่าวความขัดแย้ง":"Conflict news","บางซื่อ กรุงเทพฯ":"Bang Sue, Bangkok",
@@ -3689,6 +3720,66 @@ function seedDate(s){ const m=String(s).match(/(\d+)\s+(\S+)\s+(\d{4})/); if(!m|
 const SEED_POSTS = BN_KEYS.flatMap(k=>(NEWS[BN[k].seed]?.items||[]).map((n,j)=>({id:`seed-${k}-${j}`,category:k,title:n[0],body:"",link:null,post_date:seedDate(n[1]),pinned:false,author_name:"Corporate BCM",seed:true})));
 function bnLocal(){ try{ return JSON.parse(localStorage.getItem("bcm-posts")||"[]"); }catch(e){ return []; } }
 function bnSaveLocal(rows){ try{ localStorage.setItem("bcm-posts",JSON.stringify(rows)); return true; }catch(e){ return false; } }
+/* ---- attachments (PDF, pictures) ----
+   Supabase mode: files go to the private Storage bucket "bcm-attachments", shown through signed links.
+   Demo mode: files are kept in this browser's IndexedDB. */
+const ATT_MAX = 5, ATT_MB = 10, ATT_TYPES = /^(application\/pdf|image\/(jpeg|png|gif|webp))$/;
+const ATT_URL = {};                       // key (IndexedDB id or storage path) -> viewable URL
+const attKey = a => a.path || a.id;
+const attIsImg = a => /^image\//.test(a.type||"");
+const attSize = n => n>=1048576 ? (n/1048576).toFixed(1)+" MB" : Math.max(1,Math.round(n/1024))+" KB";
+let IDB_P=null;
+function idb(){ if(!IDB_P) IDB_P=new Promise((res,rej)=>{ const r=indexedDB.open("bcm-portal",1); r.onupgradeneeded=()=>r.result.createObjectStore("att"); r.onsuccess=()=>res(r.result); r.onerror=()=>{ IDB_P=null; rej(r.error); }; }); return IDB_P; }
+async function idbDo(mode,fn){ const db=await idb(); return new Promise((res,rej)=>{ const tx=db.transaction("att",mode), st=tx.objectStore("att"), q=fn(st); tx.oncomplete=()=>res(q&&q.result); tx.onerror=()=>rej(tx.error); tx.onabort=()=>rej(tx.error||new Error("aborted")); }); }
+const idbPut=(k,blob)=>idbDo("readwrite",s=>s.put(blob,k)), idbGet=k=>idbDo("readonly",s=>s.get(k)), idbDel=k=>idbDo("readwrite",s=>s.delete(k));
+async function attResolve(rows){
+  const need=rows.flatMap(p=>p.attachments||[]).filter(a=>!ATT_URL[attKey(a)]);
+  if(!need.length) return;
+  if(POSTS.src==="supabase"){
+    try{ const c=await sbAuth(); const {data,error}=await c.storage.from("bcm-attachments").createSignedUrls(need.map(a=>a.path),3600);
+      if(!error) (data||[]).forEach(d=>{ if(d.signedUrl) ATT_URL[d.path]=d.signedUrl; }); }catch(e){ console.warn("attachments",e); }
+  } else {
+    await Promise.all(need.map(async a=>{ try{ const b=await idbGet(a.id); if(b) ATT_URL[a.id]=URL.createObjectURL(b); }catch(e){} }));
+  }
+  bnRefresh();
+}
+async function attDelete(list){
+  if(!list.length) return;
+  try{
+    if(POSTS.src==="supabase"){ const c=await sbAuth(); await c.storage.from("bcm-attachments").remove(list.map(a=>a.path).filter(Boolean)); }
+    else await Promise.all(list.map(a=>idbDel(a.id).catch(()=>{})));
+  }catch(e){ console.warn("attachment delete",e); }
+  list.forEach(a=>{ const k=attKey(a); if(ATT_URL[k]&&ATT_URL[k].startsWith("blob:")) URL.revokeObjectURL(ATT_URL[k]); delete ATT_URL[k]; });
+}
+async function attStore(files){            // files: [{file}] -> stored metadata
+  const out=[];
+  if(POSTS.src==="supabase"){
+    const c=await sbAuth();
+    for(const f of files){ const safe=f.file.name.replace(/[^\w.\-]+/g,"_").slice(-80), path=`${POSTS.uid}/${Date.now()}-${Math.random().toString(36).slice(2,8)}-${safe}`;
+      const {error}=await c.storage.from("bcm-attachments").upload(path,f.file,{contentType:f.file.type,upsert:false}); if(error) throw error;
+      out.push({path,name:f.file.name,type:f.file.type,size:f.file.size}); }
+  } else {
+    for(const f of files){ const id="a"+Date.now()+"-"+Math.random().toString(36).slice(2,8); await idbPut(id,f.file); ATT_URL[id]=URL.createObjectURL(f.file); out.push({id,name:f.file.name,type:f.file.type,size:f.file.size}); }
+  }
+  return out;
+}
+function attView(key){
+  const a=POSTS.rows.flatMap(p=>p.attachments||[]).find(x=>attKey(x)===key), url=ATT_URL[key]; if(!a||!url) return;
+  document.querySelectorAll(".att-lb").forEach(x=>x.remove());
+  const m=document.createElement("div"); m.className="tr-modal att-lb"; m.setAttribute("role","dialog"); m.setAttribute("aria-modal","true"); m.setAttribute("aria-label",a.name);
+  m.innerHTML=`<div class="att-lb-card"><div class="att-lb-hd"><b data-notr>${esc(a.name)}</b><span>${attSize(a.size||0)}</span><a class="btn" href="${esc(url)}" target="_blank" rel="noopener" download="${esc(a.name)}">${svg("ext",14)}เปิดในแท็บใหม่</a><button class="x" data-att-close aria-label="ปิด">✕</button></div>
+    ${attIsImg(a)?`<img src="${esc(url)}" alt="${esc(a.name)}">`:`<iframe src="${esc(url)}" title="${esc(a.name)}"></iframe>`}</div>`;
+  document.body.appendChild(m);
+}
+function attBlock(p){
+  const at=p.attachments||[]; if(!at.length) return "";
+  const imgs=at.filter(attIsImg), docs=at.filter(a=>!attIsImg(a));
+  return `<div class="att-block">
+    ${imgs.length?`<div class="att-imgs">${imgs.map(a=>{const u=ATT_URL[attKey(a)];return `<button class="att-thumb" data-att-view="${esc(attKey(a))}" aria-label="${esc(a.name)}">${u?`<img src="${esc(u)}" alt="${esc(a.name)}" loading="lazy">`:`<span class="skeleton"></span>`}</button>`;}).join("")}</div>`:""}
+    ${docs.map(a=>`<button class="att-doc" data-att-view="${esc(attKey(a))}"><span class="att-ic">PDF</span><span><b data-notr>${esc(a.name)}</b><small>${attSize(a.size||0)}</small></span>${svg("ext",14)}</button>`).join("")}
+  </div>`;
+}
+
 async function bnLoad(force){
   if(POSTS.src==="loading" || (POSTS.src!=="init" && !force)) return;
   POSTS.src="loading";
@@ -3700,11 +3791,11 @@ async function bnLoad(force){
         POSTS.uid=session.user.id;
         const {data,error}=await c.from("portal_bcm_posts").select("*").order("pinned",{ascending:false}).order("post_date",{ascending:false}).order("created_at",{ascending:false});
         if(error) throw error;
-        POSTS.rows=data||[]; POSTS.src="supabase"; bnRefresh(); return;
+        POSTS.rows=data||[]; POSTS.src="supabase"; bnRefresh(); attResolve(POSTS.rows); return;
       }
     }
   }catch(e){ console.warn("BCM posts: Supabase unavailable, using this browser",e); POSTS.err=String(e.message||e); }
-  POSTS.rows=bnLocal(); POSTS.src="local"; bnRefresh();
+  POSTS.rows=bnLocal(); POSTS.src="local"; bnRefresh(); attResolve(POSTS.rows);
 }
 function bnRefresh(){ if(["bcmnews","news","home"].includes(S.route)) render(); }
 function bnList(cat){
@@ -3721,9 +3812,10 @@ function bnPost(p){
     <button class="bn-hd" data-bn-toggle="${esc(String(p.id))}" aria-expanded="${open}">
       <span class="bn-date">${bnDate(p.post_date)}</span>
       <b data-notr>${p.pinned?svg("pin",14):""}${esc(p.title)}</b>
-      ${p.seed?`<span class="sample">ตัวอย่าง</span>`:""}<i>${open?"−":"+"}</i></button>
+      ${p.seed?`<span class="sample">ตัวอย่าง</span>`:(p.attachments||[]).length?`<span class="att-count">${svg("clip",13)}${p.attachments.length}</span>`:"<span></span>"}<i>${open?"−":"+"}</i></button>
     ${open?`<div class="bn-body">
       ${p.body?`<div class="bn-text" data-notr>${esc(p.body).replace(/\n/g,"<br>")}</div>`:`<p class="muted">ยังไม่มีรายละเอียด${bnMine(p)?" · กดแก้ไขเพื่อเพิ่มรายละเอียด":""}</p>`}
+      ${attBlock(p)}
       ${p.link?`<a class="bn-link" href="${esc(p.link)}" target="_blank" rel="noopener">${svg("ext",13)}<span data-notr>${esc(p.link.replace(/^https?:\/\//,"").slice(0,60))}</span></a>`:""}
       <div class="bn-meta"><span>${p.author_name?`โดย <span data-notr>${esc(p.author_name)}</span>`:""}</span>
         ${bnMine(p)?`<span class="bn-own"><button class="btn" data-bn-edit="${esc(String(p.id))}">แก้ไข</button><button class="btn" data-bn-del="${esc(String(p.id))}">ลบ</button></span>`:""}</div>
@@ -3751,7 +3843,7 @@ function renderBcmNews(){
 function bnCards(){
   return BN_KEYS.map(k=>{const c=BN[k], l=bnList(k).slice(0,3);
     return `<div class="news-card" style="--ac:${c.ac}"><div class="tag bn-tag"><button class="bn-tag-go" data-bn-go="${k}"><i>${c.i}</i>${c.name}</button><button class="bn-plus" data-bn-add="${k}" aria-label="เพิ่มรายละเอียด" ${tipAttr("เพิ่มรายละเอียด")}>${svg("plus",15)}</button></div>
-      ${l.map(p=>`<button class="news-item bn-row bn-mini" data-bn-go="${k}" data-bn-id="${esc(String(p.id))}"><div style="min-width:0"><b data-notr>${esc(p.title)}</b><small>${bnDate(p.post_date)}</small></div></button>`).join("")||`<p class="muted" style="margin:0">ยังไม่มีรายการ</p>`}
+      ${l.map(p=>`<button class="news-item bn-row bn-mini" data-bn-go="${k}" data-bn-id="${esc(String(p.id))}"><div style="min-width:0"><b data-notr>${esc(p.title)}</b><small>${bnDate(p.post_date)}${(p.attachments||[]).length?` · ${svg("clip",11)}${p.attachments.length}`:""}</small></div></button>`).join("")||`<p class="muted" style="margin:0">ยังไม่มีรายการ</p>`}
       <button class="link" data-bn-go="${k}">ดูทั้งหมด →</button></div>`;}).join("");
 }
 
@@ -3767,12 +3859,27 @@ function bnForm(cat,p){
       <div class="field"><label for="bnD">วันที่</label><input id="bnD" type="date" required value="${p?esc(p.post_date):today}"></div></div>
     <div class="field"><label for="bnB">รายละเอียด</label><textarea id="bnB" rows="8" maxlength="20000" placeholder="สรุปสถานการณ์ ผลกระทบ สิ่งที่ต้องดำเนินการ…">${p?esc(p.body||""):""}</textarea></div>
     <div class="field"><label for="bnL">ลิงก์อ้างอิง / ไฟล์แนบ</label><input id="bnL" type="url" placeholder="https://" value="${p&&p.link?esc(p.link):""}"></div>
+    <div class="field"><span class="lab">ไฟล์แนบ (PDF, รูปภาพ)</span>
+      <label class="att-drop" id="bnDrop"><input type="file" id="bnF" multiple accept="application/pdf,image/jpeg,image/png,image/gif,image/webp">${svg("clip",18)}<span><b>เลือกไฟล์ หรือ ลากมาวาง</b><small>PDF, JPG, PNG, GIF, WEBP · สูงสุด ${ATT_MAX} ไฟล์ ไฟล์ละไม่เกิน ${ATT_MB} MB</small></span></label>
+      <div class="att-list" id="bnAtt"></div></div>
     <label class="bn-chk"><input id="bnP" type="checkbox" ${p&&p.pinned?"checked":""}> ปักหมุดไว้บนสุด</label>
     <div class="bn-err" id="bnErr" hidden></div>
     <div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" class="ui-btn outline" data-bn-close>ยกเลิก</button><button type="submit" class="ui-btn primary" id="bnSave">บันทึก</button></div>
   </form></div>`;
   document.body.appendChild(m); document.body.classList.add("ics-open");
   m.dataset.id = p?String(p.id):"";
+  m._att = (p&&p.attachments||[]).map(a=>({...a}));   // kept ones; new files carry {file}
+  m._removed = [];
+  const draw=()=>{ $("#bnAtt").innerHTML=m._att.map((a,i)=>`<div class="att-item">${a.file&&attIsImg(a)?`<img src="${esc(a.prev)}" alt="">`:attIsImg(a)&&ATT_URL[attKey(a)]?`<img src="${esc(ATT_URL[attKey(a)])}" alt="">`:`<span class="att-ic">${attIsImg(a)?"IMG":"PDF"}</span>`}<span><b data-notr>${esc(a.name)}</b><small>${attSize(a.size||0)}${a.file?" · ใหม่":""}</small></span><button type="button" class="x" data-att-rm="${i}" aria-label="เอาไฟล์ออก">✕</button></div>`).join(""); };
+  const add=files=>{ const e=$("#bnErr"); e.hidden=true; const bad=[];
+    [...files].forEach(f=>{ if(m._att.length>=ATT_MAX){ bad.push(`${f.name}: เกิน ${ATT_MAX} ไฟล์`); return; } if(!ATT_TYPES.test(f.type)){ bad.push(`${f.name}: รองรับเฉพาะ PDF และรูปภาพ`); return; } if(f.size>ATT_MB*1048576){ bad.push(`${f.name}: ใหญ่เกิน ${ATT_MB} MB`); return; }
+      m._att.push({file:f,name:f.name,type:f.type,size:f.size,prev:attIsImg(f)?URL.createObjectURL(f):null}); });
+    if(bad.length){ e.textContent=bad.join(" · "); e.hidden=false; } draw(); };
+  m._draw=draw; draw();
+  const fi=$("#bnF"); fi.addEventListener("change",()=>{ add(fi.files); fi.value=""; });
+  const dz=$("#bnDrop"); ["dragover","dragenter"].forEach(n=>dz.addEventListener(n,ev=>{ ev.preventDefault(); dz.classList.add("on"); })); ["dragleave","drop"].forEach(n=>dz.addEventListener(n,()=>dz.classList.remove("on")));
+  dz.addEventListener("drop",ev=>{ ev.preventDefault(); add(ev.dataTransfer.files); });
+  m.addEventListener("click",ev=>{ const r=ev.target.closest("[data-att-rm]"); if(!r) return; ev.preventDefault(); const a=m._att.splice(+r.dataset.attRm,1)[0]; if(a&&!a.file) m._removed.push(a); if(a&&a.prev) URL.revokeObjectURL(a.prev); draw(); });
   setTimeout(()=>$("#bnT").focus(),30);
   $("#bnForm").addEventListener("submit",ev=>{ ev.preventDefault(); bnSubmit(m); });
 }
@@ -3782,8 +3889,11 @@ async function bnSubmit(m){
   const err=t=>{ const e=$("#bnErr"); e.textContent=t; e.hidden=false; };
   if(!v.title) return err("กรุณาใส่หัวข้อ");
   if(v.link && !/^https?:\/\//i.test(v.link)) return err("ลิงก์ต้องขึ้นต้นด้วย http:// หรือ https://");
-  const id=m.dataset.id, btn=$("#bnSave"); btn.disabled=true;
+  const id=m.dataset.id, btn=$("#bnSave"); btn.disabled=true; btn.textContent="กำลังบันทึก…";
   try{
+    const fresh=m._att.filter(a=>a.file), kept=m._att.filter(a=>!a.file).map(({prev,...a})=>a);
+    const stored=fresh.length?await attStore(fresh):[];
+    v.attachments=[...kept,...stored];
     if(POSTS.src==="supabase"){
       const c=await sbAuth();
       if(id){ const {error}=await c.from("portal_bcm_posts").update({...v,updated_at:new Date().toISOString()}).eq("id",id); if(error) throw error; }
@@ -3793,18 +3903,22 @@ async function bnSubmit(m){
       const rows=bnLocal();
       if(id){ const i=rows.findIndex(r=>String(r.id)===id); if(i>-1) rows[i]={...rows[i],...v,updated_at:new Date().toISOString()}; }
       else rows.push({...v,id:"l"+Date.now(),author_name:USER.name||null,created_at:new Date().toISOString()});
-      if(!bnSaveLocal(rows)) POSTS.rows=rows; else POSTS.rows=bnLocal();
+      if(!bnSaveLocal(rows)){ await attDelete(stored); throw new Error("พื้นที่จัดเก็บในเบราว์เซอร์เต็ม"); }
+      POSTS.rows=bnLocal();
       closeBnForm(); bnRefresh();
     }
+    m._att.forEach(a=>a.prev&&URL.revokeObjectURL(a.prev));
+    attDelete(m._removed);
     toast(id?"บันทึกการแก้ไขแล้ว":"เพิ่มรายการแล้ว");
     go("bcmnews",{bn:v.category,bnOpen:null});
-  }catch(e){ btn.disabled=false; err("บันทึกไม่สำเร็จ: "+(e.message||e)); }
+  }catch(e){ btn.disabled=false; btn.textContent="บันทึก"; err("บันทึกไม่สำเร็จ: "+(e.message||e)); }
 }
 async function bnDelete(id){
   if(!confirm("ลบรายการนี้? ลบแล้วกู้คืนไม่ได้")) return;
   try{
-    if(POSTS.src==="supabase"){ const c=await sbAuth(); const {error}=await c.from("portal_bcm_posts").delete().eq("id",id); if(error) throw error; POSTS.src="init"; await bnLoad(true); }
-    else { const rows=bnLocal().filter(r=>String(r.id)!==id); bnSaveLocal(rows); POSTS.rows=rows; bnRefresh(); }
+    const att=(POSTS.rows.find(r=>String(r.id)===id)||{}).attachments||[];
+    if(POSTS.src==="supabase"){ const c=await sbAuth(); const {error}=await c.from("portal_bcm_posts").delete().eq("id",id); if(error) throw error; await attDelete(att); POSTS.src="init"; await bnLoad(true); }
+    else { const rows=bnLocal().filter(r=>String(r.id)!==id); bnSaveLocal(rows); await attDelete(att); POSTS.rows=rows; bnRefresh(); }
     toast("ลบรายการแล้ว");
   }catch(e){ toast("ลบไม่สำเร็จ: "+(e.message||e)); }
 }
@@ -3817,7 +3931,11 @@ document.addEventListener("click",ev=>{
   const d=t.closest("[data-bn-del]"); if(d){ bnDelete(d.dataset.bnDel); return; }
   if(t.closest("[data-bn-close]") || t.classList.contains("bn-modal")){ closeBnForm(); return; }
 },true);
-document.addEventListener("keydown",ev=>{ if(ev.key==="Escape" && document.querySelector(".bn-modal")) closeBnForm(); });
+document.addEventListener("keydown",ev=>{ if(ev.key!=="Escape") return; const lb=document.querySelector(".att-lb"); if(lb){ lb.remove(); return; } if(document.querySelector(".bn-modal")) closeBnForm(); });
+document.addEventListener("click",ev=>{
+  const v=ev.target.closest("[data-att-view]"); if(v){ ev.preventDefault(); attView(v.dataset.attView); return; }
+  if(ev.target.closest("[data-att-close]") || ev.target.classList.contains("att-lb")){ document.querySelectorAll(".att-lb").forEach(x=>x.remove()); }
+});
 
 /* routing: #bcmnews-watch / -focus / -announce */
 if(!ROUTES.includes("bcmnews")) ROUTES.push("bcmnews");
@@ -3841,6 +3959,7 @@ renderNav = function(){
   news.insertAdjacentHTML("afterend", BN_KEYS.map(k=>`<button class="nav-item nv-sub2${S.route==="bcmnews"&&S.bn===k?" on":""}" data-bn-go="${k}"><i class="bn-dot" style="background:${BN[k].ac}"></i><span>${BN[k].name}</span></button>`).join(""));
   if(S.route==="bcmnews") news.classList.remove("on");
 };
+Object.assign(ICON,{ clip:'<path d="M21 11.5l-8.5 8.5a5 5 0 0 1-7-7L14 4.5a3.5 3.5 0 0 1 5 5L10.5 18a2 2 0 0 1-3-3l7.5-7.5"/>' });
 Object.assign(ICON,{ plus:'<path d="M12 5v14M5 12h14"/>' });
 
 /* ===================== v13c: home trims ===================== */
