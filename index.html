@@ -1134,6 +1134,44 @@ a.src-latest:hover > span{text-decoration:underline}
 .nav-item.nv-sub{padding-left:22px;font-size:13px}
 .nav-item.nv-sub svg{width:15px;height:15px}
 .nav-group + .nav-group{margin-top:4px}
+.nav-item.nv-sub2{padding:6px 10px 6px 50px;font-size:12.5px;color:#9AA7BA}
+.nav-item.nv-sub2 .bn-dot{width:7px;height:7px;border-radius:50%;flex:none;margin-left:-14px;margin-right:2px}
+.nav-item.nv-sub2.on{color:#fff}
+
+/* ===== v13b: BCM Watch / In Focus / Announcement ===== */
+.bn-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.bn-tabs button{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 14px;font-weight:600;font-size:13px}
+.bn-tabs button i{width:22px;height:22px;border-radius:6px;display:grid;place-items:center;background:var(--ac);color:#fff;font-style:normal;font-size:11px}
+.bn-tabs button span{font:500 11px var(--f-mono);color:var(--muted);background:var(--surface-2);border-radius:99px;padding:1px 7px}
+.bn-tabs button.on{border-color:var(--ac);box-shadow:inset 0 0 0 1px var(--ac);background:color-mix(in srgb,var(--ac) 8%,var(--surface))}
+.bn-wrap{display:grid;gap:8px}
+.bn-post{border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden;transition:border-color .15s,box-shadow .15s}
+.bn-post.open{border-color:color-mix(in srgb,var(--ac) 45%,var(--line));box-shadow:var(--shadow)}
+.bn-post.pin{border-left:3px solid var(--ac)}
+.bn-hd{display:grid;grid-template-columns:110px minmax(0,1fr) auto 20px;gap:12px;align-items:center;width:100%;text-align:left;border:0;background:none;padding:12px 14px;color:var(--ink)}
+.bn-hd:hover{background:var(--surface-2)}
+.bn-hd b{font-weight:600;font-size:14px;display:flex;gap:6px;align-items:center}
+.bn-hd b svg{color:var(--ac);flex:none}
+.bn-hd i{font-style:normal;font-size:18px;color:var(--muted);text-align:center}
+.bn-date{font:500 12px var(--f-mono);color:var(--muted)}
+.bn-body{padding:2px 14px 14px 136px;display:grid;gap:10px}
+.bn-text{font-size:13.5px;line-height:1.7;color:var(--ink-2);white-space:normal}
+.bn-link{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;color:var(--sev-ad);text-decoration:none}
+.bn-link:hover{text-decoration:underline}
+.bn-meta{display:flex;justify-content:space-between;align-items:center;gap:10px;font-size:12px;color:var(--muted);border-top:1px dashed var(--line);padding-top:10px}
+.bn-own{display:flex;gap:6px}.bn-own .btn{padding:5px 11px;font-size:12px}
+.bn-tag{justify-content:space-between}
+.bn-tag-go{display:inline-flex;align-items:center;gap:8px;border:0;background:none;padding:0;font:inherit;font-weight:600;color:var(--ink)}
+.bn-tag-go:hover{text-decoration:underline}
+.bn-plus{width:28px;height:28px;border-radius:8px;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;color:var(--ac)}
+.bn-plus:hover{background:var(--ac);color:#fff;border-color:var(--ac)}
+.bn-mini{width:100%;text-align:left;border:0;background:none;cursor:pointer}
+.bn-mini:hover b{text-decoration:underline}
+.bn-modal .tr-dialog{max-width:620px}
+.bn-2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px}
+.bn-chk{display:flex;gap:8px;align-items:center;font-size:13px}
+.bn-err{font-size:12.5px;color:var(--miss);background:var(--miss-bg);padding:8px 12px;border-radius:10px}
+@media (max-width:860px){ .bn-hd{grid-template-columns:minmax(0,1fr) 20px;gap:4px 10px} .bn-date{grid-column:1/-1;order:-1} .bn-hd .sample{display:none} .bn-body{padding:2px 14px 14px} .bn-2{grid-template-columns:minmax(0,1fr)} }
 </style>
 <style>[hidden]{display:none!important}body{margin:0}img{max-width:100%}</style>
 </head>
@@ -1264,6 +1302,7 @@ a.src-latest:hover > span{text-decoration:underline}
 /* ================= v7: Thai / English ================= */
 const I18N = {
  "ความพร้อมของการดำเนินงานด้าน BCM":"BCM operational readiness","คู่มือ BCP":"BCP Manuals","ความพร้อม":"Readiness",
+ "เพิ่มรายละเอียด":"Add details","แก้ไขรายละเอียด":"Edit details","หัวข้อ *":"Title *","หมวด":"Topic","วันที่":"Date","รายละเอียด":"Details","ลิงก์อ้างอิง / ไฟล์แนบ":"Reference link / attachment","ปักหมุดไว้บนสุด":"Pin to top","ยกเลิก":"Cancel","บันทึก":"Save","แก้ไข":"Edit","ลบ":"Delete","ตัวอย่าง":"Sample","ยังไม่มีรายการ":"No posts yet","กดที่หัวข้อเพื่ออ่านรายละเอียด":"Select a title to read the details","ติดตามสถานการณ์ความเสี่ยงและภัยที่ต้องเฝ้าระวัง":"Risk situations and hazards to watch","บทความเจาะลึก บทเรียน และแนวปฏิบัติด้าน BCM":"In-depth articles, lessons learned and BCM practices","ประกาศ กำหนดการ และข่าวจาก Corporate BCM":"Announcements, deadlines and news from Corporate BCM","บันทึกในระบบ · ผู้ที่เข้าสู่ระบบทุกคนเห็นโพสต์นี้":"Saved to the portal · visible to everyone signed in","โหมดสาธิต · โพสต์ที่เพิ่มบันทึกไว้ในเบราว์เซอร์นี้เท่านั้น":"Demo mode · posts you add are kept in this browser only","กำลังโหลด…":"Loading…","ยังไม่มีรายละเอียด":"No details yet","กดแก้ไขเพื่อเพิ่มรายละเอียด":"choose Edit to add details","โดย":"By","กดปุ่มเพิ่มรายละเอียดเพื่อเริ่มต้น":"Choose Add details to start","กรุณาใส่หัวข้อ":"Please enter a title","ลิงก์ต้องขึ้นต้นด้วย http:// หรือ https://":"Links must start with http:// or https://","บันทึกไม่สำเร็จ: ":"Could not save: ","บันทึกการแก้ไขแล้ว":"Changes saved","เพิ่มรายการแล้ว":"Post added","ลบรายการแล้ว":"Post deleted","ลบไม่สำเร็จ: ":"Could not delete: ","สรุปสถานการณ์ ผลกระทบ สิ่งที่ต้องดำเนินการ…":"Situation summary, impact, actions needed…",
 
  "ใหม่":"New","โลก":"World","เอเชีย":"Asia","จุดความขัดแย้งจากข่าว":"Conflict hotspots (news)","SCG สำนักงานใหญ่":"SCG head office","ข่าวความขัดแย้ง":"Conflict news","บางซื่อ กรุงเทพฯ":"Bang Sue, Bangkok",
  "สงคราม · Cyber · ภัยพิบัติ · ข่าวด่วน — รวบรวมอัตโนมัติจากสื่อไทยและต่างประเทศ อัปเดตทุก 5 นาที":"War · Cyber · Disasters · Breaking — collected automatically from Thai and international media, updated every 5 minutes",
@@ -3598,6 +3637,175 @@ go = function(r,opts={}){
 /* keep the sidebar in step when the BU filter changes inside the dashboard */
 const _render13 = render;
 render = function(){ _render13(); if(S.route==="readiness") renderNav(); };
+
+/* ===================== v13b: BCM Watch / In Focus / Announcement ===================== */
+// Posts live in Supabase table portal_bcm_posts (signed-in users read and add; authors edit/delete their own).
+// Without a Supabase session (demo login, artifact preview) posts are kept in this browser only.
+const BN = {
+  watch:{name:"BCM Watch",ac:"var(--sev-ad)",i:"W",icon:"radar",d:"ติดตามสถานการณ์ความเสี่ยงและภัยที่ต้องเฝ้าระวัง",seed:"BCM Watch"},
+  focus:{name:"BCM In Focus",ac:"var(--ok)",i:"F",icon:"book",d:"บทความเจาะลึก บทเรียน และแนวปฏิบัติด้าน BCM",seed:"BCM In Focus"},
+  announce:{name:"BCM Announcement",ac:"var(--brand)",i:"A",icon:"bell",d:"ประกาศ กำหนดการ และข่าวจาก Corporate BCM",seed:"BCM Announcement"},
+};
+const BN_KEYS = Object.keys(BN);
+const POSTS = {rows:[], src:"init", uid:null, err:null};
+const TH_M = {"ม.ค.":0,"ก.พ.":1,"มี.ค.":2,"เม.ย.":3,"พ.ค.":4,"มิ.ย.":5,"ก.ค.":6,"ส.ค.":7,"ก.ย.":8,"ต.ค.":9,"พ.ย.":10,"ธ.ค.":11};
+function seedDate(s){ const m=String(s).match(/(\d+)\s+(\S+)\s+(\d{4})/); if(!m||TH_M[m[2]]==null) return new Date().toISOString().slice(0,10); return `${m[3]}-${String(TH_M[m[2]]+1).padStart(2,"0")}-${m[1].padStart(2,"0")}`; }
+const SEED_POSTS = BN_KEYS.flatMap(k=>(NEWS[BN[k].seed]?.items||[]).map((n,j)=>({id:`seed-${k}-${j}`,category:k,title:n[0],body:"",link:null,post_date:seedDate(n[1]),pinned:false,author_name:"Corporate BCM",seed:true})));
+function bnLocal(){ try{ return JSON.parse(localStorage.getItem("bcm-posts")||"[]"); }catch(e){ return []; } }
+function bnSaveLocal(rows){ try{ localStorage.setItem("bcm-posts",JSON.stringify(rows)); return true; }catch(e){ return false; } }
+async function bnLoad(force){
+  if(POSTS.src==="loading" || (POSTS.src!=="init" && !force)) return;
+  POSTS.src="loading";
+  let c=null; try{ c=await sbAuth(); }catch(e){}
+  try{
+    if(c){
+      const {data:{session}} = await c.auth.getSession();
+      if(session){
+        POSTS.uid=session.user.id;
+        const {data,error}=await c.from("portal_bcm_posts").select("*").order("pinned",{ascending:false}).order("post_date",{ascending:false}).order("created_at",{ascending:false});
+        if(error) throw error;
+        POSTS.rows=data||[]; POSTS.src="supabase"; bnRefresh(); return;
+      }
+    }
+  }catch(e){ console.warn("BCM posts: Supabase unavailable, using this browser",e); POSTS.err=String(e.message||e); }
+  POSTS.rows=bnLocal(); POSTS.src="local"; bnRefresh();
+}
+function bnRefresh(){ if(["bcmnews","news","home"].includes(S.route)) render(); }
+function bnList(cat){
+  const rows=POSTS.rows.filter(p=>p.category===cat);
+  const all = POSTS.src==="supabase" && rows.length ? rows : [...rows, ...SEED_POSTS.filter(p=>p.category===cat)];
+  return all.sort((a,b)=>(b.pinned-a.pinned)||String(b.post_date).localeCompare(String(a.post_date))||String(b.created_at||"").localeCompare(String(a.created_at||"")));
+}
+const bnMine = p => !p.seed && (POSTS.src==="local" || (POSTS.uid && p.created_by===POSTS.uid));
+const bnDate = d => { try{ return new Date(d+"T00:00:00").toLocaleDateString(DLOC(),{day:"numeric",month:"short",year:"numeric"}); }catch(e){ return d; } };
+
+function bnPost(p){
+  const open=S.bnOpen===String(p.id);
+  return `<article class="bn-post${open?" open":""}${p.pinned?" pin":""}" style="--ac:${BN[p.category].ac}">
+    <button class="bn-hd" data-bn-toggle="${esc(String(p.id))}" aria-expanded="${open}">
+      <span class="bn-date">${bnDate(p.post_date)}</span>
+      <b data-notr>${p.pinned?svg("pin",14):""}${esc(p.title)}</b>
+      ${p.seed?`<span class="sample">ตัวอย่าง</span>`:""}<i>${open?"−":"+"}</i></button>
+    ${open?`<div class="bn-body">
+      ${p.body?`<div class="bn-text" data-notr>${esc(p.body).replace(/\n/g,"<br>")}</div>`:`<p class="muted">ยังไม่มีรายละเอียด${bnMine(p)?" · กดแก้ไขเพื่อเพิ่มรายละเอียด":""}</p>`}
+      ${p.link?`<a class="bn-link" href="${esc(p.link)}" target="_blank" rel="noopener">${svg("ext",13)}<span data-notr>${esc(p.link.replace(/^https?:\/\//,"").slice(0,60))}</span></a>`:""}
+      <div class="bn-meta"><span>${p.author_name?`โดย <span data-notr>${esc(p.author_name)}</span>`:""}</span>
+        ${bnMine(p)?`<span class="bn-own"><button class="btn" data-bn-edit="${esc(String(p.id))}">แก้ไข</button><button class="btn" data-bn-del="${esc(String(p.id))}">ลบ</button></span>`:""}</div>
+    </div>`:""}
+  </article>`;
+}
+function bnSrcNote(){
+  return POSTS.src==="supabase" ? `<span class="src-badge"><i style="--c:var(--ok)"></i>บันทึกในระบบ · ผู้ที่เข้าสู่ระบบทุกคนเห็นโพสต์นี้</span>`
+    : POSTS.src==="local" ? `<span class="src-badge"><i style="--c:var(--sev-wt)"></i>โหมดสาธิต · โพสต์ที่เพิ่มบันทึกไว้ในเบราว์เซอร์นี้เท่านั้น</span>`
+    : `<span class="src-badge"><i style="--c:var(--na)"></i>กำลังโหลด…</span>`;
+}
+function renderBcmNews(){
+  bnLoad();
+  const k=BN[S.bn]?S.bn:"watch", c=BN[k], list=bnList(k);
+  return `<div class="page">
+    <div class="page-head"><div><div class="crumb"><button class="link" data-go="news">ข่าวสารและแจ้งเตือน</button> · ${c.name.toUpperCase()}</div><h1>${c.name}</h1><div class="muted">${c.d}</div></div>
+      <button class="ui-btn primary" data-bn-add="${k}">${svg("plus",16)}เพิ่มรายละเอียด</button></div>
+    <div class="bn-tabs">${BN_KEYS.map(x=>`<button class="${x===k?"on":""}" style="--ac:${BN[x].ac}" data-bn-go="${x}"><i>${BN[x].i}</i>${BN[x].name}<span>${bnList(x).length}</span></button>`).join("")}</div>
+    <section class="card bn-wrap" style="--ac:${c.ac}">
+      <div class="card-head"><div><h3>${list.length} รายการ</h3><div class="card-sub">กดที่หัวข้อเพื่ออ่านรายละเอียด</div></div>${bnSrcNote()}</div>
+      ${list.length?list.map(bnPost).join(""):`<p class="muted">ยังไม่มีรายการ กดปุ่มเพิ่มรายละเอียดเพื่อเริ่มต้น</p>`}
+    </section></div>`;
+}
+/* the three cards on the main news page show the latest posts and link to each topic */
+function bnCards(){
+  return BN_KEYS.map(k=>{const c=BN[k], l=bnList(k).slice(0,3);
+    return `<div class="news-card" style="--ac:${c.ac}"><div class="tag bn-tag"><button class="bn-tag-go" data-bn-go="${k}"><i>${c.i}</i>${c.name}</button><button class="bn-plus" data-bn-add="${k}" aria-label="เพิ่มรายละเอียด" ${tipAttr("เพิ่มรายละเอียด")}>${svg("plus",15)}</button></div>
+      ${l.map(p=>`<button class="news-item bn-row bn-mini" data-bn-go="${k}" data-bn-id="${esc(String(p.id))}"><div style="min-width:0"><b data-notr>${esc(p.title)}</b><small>${bnDate(p.post_date)}</small></div></button>`).join("")||`<p class="muted" style="margin:0">ยังไม่มีรายการ</p>`}
+      <button class="link" data-bn-go="${k}">ดูทั้งหมด →</button></div>`;}).join("");
+}
+
+/* add / edit form */
+function bnForm(cat,p){
+  closeBnForm();
+  const today=new Date().toISOString().slice(0,10);
+  const m=document.createElement("div"); m.className="tr-modal bn-modal"; m.setAttribute("role","dialog"); m.setAttribute("aria-modal","true");
+  m.innerHTML=`<div class="tr-dialog"><form id="bnForm" class="form">
+    <div class="card-head" style="margin:0"><div><h3>${p?"แก้ไขรายละเอียด":"เพิ่มรายละเอียด"}</h3><div class="card-sub">${BN[cat].name}</div></div><button type="button" class="x" data-bn-close aria-label="ปิด">✕</button></div>
+    <div class="field"><label for="bnT">หัวข้อ *</label><input id="bnT" required maxlength="300" value="${p?esc(p.title):""}"></div>
+    <div class="bn-2"><div class="field"><label for="bnC">หมวด</label><select id="bnC">${BN_KEYS.map(x=>`<option value="${x}" ${x===cat?"selected":""}>${BN[x].name}</option>`).join("")}</select></div>
+      <div class="field"><label for="bnD">วันที่</label><input id="bnD" type="date" required value="${p?esc(p.post_date):today}"></div></div>
+    <div class="field"><label for="bnB">รายละเอียด</label><textarea id="bnB" rows="8" maxlength="20000" placeholder="สรุปสถานการณ์ ผลกระทบ สิ่งที่ต้องดำเนินการ…">${p?esc(p.body||""):""}</textarea></div>
+    <div class="field"><label for="bnL">ลิงก์อ้างอิง / ไฟล์แนบ</label><input id="bnL" type="url" placeholder="https://" value="${p&&p.link?esc(p.link):""}"></div>
+    <label class="bn-chk"><input id="bnP" type="checkbox" ${p&&p.pinned?"checked":""}> ปักหมุดไว้บนสุด</label>
+    <div class="bn-err" id="bnErr" hidden></div>
+    <div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" class="ui-btn outline" data-bn-close>ยกเลิก</button><button type="submit" class="ui-btn primary" id="bnSave">บันทึก</button></div>
+  </form></div>`;
+  document.body.appendChild(m); document.body.classList.add("ics-open");
+  m.dataset.id = p?String(p.id):"";
+  setTimeout(()=>$("#bnT").focus(),30);
+  $("#bnForm").addEventListener("submit",ev=>{ ev.preventDefault(); bnSubmit(m); });
+}
+function closeBnForm(){ document.querySelectorAll(".bn-modal").forEach(x=>x.remove()); document.body.classList.remove("ics-open"); }
+async function bnSubmit(m){
+  const v={category:$("#bnC").value,title:$("#bnT").value.trim(),post_date:$("#bnD").value,body:$("#bnB").value.trim(),link:$("#bnL").value.trim()||null,pinned:$("#bnP").checked};
+  const err=t=>{ const e=$("#bnErr"); e.textContent=t; e.hidden=false; };
+  if(!v.title) return err("กรุณาใส่หัวข้อ");
+  if(v.link && !/^https?:\/\//i.test(v.link)) return err("ลิงก์ต้องขึ้นต้นด้วย http:// หรือ https://");
+  const id=m.dataset.id, btn=$("#bnSave"); btn.disabled=true;
+  try{
+    if(POSTS.src==="supabase"){
+      const c=await sbAuth();
+      if(id){ const {error}=await c.from("portal_bcm_posts").update({...v,updated_at:new Date().toISOString()}).eq("id",id); if(error) throw error; }
+      else { const {error}=await c.from("portal_bcm_posts").insert({...v,author_name:USER.name||null}); if(error) throw error; }
+      closeBnForm(); POSTS.src="init"; await bnLoad(true);
+    } else {
+      const rows=bnLocal();
+      if(id){ const i=rows.findIndex(r=>String(r.id)===id); if(i>-1) rows[i]={...rows[i],...v,updated_at:new Date().toISOString()}; }
+      else rows.push({...v,id:"l"+Date.now(),author_name:USER.name||null,created_at:new Date().toISOString()});
+      if(!bnSaveLocal(rows)) POSTS.rows=rows; else POSTS.rows=bnLocal();
+      closeBnForm(); bnRefresh();
+    }
+    toast(id?"บันทึกการแก้ไขแล้ว":"เพิ่มรายการแล้ว");
+    go("bcmnews",{bn:v.category,bnOpen:null});
+  }catch(e){ btn.disabled=false; err("บันทึกไม่สำเร็จ: "+(e.message||e)); }
+}
+async function bnDelete(id){
+  if(!confirm("ลบรายการนี้? ลบแล้วกู้คืนไม่ได้")) return;
+  try{
+    if(POSTS.src==="supabase"){ const c=await sbAuth(); const {error}=await c.from("portal_bcm_posts").delete().eq("id",id); if(error) throw error; POSTS.src="init"; await bnLoad(true); }
+    else { const rows=bnLocal().filter(r=>String(r.id)!==id); bnSaveLocal(rows); POSTS.rows=rows; bnRefresh(); }
+    toast("ลบรายการแล้ว");
+  }catch(e){ toast("ลบไม่สำเร็จ: "+(e.message||e)); }
+}
+document.addEventListener("click",ev=>{
+  const t=ev.target;
+  const g=t.closest("[data-bn-go]"); if(g){ ev.preventDefault(); ev.stopImmediatePropagation(); go("bcmnews",{bn:g.dataset.bnGo,bnOpen:g.dataset.bnId||null}); return; }
+  const a=t.closest("[data-bn-add]"); if(a){ ev.preventDefault(); ev.stopImmediatePropagation(); bnForm(a.dataset.bnAdd,null); return; }
+  const o=t.closest("[data-bn-toggle]"); if(o){ ev.preventDefault(); S.bnOpen = S.bnOpen===o.dataset.bnToggle?null:o.dataset.bnToggle; render(); return; }
+  const e=t.closest("[data-bn-edit]"); if(e){ const p=POSTS.rows.find(r=>String(r.id)===e.dataset.bnEdit); if(p) bnForm(p.category,p); return; }
+  const d=t.closest("[data-bn-del]"); if(d){ bnDelete(d.dataset.bnDel); return; }
+  if(t.closest("[data-bn-close]") || t.classList.contains("bn-modal")){ closeBnForm(); return; }
+},true);
+document.addEventListener("keydown",ev=>{ if(ev.key==="Escape" && document.querySelector(".bn-modal")) closeBnForm(); });
+
+/* routing: #bcmnews-watch / -focus / -announce */
+if(!ROUTES.includes("bcmnews")) ROUTES.push("bcmnews");
+const _routeFromHash13b = routeFromHash;
+routeFromHash = function(){ const h=location.hash.slice(1); if(h.startsWith("bcmnews")){ const k=h.slice(8); return ["bcmnews",null,{bn:BN[k]?k:"watch"}]; } return _routeFromHash13b(); };
+const _go13b = go;
+go = function(r,opts={}){ _go13b(r,opts); if(r==="bcmnews"){ const hh="bcmnews-"+(BN[S.bn]?S.bn:"watch"); if(location.hash.slice(1)!==hh){ try{ history.replaceState(null,"","#"+hh); }catch(e){} } } };
+window.addEventListener("hashchange",()=>{ const h=location.hash.slice(1); if(!$("#app").hidden && h.startsWith("bcmnews-") && BN[h.slice(8)] && (S.route!=="bcmnews"||S.bn!==h.slice(8))) go("bcmnews",{bn:h.slice(8)}); });
+const _render13b = render;
+render = function(){
+  if(S.route==="bcmnews"){ applyLangToEvents(); hideTip(); $("#main").innerHTML=renderBcmNews(); renderNav(); syncUser(); return; }
+  _render13b();
+  if(S.route==="news"){ bnLoad(); const n=$("#main .news"); if(n) n.innerHTML=bnCards(); }
+};
+
+/* sidebar: the three topics sit under ข่าวสารและแจ้งเตือน */
+const _renderNav13b = renderNav;
+renderNav = function(){
+  _renderNav13b();
+  const news=$('#navMain [data-go="news"]'); if(!news) return;
+  news.insertAdjacentHTML("afterend", BN_KEYS.map(k=>`<button class="nav-item nv-sub2${S.route==="bcmnews"&&S.bn===k?" on":""}" data-bn-go="${k}"><i class="bn-dot" style="background:${BN[k].ac}"></i><span>${BN[k].name}</span></button>`).join(""));
+  if(S.route==="bcmnews") news.classList.remove("on");
+};
+Object.assign(ICON,{ plus:'<path d="M12 5v14M5 12h14"/>' });
 
 trObserver.observe(document.body,{childList:true,subtree:true}); setLang(LANG);
 checkSession().then(ok=>{ if(!ok && !CFG.msLogin && routeFromHash()) enterApp(); });
